@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+        <title></title>
+<!--        <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>     
+        <link href="__PUBLIC__/css/common_page.css?{$version}" rel="stylesheet" type="text/css" />-->
+        <link href="__PUBLIC__/css/analysis.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>      
+        <div class="modalbox">
+            <div class="close">
+                <img src="__PUBLIC__/images/close.png" alt="">
+            </div>
+            <table class="modal-tbl">
+                <thead>
+                    <th>账号</th>
+                    <th>姓名</th>
+                    <th>年级</th>
+                    <th>班级</th>
+                    <th>成绩</th>
+                </thead>
+                <tbody>
+                    <if condition="$list eq ''">
+                    <tr><th></th>
+                    <th></th>
+                    <th>无相关数据</th>
+                    <th></th>
+                    <th></th></tr>
+                    <else/>
+                    <volist name="list" id="vo">
+                        <tr>
+                            <td>{$vo.student.emp_no}</td>
+                            <td>{$vo.student.name}</td>
+                            <td>{$vo.student.grade_name}</td>
+                            <td>{$vo.student.class_name}</td>
+                            <td>
+                                <if condition="$vo.yz eq 0">
+                                尚未批改
+                                <else/>
+                                {$vo.total_fen}
+                                </if>                           
+                            </td>
+                        </tr>
+                    </volist>    
+                    </if>
+                </tbody>
+            </table>
+        </div>   
+</body>
+</html>

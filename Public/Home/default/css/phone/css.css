@@ -1,0 +1,536 @@
+@charset "utf-8";
+html {
+	min-height: 100%;
+	height: 100%;
+}
+
+body {
+	margin: 0px;
+	padding: 0px;
+	height: 100%;
+	min-height: 100%;
+	font-family: "微软雅黑","黑体";
+}
+
+.all {
+	width: 100%;
+	height: 100%;
+	background: #f5f5f5;
+}
+.content:after{
+	display: block;
+	content:"";
+	clear:both;
+}
+.content {
+	/*height: 100%;*/
+	background-color:#f5f5f5;
+	margin-top: 3.3rem;
+	margin-bottom:3%;
+}
+
+.foot {
+	position:fixed;
+	z-index: 97;
+	bottom:0px;
+	background-color: #fff;
+	width: 100%;
+}
+
+/*.top {
+	width: 100%;
+	height: 16%;
+	background-color:#4aa0e9;
+	position: fixed;
+	top: 0px;
+	z-index: 50;
+}
+
+.top2 {
+	width: 100%;
+	height: 16%;
+}*/
+
+.list {
+	width: 78%;
+	height: 170px;
+	padding: 0 6% 0 6%;
+	margin-left: 5%;
+	margin-top: 20px;
+	float: left;
+	border-radius: 20px;
+	background-color: white;
+}
+
+.foot-icon {
+	width: 20%;
+	padding-top: 15px;
+	padding-bottom: 10px;
+	float: left;
+	text-align: center;
+	color: #d3d3d3;
+	font-size: 12px;
+}
+
+.foot-icon img {
+	width: 30px;
+	height: 30px;
+}
+
+.content .list .tittle {
+	width: 93%;
+	height: 30px;
+	float: left;
+	line-height: 30px;
+	padding-top: 15px;
+	padding-bottom: 10px;
+	font-size: 16px;
+	color: #818181;
+	text-align: left;
+}
+
+.content img {
+	width: 55px;
+	height: 55px;
+}
+
+.content-icon {
+	width: 33.3%;
+	float: left;
+	text-align: center;
+	font-size: 13px;
+	color: #818181;
+	line-height: 180%;
+	margin:10px 0px 10px 0px; 
+}
+
+.leftTittle .iconfont {
+	font-size: 3em;
+}
+
+.content .iconfont {
+	font-size: 36px;
+	color: #fff;
+}
+
+.content .iconBack {
+	margin: auto;
+	width: 50px;
+	height: 50px;
+	text-align: center;
+	line-height: 50px;
+	background-repeat: no-repeat;
+	background-position: center center;
+	margin-bottom: 5px;
+}
+
+.content-icon .iconfont {
+	font-size: 3em;
+}
+
+.all .top .tittle {
+	width: 100%;
+	height: 60%;
+	float: left;
+	text-align: center;
+	color: #fff;
+	font-size: 18px;
+	line-height: 350%;
+}
+
+.back {
+	float: left;
+	margin-left: 5%;
+	margin-top: 20px;
+	width: 60px;
+	height: 28px;
+	font-size: 14px;
+	color: #fff;
+	line-height: 28px;
+	text-align: left;
+}
+
+.change {
+	float: right;
+	margin-right: 5%;
+	margin-top: 20px;
+	width: 60px;
+	height: 28px;
+	font-size: 14px;
+	color: #fff;
+	line-height: 28px;
+	text-align: right;
+}
+
+.navBar {
+	width: 76%;
+	height: 28px;
+	margin-left: 12%;
+	float: left;
+	background-color: #fff;
+	text-align: center;
+	border-radius: 5px;
+}
+
+.navButton {
+	width: 22%;
+	height: 20px;
+	float: left;
+	margin-top: 4px;
+	margin-left: 2.4%;
+	background-color: #fff;
+	border-radius: 5px;
+	font-size: 12px;
+	color: #4AA0E9;
+	line-height: 20px;
+}
+
+.littleList {
+	width: 90%;
+	margin-left: 5%;
+	height: 70px;
+	padding: 0;
+	border-radius: 10px;
+	margin-top: 12px;
+}
+
+.littleList .leftTittle {
+	float: left;
+	height: 100%;
+	width: 20%;
+	background-color: #4AA0E9;
+	border-radius: 10px 0px 0px 10px;
+	text-align: center;
+	font-size: 12px;
+	color: #fff;
+}
+
+.littleList h3 {
+	font-size:16px;
+	font-weight: normal;
+	color: #818181;
+	line-height: 19px;
+	margin: 15px 0px 8px 10px;
+}
+
+.littleList h4 {
+	font-size:12px;
+	font-weight: normal;
+	color: #b7b7b7;
+	line-height: 14px;
+	margin: 0px 0px 0px 10px;
+}
+
+.littleList .rightTittle {
+	width: 14%;
+	height: 100%;
+	float: right;
+	text-align: center;
+	line-height: 70px;
+}
+
+.littleList .centerTittle {
+	width: 66%;
+	height: 100%;
+	float: left;
+}
+
+.rightTittle .iconfont {
+	font-size: 24px;
+	color: #dedede;
+}
+
+.foot-icon .iconfont {
+	font-size: 3em;
+}
+/*new*/
+.boxBack {
+	width: 70%;
+	min-height: 50%;
+	background-color: #fff;
+	position:fixed;
+	margin: 30% 0 0 15%;
+	border-radius: 30px;
+	z-index: 99;
+	text-align: center;
+	padding-bottom: 40px;
+}
+
+.mask {
+	display: none;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.9);
+	position:fixed;
+	margin: 0;
+	z-index: 98;
+}
+
+.boxBack h2 {
+	font-size: 20px;
+	font-weight: normal;
+	color: #4aa0e9;
+	margin: 30px 0 8px 0;
+}
+
+.screenList {
+	float: left;
+	margin-top: 15px;
+	margin-left: 10%;
+	height: 35px;
+	width: 35%;
+	background-color: rgba(0,0,0,0.05);
+	border-radius: 10px;
+	text-align: center;
+	line-height: 35px;
+	color: #666;
+	letter-spacing: 0px;
+}
+.back .iconfont {
+	font-size: 28px;
+	float: left;
+}
+
+.change .iconfont {
+	float: left;
+	font-size: 28px;
+}
+
+.rightTittle .iconfont {
+	font-size: 36px;
+}
+
+.leftTittle h2 {
+	font-size: 14px;
+	margin: 0;
+	padding: 10px 0px 0px 0px;
+}
+
+.bigList {
+	padding: 0;
+	height: 400px;	
+	width: 90%;
+	margin-left: 5%;
+}
+
+/*表格CSS*/
+table.altrowstable {
+	width: 90%;
+	margin-left: 5%;
+	font-size:11px;
+	color:#4AA0E9;
+	border-width: 1px;
+	border-color: #f7f7f7;
+	border-collapse: collapse;
+	margin-top: 20px;
+}
+table.altrowstable th {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #f5f5f5;
+}
+table.altrowstable td {
+	border-width: 1px;
+	padding: 8px;	
+	color: #707070;
+	border-style: solid;
+	border-color: #f5f5f5;
+}
+.oddrowcolor{
+	background-color:#fff;
+}
+.evenrowcolor{
+	background-color:#f5f5f5;
+}
+/*表格CSS结束*/
+.content .list .tittle2 {
+	width: 100%;
+	height: 50px;
+	background-color: #4AA0E9;
+	font-size: 18px;
+	line-height: 50px;
+	color: #fff;
+	text-align: center;
+	border-radius: 20px 20px 0 0;
+}
+
+ .leftRight {
+	margin: 25px 0px 25px 0px;
+	width: 20%;
+	line-height: 100px;
+}
+
+.lRtittle {
+	float: left;
+	width: 23%;
+	height: 50px;
+	margin-left: 2%;
+	margin-top: 25px;
+	line-height: 50px;
+	font-size: 13px;
+	color: #818181;
+}
+
+.longList {
+	width: 100%;
+	height: 3.6rem;
+	background-color: #fff;
+	margin-top:3%;
+	float: left;
+	line-height: 4rem;
+	padding-left: 7%;
+	color: #4AA0E9;
+}
+
+.longList3 {
+	width: 93%;
+	min-height: 100px;
+	background-color: #fff;
+	margin-top: 10px;
+	float: left;
+	line-height: 40px;
+	padding-left: 7%;
+	color: #818181;
+}
+
+.longListButton {
+	float: left;
+	width: 76%;
+	height: 45px;
+	margin-left: 12%;
+	border-radius: 5px;
+	background-color: #42d526;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	font-size: 18px;
+	line-height: 45px;
+	text-align: center;
+	color: #fff;
+}
+
+.longList input {
+	width: 38%;
+	height: 20px;
+	margin-top: 8px;
+	float: right;
+	border: 0px;
+	font-family: "微软雅黑";
+	font-size: 14px;
+	color: #818181;
+	padding-left: 2%;
+	border-radius: 5px;
+}
+.longList3 textarea {
+	width: 68%;
+	height: 80px;
+	margin-top: 8px;
+	margin-right: 5%;
+	float: right;
+	border: 0px;
+	background-color: #f9f9f9;
+	font-family: "微软雅黑";
+	font-size: 14px;
+	color: #818181;
+	padding-left: 2%;
+	border-radius: 5px;
+}
+
+.longList .chiose {
+	height: 40px;
+	width: 33%;
+	margin-left: 6%;
+	float: right;
+	font-size: 13px;
+	text-align: right;
+}
+
+.chiose .iconfont {
+	color: #818181;
+	float: right;
+	font-size: 18px;
+}
+
+.lian {
+	border-top: 1px solid #f5f5f5;
+	margin-top: 0px;
+}
+
+.longList .text {
+	width: 38%;
+	height: 20px;
+	margin-top: 8px;
+	float: right;
+	border: 0px;
+	font-family: "微软雅黑";
+	font-size: 14px;
+	color: #818181;
+	padding-left: 2%;
+	border-radius: 5px;
+	line-height: 26px;
+}
+
+.longList .tittle,.longList3 .tittle{
+	width: 22%;
+	height: 100%;
+	float: left;
+	font-size: 14px;
+}
+
+.gao {
+	height: 140px;
+	width: 100%;
+	padding-left: 0px;
+	line-height: 20px;
+	float: left;
+}
+
+.gao .tittle {
+	width: 20%;
+	height: 30px;
+	margin-top: 10px;
+	float: left;
+	line-height: 30px;
+	text-align: center;
+	font-size: 14px;
+	color: #818181;
+}
+
+.yuan {
+	width: 20%;
+	height: 100px;
+	float: left;
+	text-align: center;
+	line-height: 100px;
+	
+}
+
+.yu {
+	width: 50px;
+	height: 50px;
+	position: relative;
+	left: 50%;
+	margin-top: 10px;
+	margin-left: -25px;
+	border-radius: 25px;
+	background-color: #f5f5f5;
+	line-height: 50px;
+	font-size: 12px;
+	text-align: center;
+	color: #a3a3a3;
+}
+
+#change01,#change02 {
+	width: 100%;
+	height: 100%;
+}
+
+.preloader2 {
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	color: #9B9B9B;
+	font-size: 14px;
+	margin-bottom: -10px;
+}

@@ -1,0 +1,367 @@
+/*名师课堂*/
+body{
+	font-family: "微软雅黑";
+
+}
+a:visited{
+	text-decoration: none;
+}
+.lf{
+	float:left;
+}
+.lr{
+	float:right;
+}
+.wisdom-left{
+	float:left;
+	/*width:100%;*/
+}
+.wisdom-teacher-title{
+	width:100%;
+	height:40px;
+	font-size:16px;
+	line-height:40px;
+	margin-bottom:10px;
+	border-bottom:1px solid #d7d7d7;
+}
+ 
+.resourcesHome-page .article-content .page-content-left{
+	margin-left:0!important;
+}
+.wisdom-teacher-title a{
+	float:right;
+	font-size: 13px;
+	margin-right:10px;
+	cursor: pointer;
+	color:#1EABEB;
+}
+.wisdom-teacher-title a:hover{
+	text-decoration: none;
+	color:#1EABEB;
+}
+.wisdom-teacher-title b{
+	display: inline-block;
+    /*padding-left: 10px;*/
+    border-bottom: 2px solid #00A0E9;
+    box-sizing: border-box;
+    height: 40px;
+}
+.wisdom-contents{
+	width:100%;
+	margin-bottom:10px;
+}
+ 
+.wisdom-teacher-content{
+	width:100%;
+}
+.wisdom-teacher-content .comeclass{
+	float:left;
+	width:50%;
+	box-sizing: border-box;
+}
+.wisdom-teacher-content .comeclass:nth-child(1),.comeclass:nth-child(3),.comeclass:nth-child(5){
+	border-right:1px solid #d7d7d7;
+}
+.wisdom-teacher-content .comeclass:nth-child(1),.comeclass:nth-child(2){
+	padding-bottom: 10px;
+}
+.wisdom-teacher-content .comeclass:nth-child(3),.comeclass:nth-child(4){
+	padding-top:10px;
+	border-top:1px solid #d7d7d7;
+	padding-bottom: 10px;
+	border-bottom:1px solid #d7d7d7;
+}
+.wisdom-teacher-content .comeclass:nth-child(2),.comeclass:nth-child(4),.comeclass:nth-child(6){
+	padding-left:10px;
+}
+.wisdom-teacher-content .comeclass:nth-child(5),.comeclass:nth-child(6){
+	padding-top:10px;
+}
+.wisdom-teacher-content .comeclass div{
+	float:left;
+	width: 309px;
+}
+.wisdom-teacher-content .comeclass img{
+	float:left;
+	margin-right:10px;
+	width:90px;
+}
+.comeclass div h2{
+	font-size:14px;
+	color: #808080;
+}
+.comeclass div p:after{
+	display: block;
+	content:"";
+	clear:both;
+}
+.wisdom-teacher-content:after{
+	display: block;
+	content:"";
+	clear:both;
+}
+.comeclass div p{
+	color:#353535;
+}
+.comeclass div p span{
+	float:right;
+	padding-bottom:3px;
+	color:#ccc;
+	font-size: 12px;
+}
+.wisdom-teacher-content .comeclass .inclassroom{
+	display: inline-block;
+	padding:5px 10px;
+	background:#f39c11;
+	color:#fff;
+	font-size:14px;
+	margin-left:10px;
+	border-radius: 2px;
+}
+.wisdom-teacher-content .comeclass .inclassroom:hover{
+	background:#d38508;
+}
+.wisdom-teacher-content .comeclass .inclassroom a{
+	color:#fff;
+}
+.wisdom-teacher-content .comeclass .inclassroom a:hover{
+	text-decoration: none;
+}
+.wisdom-teacher-content .comeclass div div b{
+	 display:inline-block;
+	 margin-top:5px;
+	 font-size: 12px;
+	 float:right;
+     color:#ccc;
+     font-weight: 400;
+}
+.wisdom-teacher-content p{
+	color:#999;
+}
+.wisdom-teacher-content p b{
+	color:#575757;
+}
+.comeclass .descript-content{
+	height:58px;
+	overflow: hidden;
+}
+.wisdom-teaching{
+	width:100%;
+	display: flex;
+	justify-content: space-around;
+	margin-top:10px;
+	margin-bottom:10px;
+}
+.wisdom-teaching .class-teaching{
+	text-align: center;
+	height:100%;
+}
+.wisdom-teaching .class-teaching img{
+	height:160px;
+	width:160px;
+}
+.wisdom-teaching .class-teaching div{
+	width:160px;
+	height:160px;
+	border-radius: 50%;
+	overflow: hidden;
+	margin-left:10px;
+	margin:0 auto 5px;
+}
+.wisdom-teaching .class-teaching p{
+	margin-top: 20px;
+}
+/*轮播效果图*/
+#wrapper {
+	width: 100%;
+	height: 220px;
+	left: 50%;
+	top: 50%;
+
+}
+#carousel {
+	width:100%;
+	position:relative;
+    display: flex;
+    justify-content: space-around;
+    margin-top:10px;
+}
+
+#carousel ul {
+	list-style: none;
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+
+#carousel li {
+	color: #999;
+	text-align: center;
+	display: block;
+	width: 232px;
+	height: 200px;
+	padding: 0;
+	margin: 6px;
+	float: left;
+	position: relative;
+}			
+.course-name{
+	width:100%;
+}
+#tbl{
+	width:100%;
+	/*margin-top:10px;*/
+	border:transparent;
+	vertical-align: middle;
+	font-size: 12px;
+}
+#tbl .qiugu h4{
+	margin:0;
+}
+#tbl .qiugu a{
+	color:#333;
+	font-size: 12px;
+	font-weight:bold;
+}
+#tbl>thead{
+	background:#f1f1f1;
+	border:1px solid #d7d7d7;
+	border-bottom:0;
+}
+#tbl>thead>tr>th{
+	font-size:15px;
+	padding:5px;
+	font-weight: 400;
+	text-align: center;
+	border:1px solid #e8e8e8;
+}
+#tbl tbody>tr{
+	border:1px solid #e8e8e8;
+}
+#tbl tbody>tr>td{
+	border:1px solid #e8e8e8;
+	vertical-align: middle;
+}
+#tbl tbody>tr>td:first-child{
+	text-align: left;
+	padding:10px 5px;
+}
+#tbl tbody>tr>td:last-child p{
+	line-height:25px;
+}
+#tbl tbody>tr>td:last-child p>a{
+	color:#808080;
+}
+#tbl tbody>tr>td:last-child p>a:hover{
+	text-decoration: none;
+}
+#tbl tbody>tr>td{
+	padding:0 5px;
+	text-align: center;
+}
+#tbl .qiugu{
+	float:left;
+}
+#tbl img{
+	float:left;
+	margin-right:10px;
+}
+.qiugu p{
+	font-size:12px;
+	color:#8c8c8c;
+	margin:10px 0;
+}
+.qiugu div{
+	font-size:12px;
+	color:#ccc;
+	margin-top: 10px;
+}
+.fixed-table-container tbody td .th-inner, .fixed-table-container thead th .th-inner{
+	padding:0 !important;
+}
+.new-article ul.new-article-list{
+    width:270px;
+}
+.checkclass{
+	display: inline-block;
+    float: right;
+    margin-right: 10px;
+    margin-top: 45px;
+    padding: 5px 15px;
+    background: #00A0E9;
+    color: #fff;
+    border-radius: 3px;
+}
+.checkclass:hover{
+	color:#fff;
+	text-decoration: none;
+	background:#108bf1;
+}
+.checked:after{
+	display: block;
+	content:"";
+	clear:both;
+}
+#tbl .checked>img{
+	float: right;
+    width: 95px;
+    margin-top: 40px;
+}
+.yun{
+	margin-bottom: 5px;
+}
+.yun img{
+	width:100%;
+}
+/*.yunketang{
+	height:210px;
+}*/
+.yunketang .kecdesign{
+	float:left;
+	width:265px;
+	overflow: hidden;
+}
+.yunketang .kecdesign div.design{
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	background:rgba(92, 91, 91, 0.36);
+	display: none;
+	z-index: 1;
+}
+.yunketang .kecdesign .yun-img{
+	height:110px;
+	overflow: hidden;
+	position: relative;
+	border-right: 1px solid #ddd;
+}
+.yunketang .kecdesign .yun-img img{
+	width: 110%;
+    max-width: 110%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.yunketang h4.desc{
+	position: absolute;
+    bottom: 15px;
+    padding: 0 10px;
+    font-size: 20px;
+    color: #333;
+    right: 20px;
+    z-index:999;
+}
+.kecdesign p{
+	padding:5px 10px;
+	color:#242424;
+	font-size: 14px;
+}
+.fixed-table-container .fixed-table-body{
+	overflow-x: inherit;
+	overflow-y: inherit;
+}

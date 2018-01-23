@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>试题分析</title>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <link rel="shortcut icon" href="" type="image/x-icon"/>
+        <!--通用样式文件-->  
+        <link href="__PUBLIC__/css/css.css" rel="stylesheet" type="text/css" />		
+        <!--通用样式文件-->
+        <link href="__PUBLIC__/css/common.css" rel="stylesheet" type="text/css" />
+        <!--私有样式文件-->
+        <link href="__PUBLIC__/css/educationwisdom_exam.css" rel="stylesheet" type="text/css" />
+        <!--私有样式文件-->
+        <link href="__PUBLIC__/css/jquery.cxcalendar.css" rel="stylesheet" type="text/css" />
+        <style>
+            .pass-test-list img{width: 20%;}
+        </style>
+    </head>
+    <body>
+        <div class="main examination-page my-pass-test-page">
+            <!--顶部通栏-->
+            <div class="common-top">
+                    <!--页眉-->
+                <include file="Public:head" />
+            </div>
+            <div class="page-content article-content  w1002">
+                <div class="page-content-header">
+                    <p>试题分析</p>
+                </div>
+                <div class="my-pass-test-content">                   
+                        <div class="my-pass-test">                                         
+                            <div class="my-pass-test-header on" data-examid="{$list[0]['id']}">                                                    
+                                <ul> 
+                                    <li>创建日期：{$list[0]['creattime']|date='Y-m-d', ###}</li>
+                                    <li>年级：{$list[0]['type_name']}</li>
+                                    <li>科目：{$list[0]['topic_name']}</li>  
+                                    <li>名称：{$list[0]['name']}</li>                                       
+                                    <li>总分：{:W('ExamTitle/nober',array(2,$list[0]['id']))}分</li>
+                                    <if condition="$type eq 1">                  
+                                        <li>批阅：
+                                            <if condition="$list[0]['yz'] eq 0"> 未完全批阅                      
+                                                <elseif condition="$list[0]['yz'] neq 0" /> 已完全批阅               
+                                            </if>                                                       
+                                        </li>
+                                        <li>得分：{$list[0]['total_fen']}分</li>     
+                                    </if>                                   
+                                </ul>                                                  
+                                <div class="print"></div>
+                            </div>
+                            <div class="my-pass-content" id="content_{$list[0]['id']}">
+                            </div>
+                        </div>
+               
+                </div>          
+            </div>
+        </div>
+    <!--include file="Public:footer" /-->                
+    <!--jquery库-->
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js"></script>
+    <!--SuperSlide核心库-->
+    <script type="text/javascript" src="__PUBLIC__/js/common-focus_exam.js"></script>
+    <!--私有js文件-->
+    <script type="text/javascript" src="__PUBLIC__/js/educationwisdom_exam.js"></script>
+    <!--私有js文件-->
+    <script type="text/javascript" src="__PUBLIC__/js/common.js?v20170318"></script> 
+    <!--私有js文件时间控件-->
+    <script type="text/javascript" src="__PUBLIC__/js/jquery.cxcalendar.min.js"></script>
+    <!--自定义select-->
+    <script type="text/javascript" src="__PUBLIC__/js/select_exam.js"></script>
+    <!--弹窗插件-->
+    <script src="__PUBLIC__/js/layer/layer.js" type="text/javascript"></script>
+</body>
+</html>
+<script type="text/javascript">
+    var img_root = "{:C('ISPOA_ROOT_EXAM')}";
+    function cutstr() {    
+        var exam_id = $('.my-pass-test-header').attr('data-examid');
+        var exam_content = $("#content_" + exam_id);
+        var exam_content_list = $("div[id^='content_" + exam_id + "_']");
+        if (exam_content_list.length == 0) {
+            sendAjax("{:U('form_item')}", "exam_id=" + exam_id+'|'+1, function (data) {
+                exam_content.html(data);
+                var imgsrc = $('.pass-test-list').find("img");              
+                $.each(imgsrc, function (i,item) {
+                    console.log('img:'+item.src);
+                    var fdStart = item.src.indexOf("Uploads");
+                    if(fdStart > 0){
+                        item.src = img_root + item.src.substring(fdStart);
+                        console.log('img2:'+item.src);
+                    }
+                });
+            }, 'html');
+        }
+    };
+    cutstr();
+	
+    $(document).on("click", ".item", function () { 
+        var title_id = $(this).attr('data-id');    
+            layer.open({
+                type: 2,
+                title: '试题分析',
+                shadeClose: true,
+                shade: 0.3,
+                area: ['880px', '620px'],
+                content: "{:U('Exam/popup_item')}&title_id="+title_id                        
+            });
+    });	    
+
+</script>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+		<title>{$title}-<yang:sitename /></title>
+		<meta name="keywords" content="{$keywords}" />
+		<meta name="description" content="{$description}" />
+		<link rel="shortcut icon" href="" type="image/x-icon"/>
+		<link href="__PUBLIC__/css/css_res.css?{$version}" rel="stylesheet" type="text/css" />              
+		<!--通用样式文件-->
+		<link href="__PUBLIC__/css/common.css" rel="stylesheet" type="text/css" />
+		<!--私有样式文件-->
+		<link href="__PUBLIC__/css/educationwisdom_pre.css?{$version}" rel="stylesheet" type="text/css" />
+		<link href="__PUBLIC__/css/Wisdomclassroom_common.css?{$version}" rel="stylesheet" type="text/css" />
+		<!--分页样式文件-->
+                <link href="__PUBLIC__/css/zui.css" rel="stylesheet" type="text/css"/>   
+		<link href="__PUBLIC__/css/jPages.css?{$version}" rel="stylesheet" type="text/css" />                    
+		<script type="text/javascript">
+			var app_path = "__ROOT__";
+			var public_path = "__PUBLIC__";			
+		</script>                    
+	</head>    
+	<body>
+		<div class="main search-page wisdom-ketang">
+			<!--头部-->
+            <div class="common-top" style="margin-top:-75px;">
+            	<include file="Public:head" />
+            </div>				
+			<!--主体内容区域-->
+			<div class="page-content article-content w1002">
+				<div class="class-content">
+					<h2>当前课程：</h2>
+					{$lesson.type_name}-
+					{$lesson.topic_name}-
+					{$lesson.ver_name}-
+					{$lesson.seg_name}-
+					{$lesson.title}-
+					{:W('ExamTitle/name',array($lesson['emp_no']))}
+				</div>
+				<div class="middle-content" style="min-height: 700px;">
+					<div class="page-content-right" style="float:left;">
+						<div class="new-article new-article-content" style="border:0">
+							<div class="new-article-header" style="border:0">教学设计</div>
+							<ul class="design-list" style="width:auto">
+								<volist name="des_list" id="vo">
+									<li>
+										<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$vo.design} </p>  
+										<if condition="$vo.cid eq 0"><span onclick='go_lesson({$vo["res_id"]})'><img src="{$vo.imgs}"> {$vo.res_name}</sapn>                 
+										<elseif condition="$vo.cid eq 1" /><span><img src="{$vo.imgs}">{$vo.form_name} </span>
+										</if>                                                                         
+									</li>
+								</volist>
+							</ul>
+							<div class="classend"><!-- <a onclick='ret({$lesson["id"]})'>下课(退出)</a> --></div>
+						</div>
+					</div>
+					<div class="page-content-left classbegin" style="margin-top:10px">
+					<if condition="$res_id eq ''"> 
+						开始上课
+						<else />
+					<if condition="$res_li.type eq 1">
+					<script type="text/javascript" src="__PUBLIC__/js/flv/flv.min.js"></script>
+						<div class="mainContainer">
+							<input type="hidden" id="videourl" name="videourl" value="">
+							<video name="videoElement" class="centeredVideo" controls autoplay width="100%" height="100%">
+								Your browser is too old which doesn't support HTML5 video.
+							</video>
+							<script>
+								function flv_load(source) {
+									console.log('isSupported: ' + flvjs.isSupported());
+									var mediaDataSource = source;
+									var element = document.getElementsByName('videoElement')[0];
+									if (typeof player !== "undefined") {
+										if (player != null) {
+											player.unload();
+											player.detachMediaElement();
+											player.destroy();
+											player = null;
+										}
+									}
+									player = flvjs.createPlayer(mediaDataSource, {
+										enableWorker: false,
+										lazyLoadMaxDuration: 3 * 60,
+										seekType: 'range',
+									});
+									player.attachMediaElement(element);
+									player.load();
+								}
+
+								function flv_start() {
+									player.play();
+								}
+
+								function flv_pause() {
+									player.pause();
+								}
+
+								function flv_destroy() {
+									player.pause();
+									player.unload();
+									player.detachMediaElement();
+									player.destroy();
+									player = null;
+								}
+								
+								document.addEventListener('DOMContentLoaded', function () {
+									var videourl = eval({$res_li.file});
+									if(videourl) flv_load(videourl);
+								});
+							</script>
+						</div>
+						<else />
+						<iframe id="pdfiframe" name="pdfiframe" src="{:C('ISPOA_RESROOT')}/ResSite/Public/Home/default/js/pdf/web/viewer.htm?file={$res_li.file}" frameborder="0" style="width:100%;height:720px;"></iframe>
+						</if>
+					</if>
+					</div>
+				</div>                            
+				<!-- <div class="classmates">
+					<p>上课人员(20人)</p>
+					<div class="name-list">
+						<div>
+							<span class="name">张三</span>
+							<a>正在上课(退出)</a>
+							<a>申请上课(同意)，</a>
+						</div>
+						<div>
+							<span class="name">张三</span>
+							<a>正在上课(退出)</a>
+							<a>申请上课(同意)，</a>
+						</div>
+						<div>
+							<span class="name">张三</span>
+							<a>正在上课(退出)</a>
+							<a>申请上课(同意)，</a>
+						</div>
+						<div>
+							<span class="name">张三</span>
+							<a>正在上课(退出)</a>
+							<a>申请上课(同意)，</a>
+						</div>
+						<div>
+							<span class="name">张三</span>
+							<a>正在上课(退出)</a>
+							<a>申请上课(同意)，</a>
+						</div>
+						<div>
+							<span class="name">张三</span>
+							<a>正在上课(退出)</a>
+							<a>申请上课(同意)，</a>
+						</div>
+						<div>
+							<span class="name">张三</span>
+							<a>正在上课(退出)</a>
+							<a>申请上课(同意)，</a>
+						</div>
+						<div>
+							<span class="name">张三</span>
+							<a>正在上课(退出)</a>
+							<a>申请上课(同意)，</a>
+						</div>
+					</div>
+				</div> -->
+                                 <div class="comment-box">
+                                    <h3>师生互动(<span class="review-count">0</span>)</h3>					
+                                    <div class="more-comment">
+                                            后面还有<span id="more_count"></span>条信息，<a href="javascript:get_review();">点击查看>></a>
+                                    </div>
+                                    <form action="{:U('add_lesson')}" method="post" class="comment-item" id="reviewForm"  autocomplete="off">
+                                            <a name="reply_" id="reply_"></a>
+                                            <input type="hidden" name="post_id" value="{$res.id}" id="res_id"/>
+                                            <input type="hidden" name="model_id" value="{$res.cid}" />
+                                            <input type="hidden" name="username" value="{$username}" />
+                                            <input type="hidden" name="title" value="{$res.title}"/>
+                                            <input type="hidden" name="review_id" value="0" />
+                                            <span class="avatar"><img src="{:get_avatar(get_cookie('face'),30)}" alt="" id="my_avatar"></span>
+                                            <div class="comment-bd" id="review">
+                                                    <div class="comment-textarea">
+                                                            <textarea name="content" placeholder="我也来说两句..."></textarea>
+                                                    </div>								
+                                            </div>
+                                            <div class="comment-ft">
+                                                    <input type="submit" class="btn_blue" value="互动">
+                                            </div>
+                                    </form>						
+                                </div>
+			</div>
+		</div>
+		<!-- <include file="Public:footer" /--> 
+		<!--jquery库-->
+		<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js"></script>	
+		<!-- 私有js文件-->
+		<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+		<script src="__PUBLIC__/js/news.js" type="text/javascript"></script> 
+                <script src="__PUBLIC__/js/zui.js" type="text/javascript"></script>
+                <script src="__PUBLIC__/js/toast.js" type="text/javascript"></script>
+                <script src="__PUBLIC__/js/toastr.min.js" type="text/javascript"></script>
+                <script src="__PUBLIC__/js/layer/layer.js" type="text/javascript"></script>	 
+                <script type="text/javascript" src="__PUBLIC__/js/review_word.js"></script>       
+                <script type="text/javascript">
+                    var app_path = "__ROOT__";
+                    var public_path = "__PUBLIC__";	                        
+                    var get_review_url = "{:U('getlist_lesson')}";
+                    var post_review_url = "{:U('add_less')}"; 
+                </script>
+	</body>
+</html>
+ <script type="text/javascript" language="javascript">    
+    function go_lesson(id){            
+       window.location.href = "{:U('attendlesson','id='.$id,'&res_id='.'"+id+"')}";         
+    }   
+    function ret(id){            
+        ui_confirm('确定下课吗？', function() {   
+            sendAjax("{:U('ret_less')}", "less_id="+id, function(data) {                   
+                if (data.status) {
+                    ui_alert(data.info, function() {
+                        window.location.href = "{:U('index')}";
+                    });
+                }else{
+                    ui_alert(data.info, function() {
+                        window.location.href = "{:U('index')}";
+                    });
+                }
+            });
+        });         
+    }   
+    $(".classbegin").hover(function(){
+			$(this).css({
+				"background":"#ddd",
+				"transition":"background .5s linear"
+			})
+		},function(){
+			$(this).css({
+				"background":"#f1f1f1",
+			})
+		}) 
+</script>

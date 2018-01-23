@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN">
+ <head>
+  <meta charset="UTF-8">
+  <title>师生风采</title>
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/resource.css">
+    <script type="text/javascript">
+      var app_path = "__ROOT__";
+      var public_path = "__PUBLIC__";     
+    </script>
+ </head>
+ <body>  	
+  	<div class="teach-style">
+  		<div class="style-content">
+                    <if condition="$list_teach neq ''">
+			<header>
+  				<h3>名师风采</h3>
+  			</header>
+  			<div class="teach-lists">
+  				<div class="album-list">
+                                    <volist name="list_teach" id="vo">
+  					<div>
+  						<img src="{$vo.litpic}" onclick='href({$vo.id});' style='cursor:pointer;'>
+  						<p>{$vo.title}</p>
+  					</div>
+                                    </volist>
+  				</div>
+  			</div>                     
+                    </if>
+  		</div>
+  		<div class="style-content">
+                     <if condition="$list_stude neq ''">
+			<header>
+  				<h3>优秀学子</h3>
+  			</header>
+  			<div class="teach-lists">
+  				<div class="album-list">
+                                    
+                                    <volist name="list_stude" id="vo">
+  					<div>
+  						<img src="{$vo.litpic}" onclick='href({$vo.id});' style='cursor:pointer;'>
+  						<p>{$vo.title}</p>
+  					</div>
+                                    </volist>
+  				
+  				</div>
+  			</div>
+                     </if>
+  		</div>
+                <if condition="($list_teach eq '') AND ($list_stude eq '')">                
+                    <div class="style-content">无相关数据</div>
+                </if>
+  	</div>
+ </body>
+</html> 
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" language="javascript">     
+    function href(id){        
+      window.close();       
+      window.parent.location.replace(location.href="{:U('picdetail')}&id="+id);
+    }       
+</script>  

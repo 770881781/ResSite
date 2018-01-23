@@ -1,0 +1,217 @@
+.common-top{
+	position:fixed;width:100%;height:65px;z-index:5000000000;  margin-top:-37px;
+}
+.test-page .page-content:after{
+	display:block;
+	content:"";
+	clear:both;
+}
+.article-content .page-content-header{height:52px;border-bottom:1px solid #d2d2d2;}
+.article-content .page-content-header p{float:left;border-bottom:2px solid #00a2e3;font-size:19px;line-height:40px;margin-top:10px;margin-bottom: 10px}
+ .course-name{
+	width:100%;
+}
+.page-content{
+	position:relative;
+}
+#tbl{
+	width:100%;
+	/*margin-top:10px;*/
+	border:transparent;
+	vertical-align: middle;
+	font-size: 12px;
+}
+#tbl .qiugu h4{
+	margin:0;
+	font-size: 15px;
+}
+#tbl .qiugu a{
+	color:#333;
+	font-size: 12px;
+	font-weight:bold;
+}
+#tbl>thead{
+	background:#f1f1f1;
+	border:1px solid #d7d7d7;
+	border-bottom:0;
+}
+#tbl>thead>tr>th{
+	font-size:15px;
+	padding:5px;
+	font-weight: 400;
+	text-align: center;
+	border:1px solid #e8e8e8;
+}
+#tbl tbody>tr{
+	border:1px solid #e8e8e8;
+}
+#tbl tbody>tr>td{
+	border:1px solid #e8e8e8;
+	vertical-align: middle;
+}
+#tbl tbody>tr>td:first-child{
+	text-align: left;
+	padding:10px 5px;
+}
+#tbl tbody>tr>td:last-child p{
+	line-height:25px;
+}
+#tbl tbody>tr>td:last-child p>a{
+	color:#808080;
+}
+#tbl tbody>tr>td:last-child p>a:hover{
+	text-decoration: none;
+}
+#tbl tbody>tr>td{
+	padding:0 5px;
+	text-align: center;
+}
+#tbl .qiugu{
+	float:left;
+}
+#tbl img{
+	float:left;
+	margin-right:10px;
+}
+.qiugu p{
+	font-size:12px;
+	color:#8c8c8c;
+}
+.qiugu div{
+	font-size:12px;
+	color:#ccc;
+	margin-top: 10px;
+}
+.fixed-table-container tbody td .th-inner, .fixed-table-container thead th .th-inner{
+	padding:0 !important;
+}
+.new-article ul.new-article-list{
+    width:270px;
+}
+.checkclass{
+	display: inline-block;
+    float: right;
+    margin-right: 10px;
+    padding: 7px 20px;
+    background: #00A0E9;
+    color: #fff;
+    border-radius: 5px;
+    margin-top: 9px
+}
+.checkclass:hover{
+	color:#fff;
+	text-decoration: none;
+	background:#108bf1;
+}
+.checked:after{
+	display: block;
+	content:"";
+	clear:both;
+}
+#tbl .checked>img{
+	float: right;
+    width: 95px;
+    margin-top: 40px;
+}
+.yun{
+	margin-bottom: 5px;
+}
+.yun img{
+	width:100%;
+}
+/*.yunketang{
+	height:210px;
+}*/
+.yunketang .kecdesign{
+	float:left;
+	width:265px;
+	overflow: hidden;
+}
+.yunketang .kecdesign div.design{
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	background:rgba(0, 0, 0, 0.36);
+	display: none;
+}
+.yunketang .kecdesign .yun-img{
+	height:212px;
+	overflow: hidden;
+	position: relative;
+}
+.yunketang .kecdesign .yun-img img{
+	width: 110%;
+    max-width: 110%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.yunketang .kecdesign h4{
+	position: absolute;
+    bottom: 0;
+    padding: 0 10px;
+    font-size: 20px;
+    color:#fff;
+    left: 20px;
+}
+.kecdesign p{
+	padding:5px 10px;
+	color:#242424;
+	font-size: 14px;
+}
+.fixed-table-container .fixed-table-body{
+	overflow-x: inherit;
+	overflow-y: inherit;
+}
+/*模态框*/
+.modalbox{
+    width: 100%;
+    min-height: 500px;
+    /* background: rgba(65, 64, 64, 0.76); */
+    border-radius: 5px;
+    /* padding: 20px; */
+    /* position: absolute; */
+    /* top: 130px; */
+    /* left: 130px; */
+    color: #fff;
+}
+.modalbox .modal-tbl{
+	width:100%;
+	border:1px solid #ddd;
+	border-radius: 5px;
+	text-align: center;
+}
+.modalbox .modal-tbl tr{
+	border:1px solid #ddd;
+
+}
+.modalbox .modal-tbl tr td{
+	border:1px solid #ddd;
+	padding:6px 0;
+}
+.modalbox .modal-tbl th{
+	border:1px solid #ddd;
+	padding:6px;
+}
+.close{
+	float:right;
+}
+.close img{
+	width:15px;
+	margin-bottom: 15px;
+	cursor: pointer;
+}
+.allscore{
+	display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #7b7878;
+    color: #fff;
+    margin-bottom: 5px;
+}

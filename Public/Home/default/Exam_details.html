@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>考试首页</title>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+		<meta name="keywords" content=""/>
+		<meta name="description" content=""/>
+		<link rel="shortcut icon" href="" type="image/x-icon"/>
+                <!--通用样式文件-->  
+                <link href="__PUBLIC__/css/css.css" rel="stylesheet" type="text/css" />		
+		<!--通用样式文件-->
+		<link href="__PUBLIC__/css/common.css" rel="stylesheet" type="text/css" />
+		<!--私有样式文件-->
+		<link href="__PUBLIC__/css/educationwisdom_exam.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+		<div class="main search-page examination-information-page">
+                        <!--顶部通栏-->
+			<div class="common-top">
+				<!--页眉-->
+                            <include file="Public:head" />
+			</div>
+			<!--主体内容区域-->
+			<div class="page-content article-content w1002" >
+				<div class="page-content-left">
+					<div class="new-article best-new-pager">
+						<div class="new-article-header">最新试卷</div>
+						<ul class="new-article-list">
+						    <foreach name="new_exam_list" item="vo">
+								<li data-examid="{$vo.id}" class="exam_id">
+									<a href="#">
+										<span>{$vo.name}</span>
+										<span class="time">{$vo.type_name}-{$vo.topic_name}&nbsp;&nbsp;&nbsp;&nbsp;{$vo.creattime|date='Y-m-d',###}</span>
+									</a>
+								</li>	
+						    </foreach>
+						</ul>
+					</div>
+					<div class="new-article hot-pager">
+						<div class="new-article-header">热门试卷</div>
+						<ul class="new-article-list">
+							<foreach name="hot_exam_list" item="vo">
+								<li data-examid="{$vo.id}" class="exam_id">
+									<a href="#">
+										<span>{$vo.name}</span>
+										<span class="time">{$vo.type_name}-{$vo.topic_name}&nbsp;&nbsp;&nbsp;&nbsp;{$vo.creattime|date='Y-m-d',###}</span>
+									</a>
+								</li>	
+							</foreach>
+						</ul>
+					</div>
+				</div>
+				<div class="page-content-right">
+					<div class="page-content-header"><p>考试信息</p></div>
+					<div class="examination-information-content">
+						<div class="examination-information">
+							<foreach name="exam_details" item="vo">
+								<p class="p1">试卷名称：{$vo.name}</p>
+								<p>年级：{$vo.type_name}</p>
+								<p>科目：{$vo.topic_name}</p>
+								<p>卷面总分：{:W('ExamTitle/nober',array(2,$vo['id']))}分</p>
+								<p>已考次数：{$vo.joins}次</p>
+								<p>题目数：{:W('ExamTitle/nober',array(1,$vo['id']))}题</p>
+								<p>关注度：{$vo.hits}次</p>
+								<p>答题时间： <if condition="$vo.totaltime eq 0"> 不限制                       
+                                                                    <elseif condition="$vo.totaltime neq 0" />{$vo.totaltime}分钟                                                                 </if></p>
+								<p>开考日期：<if condition="$vo.begintime eq 0"> 不限制                       
+                                                                    <elseif condition="$vo.begintime neq 0" />{$vo.begintime}                                                                </if></p>
+								<div class="enter-examination-room" data-examid='{$vo.id}' data-type="{$type}">点击进入考场</div>
+							</foreach>
+						</div>
+					</div>
+					<div class="page-content-header"><p>考前必读</p></div>
+					<div class="test-required-content">						
+						<p>·  有的试卷有时间限制，有的没有时间限制。</p>
+						<p>·  有时间限制的，在上方会显示当前考试还剩余时间，而没有限制的，就显示考试已进行多长时间。</p>
+						<p>·  请在规定时间之内提交考卷，超时则不可以提交该考卷</p>
+						<p>·  客观题系统自动评分，但有的试卷设置了，只有管理员批阅后才显示所得分数。</p>
+						<p>·  不可以刷新或新开考卷，否则会禁止考试。</p>
+						<p>·  每份试卷每人只允许考一次。</p>
+						<p>·  填空题多个答案时，请按顺序写上答案，并用英文输入法状态下的逗号隔开以区分。</p>                           			 <p>·  当完成试卷后，可以点击“我要交卷”按钮提交试卷。</p>
+                                                <p>·  如果你已经准备好了，就点击“点击进入考场”按钮,进入考场，立即开始计时。</p>		
+					</div>
+				</div>
+			</div>
+		</div>       
+		<!--nclude file="Public:footer" /-->                
+		<!--jquery库-->
+		<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js"></script>
+		<!--SuperSlide核心库-->
+		<script type="text/javascript" src="__PUBLIC__/js/common-focus_exam.js"></script>
+		<!--私有js文件-->
+		<script type="text/javascript" src="__PUBLIC__/js/educationwisdom_exam.js"></script>
+		<!--私有js文件-->
+		<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+		<!--自定义select-->
+		<script type="text/javascript" src="__PUBLIC__/js/select_exam.js"></script>
+	</body>
+</html>
+<script type="text/javascript">      
+    $(document).on("click", ".enter-examination-room", function () { 
+        var type = $(this).attr('data-type'); 
+//      if(type == 0){            
+//          alert('老师不可进入考试');
+//          return;
+//      }
+        var exam_id = $(this).attr('data-examid'); 
+        sendAjax( "{:U('is_user_exam')}", "exam_id="+exam_id, function(data) {     
+            if(data.status == 1){
+                location.href="{:U('examstar')}&exam_id="+exam_id;
+            }else{
+                alert(data.info);
+                location.href="{:U('index')}";
+            }
+        });        
+    }); 
+    
+    $(document).on("click", ".exam_id", function () { 
+        var exam_id = $(this).attr('data-examid');        
+        location.href="{:U('details')}&exam_id="+exam_id;
+    }); 
+	
+</script>

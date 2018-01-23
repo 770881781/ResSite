@@ -1,0 +1,428 @@
+a:link,a:visited,a:active{
+    text-decoration: none;
+    outline:none;
+}
+a{
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: none;
+}
+*{
+     -webkit-box-sizing:inherit !important;
+    box-sizing:inherit !important;
+}
+body{
+    font-family: 'microsoft yahei' !important;
+    background-color: #E9EDF1 !important;
+} 
+.bootstrap-table .table>thead>tr>th{
+    vertical-align: middle;
+}
+/*课堂搜索*/
+.wisdom-ketang .article-content .ketang{
+    width:750px !important;
+    font-size:15px;
+    margin-left: 0;
+    float:left;
+    margin-right:10px;
+
+}
+.ketang  span{
+    display: inline-block;
+}
+.ketang .first-ci{
+    float:left;
+    width:20%;
+    text-align: right;
+    height:34px;
+    line-height: 34px;
+    margin-right:10px;
+}
+.ketang>div:after{
+    display: block;
+    content:"";
+    clear:both;
+}
+/*.ketang>div.xiaoguo{
+    margin-bottom:10px;
+}*/
+.img_s{
+    height:62px;
+    background:url('../images/page-name-icon.png');
+    background-repeat:no-repeat;
+    background-position:left center;
+}
+.ketang>div>p{
+    float:right;
+    width:78%;
+    text-align: left;
+    margin-bottom:0;
+}
+.xiaoguo p span{
+    border:1px solid #d7d7d7;
+    margin-right:10px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    padding:7px 20px;    
+}
+.xiaoguo p input{
+    width:65%;
+    margin-top: 5px;
+    margin-right:10px;
+}
+.xiaoguo p a img{
+    margin-top:5px;
+}
+/*课堂详情*/
+.ketang .wisdom-title{
+    width:100%;
+    border-bottom:1px solid #d7d7d7;
+    font-size: 16px;
+}
+.wisdom-title h2,.exer-title h2{
+    float:left;
+    border-bottom: 2px solid #00A0E9;
+    padding-bottom:10px;
+    font-size: 16px;
+}
+.wisdom-content,.content-details:after{
+    display: block;
+    content: "";
+    clear:both;
+}
+.wisdom-content{
+    width:100%;
+    padding:10px 0;
+}
+.wisdom-content>img{
+    float:left;
+}
+.content-details{
+    float:left;
+    width:390px;
+    margin-left:20px;
+}
+.content-details p{
+    width:100%;
+    float:left;
+}
+.content-details .classtime{
+    margin-top:10px;
+}
+.content-details .classtime span{
+    float:right;
+    padding:5px 17px;
+    background:#F0C17D;
+    margin-right:20px;
+    color:#fff;
+    cursor: pointer;
+}
+.courseware{
+    width:1060px;
+}
+.exer-title:after{
+     display: block;
+    content:"";
+    clear:both;
+}
+.courseware,.classend:after{
+    display: block;
+    content:"";
+    clear:both;
+}
+.courseware .exer{
+    float:left;
+    width:525px;
+    min-height:300px;
+}
+.courseware .kejian{
+    margin-right:10px;
+}
+.border_{
+    border: 2px solid rgb(229, 134, 75);   
+}
+.exer .exer-title{
+    width:100%;
+    border-bottom: 1px solid #d7d7d7;
+}
+.exer .exer-many{
+    width:100%;
+}
+.exer-many ul{
+    padding-left:10px;
+}
+.exer-many li{
+    padding-left:40px;
+    margin-top:10px;
+    padding-bottom:10px;
+    border-bottom:1px dashed #d5d5d5;
+    background: url(../images/filetype/shijuan.png) left top no-repeat;
+}
+.exer-many .manydetails,.collect,.download{
+    font-size:13px;
+    color:#9a8c8c;
+}
+/*.kejian .exer-many li{
+     background: url(../images/filetype/kejian.png) left top no-repeat;
+}*/
+.exer-many>ul>li>p>span{
+    float:right;
+    cursor: pointer;
+    font-size: 13px;
+    color: #9a8c8c;
+    padding-left: 17px;
+    height: 16px;
+    background: url(../images/collect.png);
+    background-repeat: no-repeat;
+    background-position: left center;
+    line-height: 16px;
+    width: 40px;
+}
+.exer-many>ul>li>p>span.download{
+    background: url(../images/download.png);
+    background-repeat: no-repeat;
+    background-position: left center;
+    margin-left:10px;
+}
+/*正在上课*/
+.middle-content:after{
+    display: block;
+    content:"";
+    clear:both;
+}
+.middle-content{
+    margin-bottom:10px;
+}
+.class-content{
+    padding:0px 10px 10px 0;
+    margin-bottom:10px;
+    font-size:15px;
+    border-bottom:1px solid #d7d7d7;
+    color:#797676;
+}
+.class-content h2{
+    font-weight: 400;
+    color:#575757;
+    font-size:16px;
+    float:left;
+    border-bottom:2px solid #00A0E9;
+    padding-bottom:7px;
+}
+.page-content-left .new-article .design-list{
+    width:298px;
+}
+.page-content-left .new-article .design-list li{
+    padding-left:10px;
+    width:268px;
+    background:none;
+}
+.page-content-left .new-article .design-list li p{
+    line-height:40px;
+}
+.page-content-left .new-article .design-list li span{
+    padding-left:25px;
+    margin-left:10px;
+    padding-bottom:10px;
+}
+.page-content-left .new-article .design-list li span.ppt{
+    background: url(../images/list-ppt.png) no-repeat;
+    background-position: left 7px;
+}
+.page-content-left .new-article .design-list li span.fenxi{
+    background: url(../images/subject-type.png) no-repeat;
+    background-position: left 7px;
+}
+.page-content-left .new-article .design-list li span.videoshow{
+    background: url(../images/video-show.png) no-repeat;
+    background-position: left 8px;
+}
+.classend{
+    margin:10px;
+    text-align: center;
+}
+.classend a{
+    display: inline-block;
+    padding:5px 15px;
+    background:#F39800;
+    color:#fff;
+    font-size: 15px;
+    cursor: pointer;
+ }
+ .classend a:hover{
+    text-decoration: none;
+    color:#fff;
+    background:#D38508;
+ }
+ .classmates{
+    border:1px solid #d7d7d7;
+    border-top:2px solid #00a0e9;
+ }
+ .classmates>p{
+    padding:10px;
+    font-size: 15px;
+    color:#00a0e9;
+    border-bottom:1px solid #d7d7d7;
+ }
+  .classmates .name-list{
+    padding:10px;
+  }
+ .classmates .name-list a{
+    color:#959393;
+ }
+.classmates .name-list>div{
+    float:left;
+  }
+ .classmates .name-list .name{
+    font-size:15px;
+ }
+ .name-list:after{
+    display: block;
+    content:"";
+    clear:both;
+}
+/*备课*/
+.basic-head:after{
+    display: block;
+    content:"";
+    clear:both;
+}
+.basic-head{
+    width:100%;
+    border-bottom:1px solid #d7d7d7;
+    line-height:58px;
+    font-size:16px;
+}
+.basic-head>h2{
+    float:left;   
+    font-size:16px;
+    border-bottom: 2px solid #00a0e9;
+}
+.basic-content{
+    width:100%;
+    font-size:15px;
+    padding-top:10px;
+}
+.basic-content.design{
+    border-bottom: 1px solid #d7d7d7;
+}
+.basic-info:after{
+    display: block;
+    content:"";
+    clear:both;
+}
+.basic-info{   
+    line-height: 30px;
+}
+.basic-info>span{
+    float:left;
+    width:20%;
+    text-align: right;
+}
+.basic-info>p{
+    width:65%;
+    float:left;
+    text-align: left;
+    min-height:30px;
+}
+.basic-info.kcm{
+    margin-bottom:10px;
+}
+
+.basic-info>p span{
+    padding: 5px 10px;
+    border: 1px solid #d7d7d7;
+    margin-right: 10px;
+    cursor: pointer;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+.basic-info>input{
+    vertical-align: middle;
+}
+.pre_a{
+    display: inline-block;
+    background: #00A2E3;
+    color: #fff;
+    padding: 2px 15px;
+    border-radius: 5px;
+    margin-left: 10px;
+    cursor:pointer;
+}
+.basic-info>input.smallimg{
+    width:370px;
+    height:30px;
+}
+.basic-info a.upchuan{
+    display: inline-block;
+    margin-left:10px;
+    background:#FCAD27;
+    padding:1px 15px;
+    color:#fff;
+    cursor:pointer;
+}
+.basic-info a:hover{
+    text-decoration: none;
+}
+.basic-info .aim-content{
+    float:left;
+    width:65%;
+    border:1px solid #A9A9A9;
+    height:100px;
+    overflow: hidden;
+    word-break: break-all;
+}
+.basic-info .aim-content.intro{
+    height:250px;
+    overflow-y:scroll;
+    word-break: break-all;
+}
+.basic-info .the-next{
+    float:right;
+    margin-top:60px;
+    margin-right:50px;
+    padding:5px 15px;
+    background:#00a0e9;
+    color:#fff;
+    cursor: pointer;
+}
+
+/*备课课程设计*/
+.basic-info .first-step{
+    width:20%;
+    font-weight: bold;
+    margin:20px 0;
+}
+.basic-info>select{
+    width:35%;
+}
+.article-content .search.search-lesson input{
+    border: 1px solid #d9d9d9;
+    width: 240px;
+}
+.search-lesson img{
+    width:25px;
+    margin-left:10px;
+    margin-top:5px;
+}
+.manydetails .sctime{
+    min-width:205px;
+    background:0;
+}
+.lf{
+    float:left;
+}
+.lf>img{
+    width:340px;
+    height:250px;
+}
+.lf .wanting{
+    text-align: center;
+    margin-top: 25px;
+}
+.lf .wanting img{
+    width:120px;
+}
+#myupload1{
+    display: inline-block;
+}

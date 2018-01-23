@@ -1,0 +1,44 @@
+<extend name="Layout/phone_base" />
+<block name="css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/phone/publiclist.css">	
+</block>	
+<block name="content">
+    <div class="contents">
+        <div class="title">	
+            <h2>{$title_name}</h2>
+            <div class="goback">
+                <a href="JavaScript:history.back(-1);" style='text-decoration:none;'>返回</a>
+                <img src="__PUBLIC__/images/phone/goback.png">
+            </div>
+        </div>
+        <volist name='list' id='vo'>
+            <div class="icon-content">
+                <if condition="$vo['litpic'] eq ''">  
+                    <div class="icon-back">                      
+                    <!-- <div class="icon-back" style="background-image:url(__PUBLIC__/images/phone/iconBack/Back_pink_03.svg)">                       -->
+                <elseif condition="$vo['litpic'] neq ''" />  
+                    <div class="icon-back" style="background-image:url({$vo['litpic']})">                       
+                </if>	                          
+                        <i class="icon iconfont icon-zixun"></i>
+                    </div>
+                <a href="{:U('news_detail','id='.$vo['id'])}"><h3 class="art_id" data-id="{$vo.id}">{:str2sub($vo['title'],25,$flag = 1,$sp = '...')}</h3></a>
+                <p>
+                    <span>发布时间：{$vo['updatetime']|date='Y-m-d H:i:s', ###}</span>
+                    <span class="fabuzhe">
+                        <i></i>
+                        <if condition="$vo['author'] eq ''"> 管理员                       
+                            <elseif condition="$vo['author'] neq ''" /> {$vo['author']}                        
+                        </if>	
+                    </span>
+                </p>
+            </div>		
+        </volist>
+<!--	<div class="morele">
+			<button>更多&nbsp;&gt;</button>
+		</div>-->
+	</div>
+</block>
+<block name="js">
+    <script>     
+    </script>
+</block>

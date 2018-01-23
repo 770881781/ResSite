@@ -1,0 +1,113 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+        <title></title>
+        <link href="__PUBLIC__/css/analysis.css" rel="stylesheet" type="text/css" />
+        
+    </head>
+    <body>    
+        <div class="hidden" id="data_list">       
+            <input type="hidden" id='class_name' name='class_name' value='全部成绩'>             
+        </div>              
+        <div id="main" style="width: 800px;height:500px;"></div>       
+        
+        <a id='is_pup' data-id="undefined" data-text="全部成绩" class="allscore">全部成绩</a> 
+        <volist name='classname' id='vo'>            
+            <a class="allscore" id='is_pup' data-id="{$vo.class_id}" data-text="{$vo.grade_name}{$vo.class_name}">{$vo.grade_name}{$vo.class_name}</a> 
+        </volist>            
+  
+    </body>
+    <script src="__PUBLIC__/js/jquery-1.8.3.min.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/js/echarts/echarts.js" type="text/javascript"></script> 
+    <script type="text/javascript">          
+    var myChart;
+    function historyMapInit() {        
+        if (myChart != null && myChart != "" && myChart != undefined) {
+            myChart.dispose();
+        }
+        myChart = echarts.init(document.getElementById('main'));
+    }
+        
+    function loadOneColumn(class_id) {     
+        myChart.setOption({
+        title:{
+                text: '成绩统计',              
+                x:'center'
+            },
+            legend:{	    	
+                orient: 'vertical',
+                left: 'left',
+                data:[],
+            },    
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },          
+            series : [
+                {
+                    name: '成绩分布',
+                    type: 'pie',
+                    radius : '70%',
+                    center: ['50%', '55%'],
+                    data:[],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0.3, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        });
+        myChart.showLoading();   
+        var names = [];    
+        var brower = [];
+        var exam_id = {$exam_id}; 
+        var class_name = $('#class_name').val();  
+        $.ajax({
+            type: 'get',
+            url: '{:U("get_data")}&exam_id='+exam_id+"&class_id="+class_id, 
+            dataType: "json",      
+            success: function (result) {          
+                $.each(result.list, function (index, item) {
+                    names.push(item.name);  
+                    brower.push({                    
+                        value: item.value,
+                        name: item.name
+                    });
+                });
+                myChart.hideLoading();   
+                myChart.setOption({                    
+                    legend: {
+                        data: names
+                    }, title:{
+                        text: class_name
+                    },
+                    series: [{
+                        data: brower
+                    }]
+                });
+            },
+            error: function (errorMsg) {            
+                alert("图表请求数据失败!");
+                myChart.hideLoading();
+            }
+        });
+    };
+    
+    historyMapInit();
+    loadOneColumn();  
+  
+    $(document).on("click", "#is_pup", function () {         
+        var class_id = $(this).attr('data-id');
+        var class_name = $(this).attr('data-text');
+        $('#class_name').val(class_name);
+        historyMapInit();
+        loadOneColumn(class_id);
+    }); 
+        
+    </script>
+    
+</html>

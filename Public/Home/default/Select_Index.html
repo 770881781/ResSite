@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>搜索</title>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+		<meta name="keywords" content=""/>
+		<meta name="description" content=""/>
+		<link href="__PUBLIC__/css/css.css?{$version}" rel="stylesheet" type="text/css" />
+		<!--通用样式文件-->
+		<link href="__PUBLIC__/css/common.css?{$version}" rel="stylesheet" type="text/css" />
+		<!--私有样式文件-->
+		<link href="__PUBLIC__/css/educationwisdom.css?{$version}" rel="stylesheet" type="text/css" />
+		<script type="text/javascript">
+			var app_path = "__ROOT__";
+			var public_path = "__PUBLIC__";			
+		</script>
+	</head>
+	<body>
+		<div class="main search-page">
+			<!--顶部通栏-->
+			<div class="common-top" style="margin-top:-75px;">
+				<!--页眉-->
+                            <include file="Public:head" />
+			</div>
+			<!--主体内容区域-->
+			<div class="page-content article-content w1002">
+				<div class="page-content-left" style="    margin-left: 10px;margin-right: 0;width:288px;">
+					<div class="page-content-header"><p>搜索中心</p></div>
+						<form method="post" id="form_adv_search"  method="post" action="{:U('select/index')}">        
+							<div class="search">                                                 
+								<input type="text" id='select' name='select' style="width:197px;">
+								<input type="hidden" id='cid' name='cid' value=''>
+								<div class="customSelectStyle">
+								<div class="customSelectValue">全部</div>
+								<div class="customSelectBtn"></div>
+									<div class="customSelectValueList">
+                                        <p class="listValue" data-delid="">全部</p>
+										<volist name="model_list" id="vo">
+                                            <p class="listValue" data-delid="{$vo.id}">{$vo.name}</p>	
+										</volist>						
+									</div>
+								</div>
+							</div>
+							<div class="search-btn">搜索</div>
+						</form>
+					<div class="new-article">
+						<div class="new-article-header">最新资源</div>
+						<ul class="new-article-list"  style="width:269px;">
+							<volist name="del_list" id="vo">  
+								<li class="res_id" data-resid='{$vo.id}'  style="height:87px;background:url({:$vo['imgs']});background-repeat:no-repeat;background-position:left center;">
+									<a href="#">
+									<span style="margin-bottom: 15px;padding-top:15px;">{:str2sub($vo['title'],16,$flag = 1,$sp = '...')}</span>
+									<span class="time">上传于{$vo.publishtime|date='Y-m-d H:i:s', ###}</span>
+									</a>
+								</li>			
+							</volist>   
+						</ul>
+					</div>
+				</div>
+				<div class="page-content-right" style="width:752px;">
+					<div class="page-content-right-content-lg" style="margin-right: 10px;padding:0 10px;">
+						<div class="page-content-right-content-lg-header">搜索结果</div>
+						<div class="key-world">关键词:{$select}</div>
+							<ul class="list">
+								<volist name="vlist" id="vo"> 
+									<li style="height:90px;">
+                                        <if condition="$vo.litpic eq ''">
+                                            <img src="{$vo['imgs']}" class="upimg"> 
+                                        <else/>
+                                            <img src="{$vo['litpic']}" class="upimg"> 
+                                        </if>
+										<div class="functions" style="width:595px;">
+											<span>
+												<a style="float:left;text-decoration:none;cursor: pointer;" class="res_id" data-resid="{$vo.id}">{$vo['title']}</a> 
+												<p class="download">下载<i>{$vo.downcnt}</i></p>
+												<p class="collect">收藏<i>{$vo.collection}</i></p>
+											</span>
+											<span class="article-details">
+												作者：
+                                                                                                {:W('ExamTitle/name',array($vo['userid']))} &nbsp;   
+												大小：
+												<if condition="$vo.filesize eq 0"> 未知                      
+													<elseif condition="$vo.filesize neq 0" /> {$vo.filesize}                 
+												</if>&nbsp;                                                        
+												上传时间：
+												{$vo.publishtime|date='Y-m-d H:i:s', ###}
+												浏览：
+												{$vo.click}次
+											</span>
+										</div>
+									</li>
+								</volist>   
+							</ul>
+						<div class="paging">
+							<div class="row clearfix">
+							   <div class="col-md-12 column">
+								   <div class="xyh-page">
+									   {$page}
+								   </div>
+							   </div>
+						   </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--jquery库-->
+		<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js"></script>
+		<!--SuperSlide核心库-->
+		<script type="text/javascript" src="__PUBLIC__/js/common-focus.js"></script>
+		<!--私有js文件-->
+		<script type="text/javascript" src="__PUBLIC__/js/educationwisdom.js"></script>
+		<!-- 私有js文件-->
+		<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+		<!--自定义select-->
+		<script type="text/javascript" src="__PUBLIC__/js/select.js"></script>               
+	</body>
+</html>
+ <script type="text/javascript" language="javascript">
+     
+    $(document).on("click", ".res_id", function () { 
+       var resid = $(this).attr('data-resid');      
+       location.href="{:U('Res/show_res')}&resid="+resid;
+    });
+     
+    $('.search-btn').click(function(){
+        $('#form_adv_search').submit();        
+    });     
+    //加入收藏
+    function AddFavorite(sURL, sTitle) {
+        sURL = encodeURI(sURL); 
+	    try{   
+	        window.external.addFavorite(sURL, sTitle);   
+	    }catch(e) {   
+	        try{   
+	            window.sidebar.addPanel(sTitle, sURL, "");   
+	        }catch (e) {   
+	            alert("加入收藏失败，请使用Ctrl+D进行添加,或手动在浏览器里进行设置.");
+	        }   
+	    }
+	}
+	//设为首页
+    function SetHome(url){
+        if (document.all) {
+            document.body.style.behavior='url(#default#homepage)';
+               document.body.setHomePage(url);
+        }else{
+            alert("您好,您的浏览器不支持自动设置页面为首页功能,请您手动在浏览器里设置该页面为首页!");
+        }
+    }
+</script>

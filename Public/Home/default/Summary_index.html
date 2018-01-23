@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>统计</title>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <link href="__PUBLIC__/css/css.css?{$version}" rel="stylesheet" type="text/css" />
+        <!--通用样式文件-->
+        <link href="__PUBLIC__/css/common.css?{$version}" rel="stylesheet" type="text/css" />
+        <!--私有样式文件-->
+        <link href="__PUBLIC__/css/summary.css?{$version}" rel="stylesheet" type="text/css" />
+                
+        <link href="__PUBLIC__/static/bootstrap.min.css" rel="stylesheet">
+        <link href="__PUBLIC__/static/bootstrap-table.min.css" rel="stylesheet">               
+        <style>
+            .fixed-table-pagination .pagination-detail, .fixed-table-pagination div.pagination{        
+                margin-top: 13px;
+                margin-bottom: 15px;
+                margin-right: 50%;
+            }   
+            .fixed-table-container{
+               padding-top: 35px; 
+            }                 
+        </style>
+        <script type="text/javascript">
+            var app_path = "__ROOT__";
+            var public_path = "__PUBLIC__";         
+        </script>
+    </head>
+    <body style="background:#e9edf1;">
+        <div class="main">
+            <!--顶部通栏-->
+            <!--顶部通栏-->
+            <div class="common-top" style="width:100%;height:65px;margin-top:-75px; ">
+                <!--页眉-->
+                <include file="Public:head" />
+            </div>
+            <!--轮播图-->
+            
+            <!--主体内容区域-->
+            <div class="page-content article-content w1002" style="margin-top:75px;">
+                <!-- banner图 -->
+                <div class="sum-banner">
+                    <img src="__PUBLIC__/images/articlebanner.jpg" alt="">
+                </div>
+                 <!-- 访问次数 -->
+                <div class="visits">                    
+                    <!-- logo -->
+                    <div class="v-logo">
+                        <div class="v-logo-img"><img src="{$school_list.logourl}" alt="" style='width:100px;'></div>
+                        <p>{$school_list.name}</p>
+                    </div>
+                    <div class="record record1">
+                        <div class="data">
+                            昨日本校<br>用户访问次数<br>
+                            <span class="school_pop_nober"></span>
+                        </div>
+                    </div>
+                    <div class="record record2">
+                        <div class="data">
+                            当月本校<br>用户访问次数<br>
+                            <span class="school_pop_nober_month"></span>
+                        </div>
+                    </div>
+                    <div class="record record3">
+                        <div class="data">
+                            昨日本校<br>用户访问人数<br>
+                            <span class="school_pop"></span>
+                        </div>
+                    </div>
+                    <div class="record record4 nomargin">
+                        <div class="data">
+                            当月本校<br>用户访问人数<br>
+                            <span class="school_pop_month"></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- 统计项目 -->
+                <div class="counts">
+                    <div class="xiangmu"><h3>统计项目</h3></div>
+                    <ul class="classfiy">
+                        <if condition="$user_type eq 88">  
+                            <li class="border-right">
+                                <a href="#th1"><div class="zgxi">教职工信息</div></a>
+                                <span></span>
+                                <p>分部门统计教职工信息</p>
+                            </li>
+                            <li>
+                                <a href="#th2"><div class="xsxi">学生信息</div></a>
+                                <span></span>
+                                <p>按年级、班级、男女生统计学生人数</p>
+                            </li>
+                            <li class="border-right">
+                                <a href="#th3"><div class="zytj">本校资源统计</div></a>
+                                <span></span>
+                                <p>本校教师发布资源，课程，习题，试卷情况</p>
+                            </li>
+                            <li>
+                                <a href="#th4"><div class="jszy">教师资源统计</div></a>
+                                <span></span>
+                                <p>教师上传资源统计</p>
+                            </li>
+                            <li class="border-right">
+                                <a href="#th5"><div class="jskc">教师课程统计</div></a>
+                                <span></span>
+                                <p>教师发布同步课程、微课情况</p>
+                            </li>
+                            <li>
+                                <a href="#th6"><div class="jssj">教师试卷统计</div></a>
+                                <span></span>
+                                <p>教师发布的试卷、习题清单</p>
+                            </li>                         
+                            <li class="border-right">
+                                <a href="#th8"><div class="jsdl">教师登录日志</div></a>
+                                <span></span>
+                                <p>老师登录情况</p>
+                            </li>
+                        </if>
+                        <li>
+                            <a href="#th7"><div class="xsdl">学生登录日志</div></a>
+                            <span></span>
+                            <p>学生登录情况</p>
+                        </li>                         
+                    </ul>
+                </div>
+                <!-- 统计饼图或者表格 -->
+                <div class="graph">
+                    <if condition="$user_type neq 88">                      
+                        <div id="th1" class="th1">                    
+                        <else/>
+                        <div id="th1" class="th1" style="display:block"> 
+                    </if>
+                        <div id="main" style="width:700px;height:500px;"></div>                   
+                    </div>
+                    <div id="th2" class="th2">
+                        <input id='is_type' type='hidden'>
+                        <volist name="grade_list" id="vo">                            
+                            <div id="main_class_{$vo.id}" ids="{$vo.id}" style="width:510px;height:300px;float:left;border-style:solid;border-width:1px;border-color:#F4D1B1;margin:5px">{$vo.grade_name}</div>    
+                        </volist>
+                    </div>
+                    <div id="th3" class="th3">
+                        <div id="main_1" style="width:520px;height:300px;float:left;border-style:solid;border-width:1px;border-color:#F4D1B1"></div>    
+                        <div id="main_2" style="width:520px;height:300px;float:right;border-style:solid;border-width:1px;border-color:#F4D1B1"></div>  
+                    </div>
+                    <div id="th4" class="th4">
+                        <div class="sum-title"><h3 class="th-title">教师上传统计</h3></div>
+                        <div class="date">
+                            <div>开始日期：<input type="text" id="test5" class='time_st_4' placeholder="请选择"></div>
+                            <div class='t-left'>结束日期：<input type="text" id="test6" class='time_no_4' placeholder="请选择"></div>
+                            <div style="width:5%;"><button type="button" class="btn btn-info jszy">搜索</button></div>
+                            <div style="width:7%;" ><button type="button" onclick='export_detail()' class="btn btn-info">导出</button></div>
+                        </div>
+                        <div class="result">
+                            <table class="rtbl table table-striped" id='table_4'>
+                                <thead>
+                                    <tr>
+                                        <th style="width:10%">姓名</th>
+                                        <th style="width:10%">账号</th>
+                                        <th>共享课件</th>
+                                        <th>校本课件</th>
+                                        <th>私密课件</th>
+                                        <th>共享视频</th>
+                                        <th>校本视频</th>
+                                        <th>私密视频</th>  
+                                        <th>共享习题</th>
+                                        <th>校本习题</th>
+                                        <th>私密习题</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="th5" class="th5">
+                        <div class="sum-title"><h3 class="th-title">教师上传课程统计</h3></div> 
+                        <div class="date">
+                            <div>开始日期：<input type="text" id="test1" class='time_st_5' placeholder="请选择"></div>
+                            <div>结束日期：<input type="text" id="test2" class='time_no_5' placeholder="请选择"></div>
+                            <div style="width:5%;"><button type="button" class="btn btn-info jskc">搜索</button></div>
+                            <div style="width:7%;" ><button type="button" onclick='export_less()' class="btn btn-info">导出</button></div>
+                        </div>
+                        <div class="result">
+                            <table class="rtbl table table-striped" id='table_5'>
+                                <thead>
+                                    <tr>
+                                        <th style="width:12%">姓名</th>
+                                        <th style="width:15%">账号</th>
+                                        <th>共享同步课</th>
+                                        <th>校本同步课</th>
+                                        <th>私密同步课</th>
+                                        <th>共享微课</th>
+                                        <th>校本微课</th>
+                                        <th>私密微课</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="th6" class="th6">
+                        <div class="sum-title"><h3 class="th-title">教师试卷统计</h3></div>
+                        <div class="date">
+                            <div>开始日期：<input type="text" id="test3" class='time_st_6' placeholder="请选择"></div>
+                            <div>结束日期：<input type="text" id="test4" class='time_no_6' placeholder="请选择"></div>
+                            <div style="width:5%;"><button type="button" class="btn btn-info jssj">搜索</button></div>
+                            <div style="width:7%;" ><button type="button" onclick='export_exam()' class="btn btn-info">导出</button></div>
+                        </div>
+                        <div class="result">
+                            <table class="rtbl table table-striped" id='table_6'>
+                                <thead>
+                                    <tr>
+                                        <th style="width:12%">姓名</th>
+                                        <th style="width:15%">账号</th>
+                                        <th>共享习题</th>
+                                        <th>校本习题</th>
+                                        <th>私密习题</th>
+                                        <th>共享试卷</th>
+                                        <th>校本试卷</th>
+                                        <th>私密试卷</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>       
+                    <if condition="$user_type neq 88">  
+                        <div id="th7" class="th7" style="display:block">
+                        <else/>
+                        <div id="th7" class="th7">
+                    </if>
+                        <div class="sum-title"><h3 class="th-title">学生登录日志</h3></div>
+                        <div class="date">
+                            <div class="others">开始日期：<input type="text" id="test7" class='time_st_7' placeholder="请选择"></div>
+                            <div class="others">结束日期：<input type="text" id="test8" class='time_no_7' placeholder="请选择"></div>  
+                            <div class="others">姓名搜索：<input type="text" class='user_name_7' placeholder="输入姓名搜索"></div>
+                            <div style="width:7%;"><button type="button" class="btn btn-info xsdl">搜索</button></div>
+<!--                            <div style="width:5%;" ><button type="button" onclick='export_()' class="btn btn-info">导出</button></div>-->
+                        </div>
+                        <div class="result">
+                            <table class="rtbl table table-striped" id='table_7'>
+                                <thead>
+                                    <tr>
+                                        <th>编号</th>
+                                        <th>姓名</th>    
+                                        <th>账号</th>  
+                                        <th>班级</th>                                                                      
+                                        <th>登录记录</th>                                  
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>         
+                    <div id="th8" class="th8">
+                        <div class="sum-title"><h3 class="th-title">教师登录日志</h3></div>
+                        <div class="date">
+                            <div class="others">开始日期：<input type="text" id="test9" class='time_st_8' placeholder="请选择"></div>
+                            <div class="others">结束日期：<input type="text" id="test10" class='time_no_8' placeholder="请选择"></div>
+                            <div class="others">姓名搜索：<input type="text" class='user_name_8' placeholder="输入姓名搜索"></div>
+                            <div style="width:7%;"><button type="button" class="btn btn-info jsdl">搜索</button></div>
+<!--                            <div style="width:5%;" ><button type="button" onclick='export_()' class="btn btn-info">导出</button></div>-->
+                        </div>
+                        <div class="result">
+                            <table class="rtbl table table-striped" id='table_8'>
+                                <thead>
+                                    <tr>
+                                        <th>编号</th>
+                                        <th>姓名</th>
+                                        <th>账号</th>                                 
+                                        <th>登录记录</th>         
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js"></script>
+    <!--统计图-->
+    <script type="text/javascript" src="__PUBLIC__/js/laydate/laydate.js"></script>
+    <script src="__PUBLIC__/js/echarts/echarts.js" type="text/javascript"></script>   
+    <!--表格-->
+    <script src="__PUBLIC__/static/bootstrap.min.js"></script>
+    <script src="__PUBLIC__/static/bootstrap-table.min.js"></script>    
+    <!--获取访问人数信息-->
+    <script type="text/javascript">       
+        var is_teher = {$user_type};       
+        var myChart; 
+        var myChart_1; 
+        var myChart_2;     
+        var sns_root = "{:C('ISPSNS_ROOT')}";
+        var oa_root = "{:C('ISPOA_ROOT_EXAM')}";      
+        school_log();
+        //导出资源ex表
+        function export_detail() {          
+            var time_st = $('.time_st_4').val();          
+            var time_no = $(".time_no_4").val();     
+            window.open( oa_root+"/oa.php/contact/export_detail?time_st="+time_st+"&time_no="+time_no);
+            return false;
+        }  
+        
+        function export_less() {          
+            var time_st = $('.time_st_5').val();          
+            var time_no = $(".time_no_5").val();     
+            window.open( oa_root+"/oa.php/contact/export_less?time_st="+time_st+"&time_no="+time_no);
+            return false;
+        }
+        
+        function export_exam() {          
+            var time_st = $('.time_st_6').val();          
+            var time_no = $(".time_no_6").val();     
+            window.open( oa_root+"/oa.php/contact/export_exam?time_st="+time_st+"&time_no="+time_no);
+            return false;
+        }
+        
+        function school_log() {                
+            $.ajax({   
+                async : false,
+                url :sns_root+'/index.php?s=/weibo/index/school_log.html',
+                type : "post",
+                dataType :'json',               
+                data : {},
+                timeout : 5000,
+                success : function(data) {
+                    if(data.status== 1){
+                        $('.school_pop').text(data.school_pop); 
+                        $('.school_pop_nober').text(data.school_pop_nober); 
+                        $('.school_pop_month').text(data.school_pop_month); 
+                        $('.school_pop_nober_month').text(data.school_pop_nober_month);                          
+                    }else{
+                        alert(data.info);
+                    }
+                }   
+            });             
+        }        
+    </script>
+    <!--教职工信息-->
+    <script type="text/javascript">          
+        historyMapInit();
+        loadOneColumn();         
+        $('.zgxi').click(function(){
+            historyMapInit();
+            loadOneColumn();  
+        });       
+        function historyMapInit() {        
+            if (myChart != null && myChart != "" && myChart != undefined) {
+                myChart.dispose();
+            }
+            myChart = echarts.init(document.getElementById('main'));
+        }
+        function loadOneColumn() {     
+            myChart.setOption({
+            title:{
+                    text: '教职工信息',              
+                    x:'center'
+                },
+                legend:{            
+                    orient: 'vertical',
+                    left: 'left',
+                    data:[],
+                },    
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },          
+                series : [
+                    {
+                        name: '人数：',
+                        type: 'pie',
+                        radius : '70%',
+                        center: ['50%', '55%'],
+                        data:[],
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0.3, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            });
+            myChart.showLoading();   
+            var names = [];    
+            var brower = [];        
+            var name = '教职工信息';  
+            $.ajax({
+                type: 'get',
+                url: '{:U("get_school_item")}', 
+                dataType: "json",      
+                success: function (result) {          
+                    $.each(result.list, function (index, item) {
+                        names.push(item.name);  
+                        brower.push({                    
+                            value: item.value,
+                            name: item.name
+                        });
+                    });
+                    myChart.hideLoading();   
+                    myChart.setOption({                    
+                        legend: {
+                            data: names
+                        }, title:{
+                            text: name
+                        },
+                        series: [{
+                            data: brower
+                        }]
+                    });
+                },
+                error: function (errorMsg) {            
+                    alert("图表请求数据失败!");
+                    myChart.hideLoading();
+                }
+            });
+        };        
+    </script>
+    <!--学生信息 -->
+    <script type="text/javascript">      
+        $('.xsxi').click(function(){ 
+            var is_type = $('#is_type').val();
+            if(is_type == ''){
+                historyMapInit_grade();
+            }
+            $('#is_type').val(1);
+        }); 
+        function historyMapInit_grade() {  
+            var classlist = $('#th2').find("div"); 
+            $.each(classlist, function (i,item) {
+                var grade_id = $(item).attr('id'); 
+                var id = $(item).attr('ids');             
+                var grade_name = $(item).text();        
+                grade_id_s = echarts.init(document.getElementById(grade_id));
+                loadOneColumn_grade(grade_id_s,id,grade_name);
+            });          
+        }  
+    
+        function loadOneColumn_grade(grade_id_s,id,grade_name) {  
+            grade_id_s.setOption({
+                title:{
+                    text: '',              
+                    x:'center'
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'cross',
+                        crossStyle: {
+                            color: '#999'
+                        }
+                    }
+                },
+                toolbox: {
+                    feature: {
+                        dataView: {show: true, readOnly: false},
+                        magicType: {show: true, type: ['line', 'bar']},
+                        restore: {show: true},
+                        saveAsImage: {show: true}
+                    }
+                },
+                legend: {
+                    data:['男生','女生'],
+                    x:'left'
+                },
+                xAxis: [
+                    {
+                        type: 'category',                    
+                        axisPointer: {
+                            type: 'shadow'
+                        }
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value',
+                        name: '人数',
+                        min: 0,
+                        max: 100,
+                        interval: 10,
+                        axisLabel: {
+                            formatter: '{value} 人'
+                        }
+                    }
+                ],            
+            });          
+            grade_id_s.showLoading();   
+            var class_names = [];    
+            var b_brower = [];
+            var g_brower = [];     
+            $.ajax({
+                type: 'get',
+                url: '{:U("get_class_st")}&grade_id='+id, 
+                dataType: "json",      
+                success: function (result) {          
+                    $.each(result.list, function (index, item) {
+                        class_names.push(item.name);  
+                        b_brower.push(item.b_number);
+                        g_brower.push(item.g_number);
+                    });
+                    var big_nuber = result.bignaber;
+                    var nuber = result.nuber;
+                    grade_id_s.hideLoading();   
+                    grade_id_s.setOption({                    
+                        title:{
+                            text: grade_name
+                        },
+                        xAxis:{
+                          data: class_names,
+                        },
+                        yAxis: [
+                            {
+                                type: 'value',
+                                name: '人数',
+                                min: 0,
+                                max: big_nuber,
+                                interval: nuber,
+                                axisLabel: {
+                                    formatter: '{value} 人'
+                                }
+                            }
+                        ],    
+                        series: [
+                            {
+                                    name:'男生',
+                                    type:'bar',
+                                    data:b_brower
+                            },
+                            {
+                                    name:'女生',
+                                    type:'bar',
+                                    data:g_brower
+                            }
+                        ]
+                    });
+                },
+                error: function (errorMsg) {            
+                    alert("图表请求数据失败!");
+                    grade_id_s.hideLoading();
+                }
+            });       
+        };     
+    </script>
+    <!--本校资源统计 -->
+    <script type="text/javascript">    
+        $('.zytj').click(function(){
+            historyMapInit_s();
+            loadOneColumn_1(); 
+            loadOneColumn_2();  
+        });  
+        function historyMapInit_s() {        
+            if (myChart_1 != null && myChart_1 != "" && myChart_1 != undefined) {
+                myChart.dispose();
+            } 
+            if (myChart_2 != null && myChart_2 != "" && myChart_2 != undefined) {
+                myChart.dispose();
+            }
+            myChart_1 = echarts.init(document.getElementById('main_1'));  
+            myChart_2 = echarts.init(document.getElementById('main_2'));
+        }
+        function loadOneColumn_1() {     
+            myChart_1.setOption({
+            title:{
+                    text: '教学课件',              
+                    x:'center'
+                },
+                legend:{            
+                    orient: 'vertical',
+                    left: 'left',
+                    data:[],
+                },    
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },          
+                series : [
+                    {
+                        name: '数目：',
+                        type: 'pie',
+                        radius : '70%',
+                        center: ['50%', '55%'],
+                        data:[],
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0.3, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            });
+            myChart_1.showLoading();   
+            var names = [];    
+            var brower = [];           
+            $.ajax({
+                type: 'get',
+                url: '{:U("get_res_item")}', 
+                dataType: "json",      
+                success: function (result) {          
+                    $.each(result.list, function (index, item) {
+                        names.push(item.name);  
+                        brower.push({                    
+                            value: item.value,
+                            name: item.name
+                        });
+                    });
+                    myChart_1.hideLoading();   
+                    myChart_1.setOption({                    
+                        legend: {
+                            data: names
+                        },
+                        series: [{
+                            data: brower
+                        }]
+                    });
+                },
+                error: function (errorMsg) {            
+                    alert("图表请求数据失败!");
+                    myChart_1.hideLoading();
+                }
+            });
+        };        
+        function loadOneColumn_2() {     
+            myChart_2.setOption({
+            title:{
+                    text: '智慧课堂',              
+                    x:'center'
+                },
+                legend:{            
+                    orient: 'vertical',
+                    left: 'left',
+                    data:[],
+                },    
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },          
+                series : [
+                    {
+                        name: '人数：',
+                        type: 'pie',
+                        radius : '70%',
+                        center: ['50%', '55%'],
+                        data:[],
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0.3, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            });
+            myChart_2.showLoading();   
+            var names = [];    
+            var brower = [];        
+            $.ajax({
+                type: 'get',
+                url: '{:U("get_wis_item")}', 
+                dataType: "json",      
+                success: function (result) {          
+                    $.each(result.list, function (index, item) {
+                        names.push(item.name);  
+                        brower.push({                    
+                            value: item.value,
+                            name: item.name
+                        });
+                    });
+                    myChart_2.hideLoading();   
+                    myChart_2.setOption({                    
+                        legend: {
+                            data: names
+                        }, 
+                        series: [{
+                            data: brower
+                        }]
+                    });
+                },
+                error: function (errorMsg) {            
+                    alert("图表请求数据失败!");
+                    myChart_2.hideLoading();
+                }
+            });
+        };
+    </script>    
+    <!--教师资源统计 -->
+    <script type="text/javascript">    
+        $('.jszy').click(function(){  
+            var aArray_4 = {};
+            aArray_4['time_st'] = $('.time_st_4').val();          
+            aArray_4['time_no'] = $(".time_no_4").val();       
+            initTable_4(aArray_4);      
+        }); 
+        function initTable_4(aArray_4) {          
+            $('#table_4').bootstrapTable('destroy');        
+            $("#table_4").bootstrapTable({
+            method: "get",
+            url:"{:U('res_list')}",
+            striped:true, 
+            pagination:true,             
+            pageSize:10,       
+            pageNumber:1,            
+            pageList: [5, 10, 15, 20, 25],  
+            sidePagination:"server", 
+            paginationFirstText: "首页",
+            paginationPreText:"上一页",
+            paginationNextText:"下一页",
+            paginationLastText:"尾页",
+            queryParamsType : "undefined",           
+            queryParams:function queryParams(params) {   
+                var param = {                    
+                    page: params.pageNumber,                 
+                    pageSize: params.pageSize,  
+                    time_fw: aArray_4,                                    
+                    account:$('#account').val(),
+                    start: $("#start").val(),
+                    end: $("#end").val(),
+                    sortName: this.sortName,
+                }                
+                return param;
+            },
+            onLoadSuccess: function(res){        
+                var res_list = '';  
+                if(res.total == 0){
+                    $('.fixed-table-loading').text('无相关资源');
+                }                
+                $.each(res.rows, function (i, item) {               
+                    res_list +='<tr><td>'+item.name+'</td><td>'; 
+                        res_list += item.emp_no  +'</td><td>'; 
+                        res_list += item.number_1+'</td><td>';
+                        res_list += item.number_2+'</td><td>'; 
+                        res_list += item.number_3+'</td><td>'; 
+                        res_list += item.number_4+'</td><td>'; 
+                        res_list += item.number_5+'</td><td>'; 
+                        res_list += item.number_6+'</td><td>'; 
+                        res_list += item.number_7+'</td><td>'; 
+                        res_list += item.number_8+'</td><td>';
+                        res_list += item.number_9+'</td></tr>';                              
+                });         
+                $('#table_4 tbody').html(res_list);                
+                $('.pagination-detail').remove();                
+                return false;
+                },
+                onLoadError: function(){  
+                    console.log("加载数据失败");
+                },
+            });
+        }        
+    </script>   
+     <!--教师课程统计 -->
+    <script type="text/javascript">    
+        $('.jskc').click(function(){  
+            var aArray_5 = {};
+            aArray_5['time_st'] = $('.time_st_5').val();          
+            aArray_5['time_no'] = $(".time_no_5").val();       
+            initTable_5(aArray_5);      
+        }); 
+        function initTable_5(aArray_5) {          
+            $('#table_5').bootstrapTable('destroy');        
+            $("#table_5").bootstrapTable({
+            method: "get",
+            url:"{:U('less_list')}",
+            striped:true, 
+            pagination:true,             
+            pageSize:10,       
+            pageNumber:1,            
+            pageList: [5, 10, 15, 20, 25],  
+            sidePagination:"server", 
+            paginationFirstText: "首页",
+            paginationPreText:"上一页",
+            paginationNextText:"下一页",
+            paginationLastText:"尾页",
+            queryParamsType : "undefined",           
+            queryParams:function queryParams(params) {   
+                var param = {                    
+                    page: params.pageNumber,                 
+                    pageSize: params.pageSize,  
+                    time_fw: aArray_5,                                    
+                    account:$('#account').val(),
+                    start: $("#start").val(),
+                    end: $("#end").val(),
+                    sortName: this.sortName,
+                }                
+                return param;
+            },
+            onLoadSuccess: function(res){        
+                var res_list = '';  
+                if(res.total == 0){
+                    $('.fixed-table-loading').text('无相关资源');
+                }                
+                $.each(res.rows, function (i, item) {               
+                    res_list +='<tr><td>'+item.name+'</td><td>'; 
+                        res_list += item.emp_no  +'</td><td>'; 
+                        res_list += item.number_1+'</td><td>';
+                        res_list += item.number_2+'</td><td>'; 
+                        res_list += item.number_3+'</td><td>'; 
+                        res_list += item.number_4+'</td><td>'; 
+                        res_list += item.number_5+'</td><td>';                      
+                        res_list += item.number_6+'</td></tr>';                              
+                });         
+                $('#table_5 tbody').html(res_list);                
+                $('.pagination-detail').remove();                
+                return false;
+            },
+            onLoadError: function(){  
+                console.log("加载数据失败");
+            },
+        });
+    }          
+    </script>   
+    <!--教师试卷统计 -->
+    <script type="text/javascript">    
+        $('.jssj').click(function(){  
+            var aArray_6 = {};
+            aArray_6['time_st'] = $('.time_st_6').val();          
+            aArray_6['time_no'] = $(".time_no_6").val();       
+            initTable_6(aArray_6);      
+        });     
+        function initTable_6(aArray_6) {          
+            $('#table_6').bootstrapTable('destroy');        
+            $("#table_6").bootstrapTable({
+            method: "get",
+            url:"{:U('title_list')}",
+            striped:true, 
+            pagination:true,             
+            pageSize:10,       
+            pageNumber:1,            
+            pageList: [5, 10, 15, 20, 25],  
+            sidePagination:"server", 
+            paginationFirstText: "首页",
+            paginationPreText:"上一页",
+            paginationNextText:"下一页",
+            paginationLastText:"尾页",
+            queryParamsType : "undefined",           
+            queryParams:function queryParams(params) {   
+                var param = {                    
+                    page: params.pageNumber,                 
+                    pageSize: params.pageSize,  
+                    time_fw: aArray_6,                                    
+                    account:$('#account').val(),
+                    start: $("#start").val(),
+                    end: $("#end").val(),
+                    sortName: this.sortName,
+                }                
+                return param;
+            },
+            onLoadSuccess: function(res){        
+                var res_list = '';  
+                if(res.total == 0){
+                    $('.fixed-table-loading').text('无相关资源');
+                }                
+                $.each(res.rows, function (i, item) {               
+                    res_list +='<tr><td>'+item.name+'</td><td>'; 
+                        res_list += item.emp_no  +'</td><td>'; 
+                        res_list += item.number_1+'</td><td>';
+                        res_list += item.number_2+'</td><td>'; 
+                        res_list += item.number_3+'</td><td>'; 
+                        res_list += item.number_4+'</td><td>'; 
+                        res_list += item.number_5+'</td><td>';                      
+                        res_list += item.number_6+'</td></tr>';                              
+                });         
+                $('#table_6 tbody').html(res_list);                
+                $('.pagination-detail').remove();                
+                return false;
+            },
+            onLoadError: function(){  
+                console.log("加载数据失败");
+            },
+        });
+    } 
+    </script>   
+    <!--学生登陆日志 -->
+    <script type="text/javascript">    
+        $('.xsdl').click(function(){  
+            var aArray_7 = {};
+            aArray_7['time_st'] = $('.time_st_7').val();          
+            aArray_7['time_no'] = $(".time_no_7").val();
+            aArray_7['username'] = $(".user_name_7").val();       
+            initTable_7(aArray_7);      
+        }); 
+        
+        function jsdl(){
+            var aArray_7 = {};
+            aArray_7['time_st'] = $('.time_st_7').val();          
+            aArray_7['time_no'] = $(".time_no_7").val();
+            aArray_7['username'] = $(".user_name_7").val();       
+            initTable_7(aArray_7);    
+        }
+        
+        function initTable_7(aArray_7) {          
+            $('#table_7').bootstrapTable('destroy');        
+            $("#table_7").bootstrapTable({
+            method: "get",
+            url:sns_root+'/index.php?s=/weibo/index/student_teache_list.html',
+            striped:true, 
+            pagination:true,             
+            pageSize:10,       
+            pageNumber:1,            
+            pageList: [5, 10, 15, 20, 25],  
+            sidePagination:"server", 
+            paginationFirstText: "首页",
+            paginationPreText:"上一页",
+            paginationNextText:"下一页",
+            paginationLastText:"尾页",
+            queryParamsType : "undefined",           
+            queryParams:function queryParams(params) {   
+                var param = {                    
+                    page: params.pageNumber,                 
+                    pageSize: params.pageSize,  
+                    time_fw: aArray_7, 
+                    type: 0,                                    
+                    account:$('#account').val(),
+                    start: $("#start").val(),
+                    end: $("#end").val(),
+                    sortName: this.sortName,
+                }                
+                return param;
+            },
+            onLoadSuccess: function(res){        
+                var res_list = '';  
+                if(res.total == 0){
+                    $('.fixed-table-loading').text('无相关数据');
+                }                
+                $.each(res.rows, function (i, item) {               
+                        res_list +='<tr><td>'+((item.page-1)*10+i+1)+'</td><td>'; 
+                        res_list += item.nickname  +'</td><td>'; 
+                        res_list += item.username  +'</td><td>';                        
+                        res_list += item.class_names+'</td><td>';                                 
+                        res_list += item.remark+'</td></tr>';                              
+                });         
+                $('#table_7 tbody').html(res_list);                
+                $('.pagination-detail').remove();                
+                return false;
+            },
+            onLoadError: function(){  
+                console.log("加载数据失败");
+            },
+        });
+    }       
+    </script>
+    <!--教师登陆日志 -->
+    <script type="text/javascript">       
+        $('.jsdl').click(function(){  
+            var aArray_8 = {};
+            aArray_8['time_st'] = $('.time_st_8').val();          
+            aArray_8['time_no'] = $(".time_no_8").val();   
+            aArray_8['username'] = $(".user_name_8").val(); 
+            initTable_8(aArray_8);      
+        }); 
+        function initTable_8(aArray_8) {          
+            $('#table_8').bootstrapTable('destroy');        
+            $("#table_8").bootstrapTable({
+            method: "get",
+            url:sns_root+'/index.php?s=/weibo/index/student_teache_list.html',
+            striped:true, 
+            pagination:true,             
+            pageSize:10,       
+            pageNumber:1,            
+            pageList: [5, 10, 15, 20, 25],  
+            sidePagination:"server", 
+            paginationFirstText: "首页",
+            paginationPreText:"上一页",
+            paginationNextText:"下一页",
+            paginationLastText:"尾页",
+            queryParamsType : "undefined",           
+            queryParams:function queryParams(params) {   
+                var param = {                    
+                    page: params.pageNumber,                 
+                    pageSize: params.pageSize,  
+                    time_fw: aArray_8,
+                    type: 1,                                    
+                    account:$('#account').val(),
+                    start: $("#start").val(),
+                    end: $("#end").val(),
+                    sortName: this.sortName,
+                }                
+                return param;
+            },
+            onLoadSuccess: function(res){        
+                var res_list = '';  
+                if(res.total == 0){
+                    $('.fixed-table-loading').text('无相关数据');
+                }                
+                $.each(res.rows, function (i, item) {               
+                    res_list +='<tr><td>'+((item.page-1)*10+i+1)+'</td><td>'; 
+                        res_list += item.nickname  +'</td><td>'; 
+                        res_list += item.username  +'</td><td>';                                                         
+                        res_list += item.remark+'</td></tr>';                              
+                });         
+                $('#table_8 tbody').html(res_list);                
+                $('.pagination-detail').remove();                
+                return false;
+            },
+            onLoadError: function(){  
+                console.log("加载数据失败");
+            },
+        });
+    }        
+    </script>
+    <!--其他 -->
+    <script>
+        $(".classfiy span").mouseover(function(){
+            $(this).siblings('p').css('display','block');
+        })
+        $(".classfiy span").mouseout(function(){
+            $(this).siblings('p').css('display','none');
+        })
+
+        // 日期插件
+        //执行一个laydate实例
+        laydate.render({
+          elem: '#test1'//指定元素
+        });
+        laydate.render({
+          elem: '#test2'//指定元素
+        });
+         laydate.render({
+          elem: '#test3'//指定元素
+        });
+        laydate.render({
+          elem: '#test4'//指定元素
+        });
+        laydate.render({
+          elem: '#test5'//指定元素
+        });
+        laydate.render({
+          elem: '#test6'//指定元素
+        });
+        laydate.render({
+          elem: '#test7'//指定元素
+        });
+        laydate.render({
+          elem: '#test8'//指定元素
+        });
+        laydate.render({
+          elem: '#test9'//指定元素
+        });
+        laydate.render({
+          elem: '#test10'//指定元素
+        });
+        // tab切换效果
+        $('.classfiy li').on('click','a',function(e){
+            e.preventDefault();
+            $($(this).attr('href')).css('display','block').siblings().css('display','none')
+        })
+
+        // logo固定
+        var h=$('.v-logo-img').height();
+        var ih=$('.v-logo-img img').height();
+        $('.v-logo-img img').css('paddingTop',(h-ih)/2+'px');
+        
+        if(is_teher == 0){
+            jsdl();
+        }
+    </script>    
+    </body>
+</html>

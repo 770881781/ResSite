@@ -1,0 +1,21 @@
+<div class="pass-test-list" id="content_{$data.exam_id}_{$data.id}">
+	<div class="mp-header">{$data.chinese_num}、{$data.name} （共{$data.num}题，每题<i>{$data.fen}</i>分，共<i>{$data.fenz}</i>分）</div>
+	<volist name="data.list" id="voo">   
+        <div class="mp-content">
+            <p> {$voo._id_}、
+                <foreach name='voo.question' item="vo">
+                   {$vo}、
+                </foreach>  
+			</p>       
+			<p>答:<input type="text"  style="width:300px;"  name="6|{$voo.title_id}"/></p>
+			<if condition="$data.is_exam eq 1"> 
+				<p class="answer">最佳答案是：{$voo.config}</p>
+			<elseif condition="$vo.filesize neq 1" />  </br>	   				
+			</if>   
+			<if condition="$voo.is_old eq 1">                      
+				<p class="answer">我的答案是：{$voo.title_answer}</p>                    
+			<elseif condition="$voo.is_old neq 1" />  </br>	   				
+			</if>    
+        </div>
+     </volist>
+</div>

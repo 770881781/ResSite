@@ -1,0 +1,108 @@
+*{
+	margin:0;
+	padding:0;
+	text-decoration: none;
+}
+body{
+	font-family:"microsoft yahei", Arial, Helvetica, sans-serif;
+	font-size: 15px;
+}
+.education-content{
+	width:100%;
+}
+.mui-bar .mui-title {
+    right: 40px;
+    left: 40px;
+    display: inline-block;
+    overflow: hidden;
+    width: auto;
+    margin: 0;
+    text-overflow: ellipsis;
+}
+.base-header-background h1 {
+    color: #1ABC9C;
+}
+.mui-title {
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 45px;
+    position: absolute;
+    display: block;
+    width: 100%;
+    margin: 0 -10px;
+    padding: 0;
+    text-align: center;
+}
+.mui-bar a{
+	float:left;
+	width:24px;
+	height:24px;
+	margin-left:11px;
+	margin-top:11px;
+	background:url(../images/phone/arrow-left.png);
+}
+.mui-bar:after{
+    display:block;
+    content:"";
+    clear:both;
+}
+.mui-bar{
+    height:45px;
+}
+.banner{
+    width:100%;
+}
+.banner img{
+    width:100%;
+}
+/*分类*/
+.fenlei-list{
+    width:100%;
+}
+.school-news:after{
+    display:block;
+    content:"";
+    clear:both;
+}
+.fenlei-list .school-news{
+    margin:10px;
+    border-bottom:1px solid #CCCBCF;
+    padding-bottom:10px;
+}
+.school-news img{
+    float:left;
+    margin-right:10px;
+    /*width:25%;*/
+    border-radius: 50%;
+    width:70px;
+    height:70px;
+}
+.school-news div{
+    float:left;
+}
+.school-news h5{
+    font-size: 15px;
+    margin-bottom: 15px;
+    margin-top: 5px;
+}
+.school-news p{
+    font-size:12px;
+    color:#8C8C8C;
+}
+.school-news span{
+    float:right;
+    font-size:25px;
+    color:#8C8C8C;
+    margin-top:4%;
+}
+/*轮播*/
+.swiper-slide {
+    width:100%;
+    color: #fff;
+    font-size: 36px;
+    text-align: center;
+}
+.swiper-slide img{
+    width:100%;
+}
+ 

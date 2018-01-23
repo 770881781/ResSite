@@ -1,0 +1,220 @@
+@charset "utf-8";
+html {
+	min-height: 100%;
+	height: 100%;
+}
+body{
+	margin:0;
+	padding:0;
+	width:100%;
+	font-family:'microsoft yahei' !important;
+	height: 100%;
+	min-height: 100%;
+	background:#f7f7f7 !important;
+}
+p,div,h1,h2,h3,h4,h5{
+	margin:0;
+	padding:0;
+}
+ul,li{
+	list-style: none;
+	float:left;
+    margin:0;
+    padding:0;
+}
+a{
+	color:#333;
+}
+
+a{
+	text-decoration: none;
+}
+a:hover{
+	text-decoration: none;
+}
+/*头部*/
+.mui-bar {
+    position: fixed;
+    z-index: 10;
+    right: 0;
+    left: 0;
+    height: 44px;
+    padding-right: 10px;
+    padding-left: 10px;
+    border-bottom: 0;
+    background-color: #f7f7f7;
+    -webkit-box-shadow: 0 0 1px rgba(0,0,0,.85);
+    box-shadow: 0 0 1px rgba(0,0,0,.85);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+header{
+    display: block;
+}
+.mui-bar-nav {
+    top: 0;
+    -webkit-box-shadow: 0 1px 6px #ccc;
+    box-shadow: 0 1px 6px #ccc;
+}
+.mui-bar .mui-icon {
+    width:24px;
+    height:24px;
+    display: inline-block;
+    text-decoration: none;
+    background:url(../../images/phone/news-arrow.png) no-repeat;
+    position: relative;
+    top: 10px;
+}
+.mui-pull-left {
+    float: left;
+}
+.mui-bar .mui-title {
+    right: 40px;
+    left: 40px;
+    display: inline-block;
+    overflow: hidden;
+    width: auto;
+    margin: 0;
+    text-overflow: ellipsis;
+}
+.mui-title {
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 44px;
+    position: absolute;
+    display: block;
+    width: 100%;
+    margin: 0 -10px;
+    padding: 0;
+    text-align: center;
+    white-space: nowrap;
+    color: #000;
+}
+.search{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.search input{
+	appearance:none;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	height:30px;
+}
+.search .mores{
+	padding-right: 0;
+
+}
+.search .mores a{
+	float:right;
+	padding-right:0;
+	vertical-align: middle;
+	height:30px;
+	line-height:30px;
+	color:#006dff;
+}
+.search .mores i{
+	display: inline-block;
+	width:20px;
+	height:20px;
+	background:url(../../images/phone/arrow-right.png) no-repeat;
+	position: relative;
+	top:5px;
+}
+.cation a{
+    color:#333;
+}
+.cation a:hover{
+    text-decoration: none;
+}
+.buffer:after{
+	display: block;
+	content:"";
+	clear:both;
+}
+.buffer{
+	/*padding:10px 0;*/
+	background:#fff;
+    min-height:100%;
+    /*height:100%;*/
+}
+.kinds .cation .colors{
+	color:#006dff;
+}
+.kinds .cation{
+    padding:0;
+}
+.kinds{
+    background:#fff;
+    padding: 10px 0;
+    border-bottom:1px solid #ddd;
+    text-align: center;
+}
+.list-content p{
+    margin-bottom:0;
+    padding:0;
+    color:#888;
+}
+.list-content .pull-left{
+    float:left;
+     color:#ccc;
+}
+.list-content .pull-right{
+    float:right;
+     color:#ccc;
+}
+.list-content .kinds-list{
+    background:#fff;
+}
+.kinds-list ul
+{
+    background:#fff;
+    margin-bottom: 0;
+}
+.kinds-list ul,li{
+    width:100%;
+}
+.kinds-list .img-responsive{
+   padding:0;
+   max-width:72px;
+   height:60px;
+   line-height:60px;
+}
+.kinds-list .list-content{
+    padding:0;
+    padding-left:10px;
+    width:78%;
+}
+.list-content .newstitle{
+    min-height:40px;
+}
+.kinds-list li{
+    border-bottom:1px solid #ddd;
+    padding:10px 0;
+}
+.kinds-list{
+    display: none;
+}
+.kinds-list.on{
+    display: block;
+}
+.onloading{
+    display: inline-block;
+    width: 100%;
+    height: 30px;
+    background: #E1E1E1;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 30px;
+    margin-bottom: 15px;
+    margin-top: 10px;
+}
+@media (min-width:400px){
+    .kinds-list .list-content{
+        width:81%;
+    }
+}
+@media (max-width:320px){
+    .kinds-list .list-content{
+        width:75%;
+    }
+}

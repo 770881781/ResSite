@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>考试首页</title>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+		<meta name="keywords" content=""/>
+		<meta name="description" content=""/>
+		<link rel="shortcut icon" href="" type="image/x-icon"/>
+		<!--通用样式文件-->  
+		<link href="__PUBLIC__/css/css.css" rel="stylesheet" type="text/css" />		
+		<!--通用样式文件-->
+		<link href="__PUBLIC__/css/common.css" rel="stylesheet" type="text/css" />
+		<!--私有样式文件-->
+		<link href="__PUBLIC__/css/educationwisdom_exam.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+		<div class="main  test-page">
+			<!--顶部通栏-->
+			<div class="common-top" style="margin-top:-38px;">
+				<!--页眉-->
+                            <include file="Public:head" />
+			</div>
+			<!--主体内容区域-->
+			<div class="page-content w1002">
+				<div class="test-page-content-left">
+					<div class="test-swiper-banner">
+						<div class="bd">
+							<ul>
+							 	<volist name="model_abc" id="vo">
+                             	   <li data-details = "{$vo.title}"><a href="{$vo.url}"><img src="{$vo.content}"/></a></li>
+                         	   </volist>
+							</ul>
+						</div>
+						<p></p>
+						<!--分页器-->
+						<div class="hd">
+							<ul></ul>
+						</div>
+					</div>
+					<!--本校试卷-->
+					<div class="my-school-paper">
+						<div class="div-header">本校试卷<a href="javascript:void(0);" class='type_topic_id' style='float:right;color: #b4b4b4;margin-right:10px;'>更多</a></div>
+						<div class="my-school-paper-content">
+							<ul>
+								<volist name="school_exam_list" id="vo">    
+									<li data-examid="{$vo['id']}" class="exam_id">
+										<a href="javascript:void(0)">
+											<p class="p1">【{$vo.type_name}{$vo.topic_name}】{$vo.name}<i class="xz">答题<em>{$vo.joins}</em></i><i class="sc">关注<em>{$vo.hits}</em></i></p>
+											<p class="p2">
+												作者：
+													<if condition="$vo.school_name eq ''"> 管理员                       
+													<elseif condition="$vo.school_name neq ''" />{$vo.school_name}                          
+													</if>&nbsp;
+												题目:{:W('ExamTitle/nober',array(1,$vo['id']))}题&nbsp;&nbsp;
+												试卷总分:{:W('ExamTitle/nober',array(2,$vo['id']))}分&nbsp;&nbsp;
+												答题时间: 
+													<if condition="$vo.totaltime eq 0"> 不限制                       
+													<elseif condition="$vo.totaltime neq 0" />{$vo.totaltime}分钟
+													</if>&nbsp;&nbsp;
+												发布日期:{$vo.creattime|date='Y-m-d H:i:s', ###}
+											</p>
+										</a>
+									</li>	
+								</volist>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="test-page-content-right">
+					<!--考试资源-->
+					<div class="test-consulting">
+						<div class="div-header">考试资讯</div>
+						<div class="test-consulting-recommend">
+                            <div class="test-consulting-recommend-title"><h3>{$art_list.title}</h3></div>
+                            <div class="test-consulting-recommend-details">
+                                {:str2sub($art_list['content'],48,$flag = 1,$sp = '....')}                             
+                                <a href="javascript:void(0)" class="art_id" data-id="{$art_list.id}">【详情】</a>
+                            </div>
+                        </div>
+                        <ul>
+                            <volist name="art_list_three" id="vo">
+                                <li class="art_id" data-id="{$vo.id}">{:str2sub($vo['title'],16,$flag = 1,$sp = '....')}<i>{$vo.updatetime|date='Y-m-d', ###}</i></li>
+                            </volist>
+                        </ul>
+                        <div class="test-consulting-btn">                            
+                            <a href="javascript:void(0)" class="my-pager">我的试卷</a>
+                            <if condition="$type eq 0">
+                                <a href="{:U('analysis')}" class="pager-fenxi">试卷分析</a>
+                            <else/>
+                                <a href="javascript:void(0)" class="my-wrong-topic">我的错题</a> 
+                            </if>                          
+                        </div>
+                    </div>
+                    <!--最新资源-->
+                    <div class="new-consulting">
+                        <div class="div-header">最新试卷</div>
+                        <ul>
+                            <volist name="new_exam_list" id="vo">    
+                                <li data-examid="{$vo['id']}" class="exam_id"><a href="javascript:void(0)">【{$vo.type_name}{$vo.topic_name}】{$vo.name}<i> {$vo.hits}次</i></a></li>
+                            </volist>	
+                        </ul>
+                    </div>
+                </div>
+                <div class="grade-page w1002">
+                    <div class="grade-page-header">
+                        <ul>
+                            <foreach name="exam_type_list" item="vo" > 
+                                <li  class="examtype_id" data-typeid='{$vo.id}' id='type_id_{$vo.id}'>{$vo.type_name}</li>
+                            </foreach>	                                                   
+                        </ul>
+                    </div>
+                    <foreach name="value_list_exam"  key="key_a" item="vo_list"> 
+                        <div class="grade-page-content">
+                            <div class="grade-page-content-c"><br>                                     
+                                <div class="subject-type">
+                                    <foreach name="vo_list" item="vo_topic" >
+                                        <div class="subject-type-header" >{:substr($vo_topic,strpos($vo_topic,'|')+1)}<a href="javascript:void(0);" data-topicid="{$key_a}|{:strstr($vo_topic, '|', ture)}" class="type_topic_id">更多</a>
+                                        </div>                                          
+                                        <div class="subject-type-content">
+                                            <ul class="topic_exam_{$key_a}_{:strstr($vo_topic, '|', ture)}">                         
+                                            </ul>
+                                        </div>
+                                    </foreach> 
+                                </div>                              					
+                            </div>
+                        </div>                                
+                    </foreach> 
+                </div>
+            </div>
+        </div>              
+        <!--<include file="Public:footer" /-->                
+        <!--jquery库-->
+        <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js"></script>
+        <!--SuperSlide核心库-->
+        <script type="text/javascript" src="__PUBLIC__/js/common-focus_exam.js"></script>
+        <!--私有js文件-->
+        <script type="text/javascript" src="__PUBLIC__/js/educationwisdom_exam.js"></script>
+        <!--私有js文件-->
+        <script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+        <!--自定义select-->
+        <script type="text/javascript" src="__PUBLIC__/js/select_exam.js"></script>
+    </body>
+</html>
+<script type="text/javascript">
+   
+    $(document).on("click", ".art_id", function () { 
+       var resid = $(this).attr('data-id');          
+       location.href="{:U('Article/details')}&id="+resid;
+    }); 
+    
+    $(document).ready(function () {
+        type();
+    });
+
+    $(document).on("click", ".examtype_id", function () {
+        var type_id = $(this).attr('data-typeid');
+        type(type_id);
+    });
+    
+    function type(type_id){
+        if(!(type_id)) {
+            type_id = 1; //默认显示小学的试卷
+            $('#type_id_1').attr('class','on li examtype_id'); 
+        }
+        sendAjax( "{:U('get_topic_id')}", "type_id="+type_id, function(data) {   
+            if(data.status == 1){
+                exam_list(type_id,data.topic_id);
+            }
+        });
+    }    
+    
+    function exam_list(type_id,exam_topic_id){           
+        $.each(exam_topic_id, function (i, items) {               
+            sendAjax( "{:U('get_exam_list')}", "topic_id="+items+'|'+type_id, function(data) {   
+                if(data.status == 1){  
+                    var _html = '';                
+                    $.each(data.exam_list, function (i, item) {                         
+                        var exam_type_topic_id = '.'+'topic_'+'exam_'+item.schooltype_id+'_'+item.topic_id;                     
+                        _html += '<li><a href="javascript:void(0)">';
+                        _html += '<p data-examid="' + item.id + '" class="exam_id">';
+                        _html += '【' + item.type_name + item.topic_name + '】' + item.name;
+                        _html += '</p><i>' + date('Y-m-d', item.creattime) + '</i></a></li>';
+                        $(exam_type_topic_id).html(_html);
+                    });
+                }
+            }); 
+        });         
+    } 
+    //我的试卷
+    $(document).on("click", ".my-pager", function () {              
+       location.href="{:U('myresnew')}";
+    });  
+    //我的错题
+    $(document).on("click", ".my-wrong-topic", function () {              
+       location.href="{:U('myresold')}";
+    });     
+    //试卷详情
+    $(document).on("click", ".exam_id", function () { 
+       var exam_id = $(this).attr('data-examid');        
+       location.href="{:U('details')}&exam_id="+exam_id;
+    }); 
+    //更多试卷
+    $(document).on("click", ".type_topic_id", function () { 
+       var type_topic_id = $(this).attr('data-topicid');        
+       location.href="{:U('more')}&type_topic_id="+type_topic_id;
+    }); 
+</script>

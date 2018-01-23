@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>考试首页</title>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+		<meta name="keywords" content=""/>
+		<meta name="description" content=""/>
+		<link rel="shortcut icon" href="" type="image/x-icon"/>
+		<!--通用样式文件-->  
+		<link href="__PUBLIC__/css/css.css" rel="stylesheet" type="text/css" />		
+		<!--通用样式文件-->
+		<link href="__PUBLIC__/css/common.css" rel="stylesheet" type="text/css" />
+		<!--私有样式文件-->
+		<link href="__PUBLIC__/css/educationwisdom_exam.css" rel="stylesheet" type="text/css" />
+		<!--私有样式文件-->
+		<link href="__PUBLIC__/css/jquery.cxcalendar.css" rel="stylesheet" type="text/css" />
+		<style>
+		   .my-pass-content img{width: 20%;}
+		</style>
+	</head>
+	<body>
+		<div class="main examination-page my-pass-test-page perform-test-page">
+                        <!--顶部通栏-->
+			<div class="common-top">
+				<!--页眉-->
+                            <include file="Public:head" />
+			</div>
+			<div class="page-content article-content w1002">
+                                                           
+				<div class="page-content-header"><p>{$list.name}</p></div>
+				<div class="my-pass-test-content">
+					<div class="my-pass-test">
+						<div class="perform-test-page-header">
+                            <input type="hidden" id='totaltime' name='totaltime' value='{$list["totaltime"]}'>  
+                            <input type="hidden" id='type' name='type' value='{$type}'>
+							<div class="test-total-num">
+								试卷总分:<i>{:W('ExamTitle/nober',array(2,$list['id']))}分</i>&nbsp;&nbsp;&nbsp;
+								限制时长:
+								<i>
+									<if condition="$list['totaltime'] eq 0"> 不限制                       
+		                                <elseif condition="$list['totaltime'] neq 0" />{$list['totaltime']}分钟                                               
+	                         	 	</if>
+                         	 	</i>
+                     	 	</div>
+							<div class="test-begin-time">{$time|date='Y-m-d H:i:s', ###}</i></div>
+							<div id="times" style="color:blue;line-height:30px;"> 距离交卷还有<a style="font-weight:bold;color:red;border:green solid 1px;padding:4px;">0秒</a></div>
+						</div>
+						<form method="post" id="form_adv_search"  method="post" action="{:U('is_exam')}">        
+							<div class="my-pass-content" id="content_{$exam_id}"></div>
+							<if condition="$type eq 1">
+                       			<div class="test-btn">我要交卷</div>
+                            </if>
+                            <input id="exam_id" type="text" name='exam_id' value="{$exam_id}" class="hidden"> 
+						</form> 
+					</div>
+				</div>
+			</div>
+		</div>             
+		<!--jquery库-->
+		<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js"></script>
+		<!--SuperSlide核心库-->
+		<script type="text/javascript" src="__PUBLIC__/js/common-focus_exam.js"></script>
+		<!--私有js文件-->
+		<script type="text/javascript" src="__PUBLIC__/js/educationwisdom_exam.js"></script>
+		<!--私有js文件-->
+		<script type="text/javascript" src="__PUBLIC__/js/common.js"></script> 
+		<!--私有js文件时间控件-->
+		<script type="text/javascript" src="__PUBLIC__/js/jquery.cxcalendar.min.js"></script>
+		<!--自定义select-->
+		<script type="text/javascript" src="__PUBLIC__/js/select_exam.js"></script>
+       	<!-- 插件 -->
+		<script type="text/javascript" src="__PUBLIC__/js/layer.js"></script>
+	</body>
+</html>
+<script type="text/javascript">
+    var img_root = "{:C('ISPOA_ROOT_EXAM')}";
+    $(document).ready(function(){              
+        var exam_id = $('#exam_id').val();        
+        var exam_content = $("#content_" + exam_id);
+        var exam_content_list = $("div[id^='content_" + exam_id + "_']");
+        if (exam_content_list.length == 0) {
+            sendAjax("{:U('form')}", "exam_id=" + exam_id+'|'+2, function (data) {
+                exam_content.html(data);
+                var imgsrc = $('.my-pass-content').find("img");               
+                $.each(imgsrc, function (i,item) {
+                    console.log('img:'+item.src);
+                    var fdStart = item.src.indexOf("Uploads");
+                    if(fdStart > 0){
+                        item.src = img_root + item.src.substring(fdStart);
+                        console.log('img2:'+item.src);
+                    }
+                });	  
+            }, 'html');            
+        }           
+    });	  
+    
+   
+ 
+//    mktime=0
+//    function Count_Down(){   
+//        minutes = Math.floor(mktime/60);   
+//        seconds = Math.floor(mktime%60);   
+//        msg = "考试已进行 <a style='font-weight:bold;color:red;border:green solid 1px;padding:4px;'>"+minutes+"分"+seconds+"秒</a>";   
+//        document.getElementById('times').innerHTML=msg;
+//        mktime++;   
+//    }
+//    times = setInterval("Count_Down()",1000);   
+//    
+    var totaltime = $('#totaltime').val();
+    if(totaltime != 0){
+        var maxtime = totaltime*60;//一个小时，按秒计算!   
+        function CountDown(){   
+            if(maxtime>0){   
+            minutes = Math.floor(maxtime/60);   
+            seconds = Math.floor(maxtime%60);   
+            msg = "距离交卷还有 <a style='font-weight:bold;color:red;border:green solid 1px;padding:4px;'>"+minutes+"分"+seconds+"秒</a>";   
+            document.getElementById('times').innerHTML=msg;   
+            if(maxtime == 3*60) alert('注意，还有3分钟!');--maxtime;   
+            }else{  alert("时间到，考试结束!"); 
+                if($('#type') == 1){
+                	document.getElementById("form_adv_search").submit();  
+                }
+            }
+        }   
+        timer = setInterval("CountDown()",1000); 
+    }   
+    
+    $('.test-btn').click(function(){
+         $('#form_adv_search').submit(); 
+    });   
+   
+
+</script>

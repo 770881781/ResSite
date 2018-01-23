@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+		<title>{$title}-<yang:sitename /></title>
+		<meta name="keywords" content="{$keywords}" />
+		<meta name="description" content="{$description}" />
+		<link rel="shortcut icon" href="" type="image/x-icon"/>
+		<link href="__PUBLIC__/css/css.css?{$version}" rel="stylesheet" type="text/css" />
+		<!--通用样式文件-->
+		<link href="__PUBLIC__/css/common.css" rel="stylesheet" type="text/css" />
+		<!--私有样式文件-->
+		<link href="__PUBLIC__/css/educationwisdom.css?{$version}" rel="stylesheet" type="text/css" />
+		<link href="__PUBLIC__/css/Wisdomclassroom.css?{$version}" rel="stylesheet" type="text/css" />
+		<link href="__PUBLIC__/css/Wisdomclassroom_common.css?{$version}" rel="stylesheet" type="text/css" />
+		<!--分页样式文件-->
+		<link href="__PUBLIC__/css/jPages.css?{$version}" rel="stylesheet" type="text/css" />
+		<!--jquery库-->
+		<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript">
+			var app_path = "__ROOT__";
+			var public_path = "__PUBLIC__";			
+		</script>    
+		<script type="text/javascript">
+		$(function () {
+			//缩略图上传
+			var type = 0;
+			var litpic_tip = $(".litpic_tip");
+			var btn = $(".up-picture-btn span");
+			$("#fileupload").wrap("<form id='myupload' action='{:U('upload')}' method='post' style='display:inline-block;' enctype='multipart/form-data'></form>");
+			$("#myupload").append('<input type="hidden" name="sfile" value="abc1" />')
+			$("#fileupload").change(function(){
+				if($("#fileupload").val() == "") return;
+				$("#myupload").ajaxSubmit({
+					dataType:  'json',
+					beforeSend: function() {
+						$('#litpic_show').empty();
+						btn.html("上传中...");
+					},
+					success: function(data) {
+						if(data.state == 'SUCCESS'){
+							var fileSize = parseFloat(data.info[0].size/1024).toFixed(2);
+							litpic_tip.html(""+ data.info[0].name +" 上传成功("+ fileSize +"k)");
+							var img = data.info[0].url;//原图
+							if (type == 2) {
+								$('#litpic_show').html("<img src='"+img+"' width='88'>");
+							}
+							$("#litpic").val(img);
+                                                        //$('#myupload').remove();
+						}else {
+							litpic_tip.html(data.state);		
+						}			
+							btn.html("添加图片");
+
+					},
+					error:function(xhr){
+						btn.html("上传失败");
+						litpic_tip.html(xhr);
+					}
+				});
+			});
+			
+			$('#BrowerPicture').click(function(){
+				layer.open({
+					type: 2,
+					title: '图片浏览',
+					shadeClose: true,
+					shade: 0.5,
+					area: ['700px', '550px'],
+					content: "{:U('Public/browseFile', array('stype' => 'ad'))}"
+				});
+			});	
+                        
+		});
+		
+		function selectFile(sfile) {
+			layer.msg('选择文件成功')
+			$("#litpic").val(sfile);
+			//$('#litpic_show').html("<img src='"+sfile+"' width='120'>");
+		}
+	</script>
+	</head>    
+	<body>
+		<div class="main search-page wisdom-ketang">
+			<!--头部-->
+            <div class="common-top" style="margin-top:-75px;">
+            	<include file="Public:head" />
+            </div>				
+			<!--主体内容区域-->
+			<div class="page-content article-content w1002">
+				<div class="basic-head">
+					<h2>课程修改：{$lesson.title}</h2>
+			    </div>
+			    <div class="basic-content">
+			    	<div class="basic-info">
+			    		<span>学段：</span>
+			    		<p>
+							<volist name='type_list' id='vo'>
+								<span onclick="topic_list({$vo['id']})" id="type_{$vo['id']}">{$vo.type_name}</span>						 	
+							</volist>
+						</p>
+			    	</div>
+			    	<div class="basic-info">
+						<span>科目：</span>
+						<p id='eq_topic_id'>
+							 <span style="border: 2px solid rgb(229, 134, 75);">{$lesson.topic_name}</span>																   
+						</p>
+			    	</div>
+			    	<div class="basic-info">
+						<span>版本：</span>
+						<p id='eq_ver_id'>
+							<span style="border: 2px solid rgb(229, 134, 75);">{$lesson.ver_name}</span>                                     
+						</p>
+			    	</div>
+			    	<div class="basic-info">
+			    		<span>年级段：</span>
+			    		<p id='eq_seg_id'>
+							<span style="border: 2px solid rgb(229, 134, 75);">{$lesson.seg_name}</span>                                         
+						</p>
+			    	</div>
+                                <form method='post' id="form_do" name="form_do" action="{:U('update_')}"> 
+                                <input type="hidden" name="type_id" id="type_id" value="{$lesson.type_id}">
+                                <input type="hidden" name="id" value="{$lesson.id}">
+                                <input type="hidden" name="topic_id" id="topic_id" value="{$lesson.topic_id}">
+                                <input type="hidden" name="ver_id" id="ver_id" value="{$lesson.ver_id}">
+                                <input type="hidden" name="seg_id" id="seg_id" value="{$lesson.seg_id}">
+                                <input type="hidden" id="jur" value="{$lesson.jur}">
+			    	<div class="basic-info kcm">
+			    		<span>课程名称：</span>
+			    		<input type="" name="title" class="smallimg" id="title" value='{$lesson.title}'>
+			    	</div>
+			    	<div class="basic-info kcm">
+			    		<span>是否共享：</span>
+			    		<input type="radio" name="jur" value='3' id="jur_3">公开&nbsp;&nbsp;&nbsp;
+			    		<input type="radio" name="jur" value='2' id="jur_2">本校公开&nbsp;&nbsp;&nbsp;
+			    		<input type="radio" name="jur" value='1' id="jur_1">个人私密
+			    	</div>
+			    	<div class="basic-info kcm">
+			    		<span>微缩图：</span>
+			    		<input type="" name="litpic" class="smallimg" id="litpic" value='{$lesson.litpic}'>                                     
+                                        <input id="fileupload" type="file" name="mypic" class='hidden'>                                        
+                                        <a class='pre_a' onclick="document.getElementById('fileupload').click();return false;">选择图片</a>
+			    	</div>
+			    	<div class="basic-info kcm">
+			    		<span>课程目标：</span>
+			    		<textarea class="aim-content" name="remark" id="remark">{$lesson.remark}</textarea>
+			    	</div>
+			    	<div class="basic-info">
+			    		<span>课程说明：</span>
+			    		<textarea class="aim-content intro" name="content" id="content">{$lesson.content}</textarea>
+			    	</div>
+                                
+			    	<div class="basic-info">
+			    		<a onclick='sub()' class="the-next">修改完成</a>
+			    	</div>
+                                </form>    
+			    </div>
+			</div>
+		</div>
+		<!-- <include file="Public:footer" /--> 			
+		<!-- 私有js文件-->
+		<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>		
+		<!--上传图片Js-->
+		<script type="text/javascript" src="__PUBLIC__/js/jquery.form.min.js"></script>
+	</body>        
+</html>
+ <script type="text/javascript" language="javascript">        
+    $(document).ready(function(){ 
+       var type_id = $('#type_id').val();
+       var jur = $('#jur').val();
+       var type_ = '#'+'type_'+type_id;
+       var jur_ = '#'+'jur_'+jur;
+       $(type_).css("border","2px solid #E5864B"); 
+       $(jur_).attr('checked','true');        
+    }); 
+    
+    function sub(){
+       var sub_type_id = $('#type_id').val();
+       var sub_topic_id = $('#topic_id').val();       
+       var title = $('#title').val(); 
+       var litpic = $('#litpic').val();
+       var remark = $('#remark').val(); 
+       var content = $('#content').val();
+       if(sub_type_id == '' || sub_topic_id == '' || title==''||litpic == '' || remark == ''|| content == ''){
+           alert('填写信息不完整,无法提交');
+           return false;
+       }else{
+           $('#form_do').submit();
+       }      
+    }; 
+    
+    function topic_list(id){
+        $('#type_id').val(id);
+        sendAjax( "{:U('get_topic_list')}", "type_id="+id, function(data) {
+            $("#eq_topic_id span").remove();//先清除数据
+            $("#eq_ver_id span").remove();//先清除数据  
+            $("#eq_seg_id span").remove();//先清除数据            
+            $("#eq_ver_id").append("<span>选择版本</span>");//赋值
+            $("#eq_seg_id").append("<span>选择年级</span>");//赋值            
+            $.each(data.items, function (i, item) {                                       
+                $("#eq_topic_id").append("<span onclick='ver_list("+item.id+")'>"+item.name+"</span>");//赋值                	
+            });   
+        });        
+    }; 
+    
+    function ver_list(id){
+        $('#topic_id').val(id);
+        sendAjax( "{:U('get_ver_list')}", "topic_id="+id, function(data) {           
+            $("#eq_ver_id span").remove();//先清除数据  
+            $("#eq_seg_id span").remove();//先清除数据               
+            $("#eq_seg_id").append("<span>选择年级</span>");//赋值            
+            $.each(data.items, function (i, item) {                                       
+                $("#eq_ver_id").append("<span onclick='seg_list("+item.id+")'>"+item.name+"</span>");//赋值                	
+            });   
+        });        
+    };  
+    function seg_list(id){
+        $('#ver_id').val(id);
+        sendAjax( "{:U('get_seg_list')}", "ver_id="+id, function(data) {             
+            $("#eq_seg_id span").remove();//先清除数据                      
+            $.each(data.items, function (i, item) {                                       
+                $("#eq_seg_id").append("<span onclick='seg_id("+item.id+")'>"+item.name+"</span>");//赋值                	
+            });   
+        });        
+    };
+    function seg_id(id){
+        $('#seg_id').val(id);           
+    };
+    //选择加边框
+    
+    $(".basic-info").on("click",".basic-info>p span",function(){
+        $(this).css("border","2px solid #E5864B").siblings().css("border","1px solid #d7d7d7");
+    })
+</script>
+</block>

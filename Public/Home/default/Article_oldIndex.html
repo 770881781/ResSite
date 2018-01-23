@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>文章首页</title>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+		<meta name="keywords" content=""/>
+		<meta name="description" content=""/>
+		<link href="__PUBLIC__/css/css.css?{$version}" rel="stylesheet" type="text/css" />
+		<!--通用样式文件-->
+		<link href="__PUBLIC__/css/common.css?{$version}" rel="stylesheet" type="text/css" />
+		<!--私有样式文件-->
+		<link href="__PUBLIC__/css/educationwisdom_zixun.css?{$version}" rel="stylesheet" type="text/css" />
+                
+                <link href="__PUBLIC__/static/bootstrap.min.css" rel="stylesheet">
+                <link href="__PUBLIC__/static/bootstrap-table.min.css" rel="stylesheet">               
+                <style>
+                        .fixed-table-pagination .pagination-detail, .fixed-table-pagination div.pagination{        
+                            margin-top: 13px;
+                            margin-bottom: 15px;
+                            margin-right: 50%;
+                        }                    
+                </style>
+        <script type="text/javascript">
+			var app_path = "__ROOT__";
+			var public_path = "__PUBLIC__";			
+		</script>
+	</head>
+	<body style="background:#e9edf1;">
+		<div class="main">
+			<!--顶部通栏-->
+			<!--顶部通栏-->
+			<div class="common-top" style="width:100%;height:65px;margin-top:-75px; ">
+				<!--页眉-->
+				<include file="Public:head" />
+			</div>
+			<!--轮播图-->
+			<div class="article-banner w1002" style="width:1100px;">
+				<!--分页器-->
+				<div class="hd"><ul></ul></div>
+				<!--轮播图-->
+				<div class="bd">
+                    <ul>
+                        <volist name="model_abc" id="vo">
+                            <li data-details = "{$vo.title}"><a href="{$vo.url}"><img src="{$vo.content}"/></a></li>          
+                        </volist>
+                    </ul>
+				</div>
+			</div>
+			<!--主体内容区域-->
+			<div class="page-content article-content w1002" style="margin-top:10px;">
+				<div class="page-content-left article-content-page-content-left ">
+					<div class="page-content-header"><p>文章搜索</p></div>
+					<form method="post" id="form_adv_search"  method="post" action="{:U('index')}">        
+						<div class="search">                                          
+							<input type="text" id='title' name='title'>
+							<input type="hidden" id='cid' name='cid' value=''>
+							<div class="customSelectStyle">
+							<div class="customSelectValue">全部</div>
+							<div class="customSelectBtn"></div>
+								<div class="customSelectValueList">
+                                                                        <p class="listValue" data-delid="">全部</p>	
+									<volist name="model_list" id="vo">
+									   <p class="listValue" data-delid="{$vo.id}">{:str2sub($vo['name'],2)}</p>		
+									</volist>						
+								</div>
+							</div>                                               
+						</div>
+						<div class="search-btn" onclick='more_select()'>搜索</div>
+					</form>
+					<!-- <div class="article-management"><i>管理我的文章</i></div> -->
+					<div class="new-article">
+						<div class="new-article-header">最新文章</div>
+					    <ul class="new-article-list" style="width:270px;">
+						    <volist name="art_list" id="vo">                                                         
+								<li><a href="{:U('details','id='.$vo['id'])}"><span>{:str2sub($vo['title'],16,$flag = 1,$sp = '...')}</span></a></li>
+						    </volist>			
+					    </ul>
+					</div>
+				</div>
+				<div class="page-content-right article-content-page-content-right" style="width:750px;">
+					<div class="page-content-header">                          
+						<p>文章栏目</p>                                         
+						<ul class="tab-nav"> 						
+						   <volist name="list" id="vo"> 		  
+								<li onclick='cid_list({$vo.id})' data-cid='{$vo.id}'>{$vo.name}</li>  
+						   </volist>   						                                     
+					    </ul>                                               
+					</div>
+					<div class="page-content-right-content-lg">
+						<ul class="list">   
+							<table id="tbs">								
+							</table>               
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--jquery库-->
+		<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js"></script>
+		<!--SuperSlide核心库-->
+		<script type="text/javascript" src="__PUBLIC__/js/common-focus.js"></script>
+		<!--私有js文件-->
+		<script type="text/javascript" src="__PUBLIC__/js/educationwisdom.js"></script>
+		<!-- 私有js文件-->
+		<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+		<!--自定义select-->
+		<script type="text/javascript" src="__PUBLIC__/js/select.js"></script>
+        <script src="__PUBLIC__/static/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/static/bootstrap-table.min.js"></script>
+        <script src="__PUBLIC__/static/bootstrap-table-zh-CN.min.js"></script>
+        <script src="__PUBLIC__/js/news.js" type="text/javascript"></script>
+	</body>
+</html>
+ <script type="text/javascript" language="javascript">
+    initTable(); 
+    function cid_list(id){
+        $('#cid').val(id);     	
+        more_select();    
+    };  
+
+    function more_select(){         
+        var aArray = {};
+        aArray['cid'] = $('#cid').val();      
+        aArray['title'] = $("#title").val();
+        initTable(aArray);         
+    }  
+ 
+    
+    function initTable(aArray) {  
+       // if(!(aArray['cid'] == undefined)) {var cid = aArray['cid'];}	
+        $('#tbs').bootstrapTable('destroy');        
+        $("#tbs").bootstrapTable({
+            method: "get",
+            url:"{:U('are_list')}",
+            striped:true, 
+            pagination:true,             
+            pageSize:10,       
+            pageNumber:1,            
+            pageList: [5, 10, 15, 20, 25],  
+            sidePagination:"server", 
+            paginationFirstText: "首页",
+            paginationPreText:"上一页",
+            paginationNextText:"下一页",
+            paginationLastText:"尾页",
+            queryParamsType : "undefined",           
+            queryParams:function queryParams(params) {   
+                var param = {                    
+                    page: params.pageNumber,
+                    aArray: aArray,
+                    pageSize: params.pageSize,                                     
+                    account:$('#account').val(),
+                    start: $("#start").val(),
+                    end: $("#end").val(),
+                    sortName: this.sortName,
+                }                
+                return param;
+            },
+            onLoadSuccess: function(res){        
+                var res_list = '';  
+                if(res.total == 0){
+                    $('.fixed-table-loading').text('无相关资源');
+                }                
+                $.each(res.rows, function (i, item) {               
+	                res_list +='<div class="page-circle"></div><li style="margin-top:0">'+'<a class="are_id" data-id="'+item.id+'"><span style="cursor:pointer;">';
+	                res_list +=item.title+'</span>';
+	                res_list +='<i>'+date("Y-m-d H:i:s",item.updatetime)+'</i></a></li>';                   
+                });         
+                $('#tbs tbody').html(res_list);                
+                $('.pagination-detail').remove(); 
+                color();
+                return false;
+            },
+            onLoadError: function(){  
+                console.log("加载数据失败");
+            },
+        });
+    }
+
+   $(document).on("click", ".are_id", function () { 
+       var id = $(this).attr('data-id');      
+       location.href="{:U('details')}&id="+id;
+    });
+    //颜色
+    function color(){
+        var cid = $('#cid').val();
+        if(!(cid == undefined)){ 
+            $('.tab-nav li').attr('class','');
+            $('.tab-nav li[data-cid='+cid+']').attr('class','on');
+        }
+    }   
+</script>

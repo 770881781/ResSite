@@ -1,0 +1,89 @@
+body{
+	margin:0;
+	padding:0;
+	font-size: 14px;
+	font-family: "Microsoft yahei";
+}
+p,div,h1,h2,h3,h4,h5,h6{
+	margin:0;
+	padding:0;
+}
+ul,li{
+	list-style: none;
+}
+a{
+	text-decoration: none;
+}
+a:hover{
+	text-decoration: none;
+}
+.teach-style{
+	width:100%;
+}
+.style-content{
+	margin:10px;
+}
+header{
+	background:linear-gradient(#f2f2f2,#e5e5e5,#f1f1f1);
+	border:1px solid #e4e4e4;
+}
+header h3{
+	padding:7px 0;
+	margin-left:10px;
+	font-weight:400;
+	color:#666;
+	font-size: 16px;
+}
+.teach-lists{
+	padding-top: 10px;
+	border:1px solid #e4e4e4;
+	border-top: 0;
+}
+.album-list:after{
+	display: block;
+	content:"";
+	clear:both;
+}
+.album-list{
+	padding-left:10px;
+}
+.album-list>div{
+	float:left;
+	width:192px;
+	margin-bottom: 10px;
+	margin-right: 10px;
+	text-align: center;
+}
+.album-list>div img{
+	border:1px solid #ddd;
+	padding:1px;
+	width:100%;
+    height: 140px;
+ }
+ .detail-title{
+ 	text-align: center;
+ 	margin: 10px 0;
+ 	font-size: 15px;
+ }
+.detail-content>p{
+	font-size:13px;
+	color:#999;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.detail-img{
+	width:1070px;
+	min-height:500px;
+	margin-bottom: 10px;
+	overflow-x:hidden;
+}
+.detail-img>img{
+	width:100%;
+	margin-bottom: 10px;
+}
+.wzzw.lh p{
+	text-indent: 30px;
+}
+.wzzw.lh img{
+	max-width: 200px;
+}

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title>资源</title>
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/phone/res.css">
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/bootstrap.min.css">
+        <link href="__PUBLIC__/css/phone/css.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="__PUBLIC__/css/iconfont.css">       
+        <script src="__PUBLIC__/js/jquery-1.8.3.min.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/js/news.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <div class="all">
+    <!--筛选框弹出-->
+        <div id="screenBox1" class="mask">
+            <div class="boxBack" id="type">
+                <h2>选择框</h2>
+                <volist name="list_schooltype" id ="vo">
+                    <div class="screenList type_id_name" data-id="{$vo.id}" data-typename="{$vo.type_name}">{$vo.type_name}</div>
+                </volist>
+            </div>
+        </div>
+        <div id="screenBox2" class="mask">
+            <div class="boxBack" id="topic">
+                <h2>选择框</h2>      
+                <if condition="$list_topic eq ''">   <div class="screenList topic_id_name">请先选择学段</div>   
+                <else/>                 
+                    <volist name="list_topic" id ="vo">
+                        <div class="screenList topic_id_name" data-id="{$vo.id}" data-topicname="{$vo.topic_name}">{$vo.topic_name}</div>
+                    </volist>
+                </if>
+            </div>
+        </div>
+    <div id="screenBox3" class="mask">
+            <div class="boxBack" id="ver">
+                <h2>选择框</h2>          
+                <if condition="$list_ver eq ''">   <div class="screenList ver_id_name">请先选择科目</div>   
+                <else/>                 
+                    <volist name="list_ver" id ="vo">
+                        <div class="screenList ver_id_name" data-id="{$vo.id}" data-vername="{$vo.ver_name}">{$vo.ver_name}</div>
+                    </volist>
+                </if>
+            </div>
+        </div><div id="screenBox4" class="mask">
+            <div class="boxBack" id="seg">
+                <h2>选择框</h2>               
+                <if condition="$list_seg eq ''">   <div class="screenList seg_id_name">请先选择学段</div>   
+                <else/>                 
+                    <volist name="list_seg" id ="vo">
+                        <div class="screenList seg_id_name" data-id="{$vo.id}" data-segname="{$vo.seg_name}">{$vo.seg_name}</div>
+                    </volist>
+                </if>             
+            </div>
+        </div>
+       <!--  <header class="res-title xiti">
+            <h3 style="position:relative;"><i class="icon iconfont icon-OA_back" ></i>教育资源</h3>                
+            <form method="post" id="form_adv_search"  method="post" action="{:U('ressearch')}">                      
+                <input type="hidden" name="type_id" id="type_id" value="{$type_name.id}">
+                <input type="hidden" name="topic_id" id="topic_id" value="{$topic_name.id}">
+                <input type="hidden" name="ver_id" id="ver_id" value="{$ver_name.id}">
+                <input type="hidden" name="seg_id" id="seg_id" value="{$seg_name.id}">                        
+            </form>		                
+            <a href="javascript:()" style="color:#333;" onclick="sub()">查询</a>
+        </header> -->
+        <div class="content" style="margin-top:0;">
+            <div class="longList" style="margin-top:0;">
+                <div class="tittle">学段:</div> 
+                    <div id="type_name">
+                        <div class="chiose" onClick="javascript:screenBoxOn1();">
+                            <if condition="$type_name.type_name eq ''">选择学段              
+                                <elseif condition="$type_name.type_name neq ''" />{$type_name.type_name}                  
+                            </if>   
+                            <i class="icon iconfont icon-OA_next"></i></div>
+                    </div>
+                <div class="text"></div>
+            </div>
+            <div class="longList">
+                <div class="tittle">学科:</div>
+                    <div id="topic_name">
+                        <div class="chiose" onClick="javascript:screenBoxOn2();">
+                            <if condition="$topic_name.topic_name eq ''">选择学科             
+                                <elseif condition="$topic_name.topic_name neq ''" />{$topic_name.topic_name}                  
+                            </if>   
+                            <i class="icon iconfont icon-OA_next"></i></div>
+                    </div>
+                <div class="text"></div>
+            </div>
+            <div class="longList">
+                <div class="tittle">版本:</div>
+                    <div id="ver_name">
+                        <div class="chiose" onClick="javascript:screenBoxOn3();"> 
+                            <if condition="$ver_name.ver_name eq ''">选择版本            
+                                <elseif condition="$ver_name.ver_name neq ''" />{$ver_name.ver_name}                  
+                            </if>   
+                            <i class="icon iconfont icon-OA_next"></i></div>
+                    </div>
+                <div class="text"></div>
+            </div>
+            <div class="longList">
+                <div class="tittle">年级:</div>
+                    <div id="seg_name">
+                        <div class="chiose" onClick="javascript:screenBoxOn4();">  
+                            <if condition="$seg_name.seg_name eq ''">选择年级段            
+                                <elseif condition="$seg_name.seg_name neq ''" />{$seg_name.seg_name}                  
+                            </if><i class="icon iconfont icon-OA_next"></i></div>
+                    </div>
+                <div class="text"></div>
+            </div>
+            
+        </div>
+        <div class="search-res">
+            <a href="{:U('resindex')}" style='text-decoration: none;float: left;font-weight: 400;margin-left:10px;margin-top:5px;'>返回      
+                <img src="__PUBLIC__/images/phone/goback.png" style="vertical-align:sub;">
+            </a>
+            <form method="post" id="form_adv_search"  method="post" action="{:U('ressearch')}">
+                <input type="hidden" name="type_id" id="type_id" value="{$type_name.id}">
+                <input type="hidden" name="topic_id" id="topic_id" value="{$topic_name.id}">
+                <input type="hidden" name="ver_id" id="ver_id" value="{$ver_name.id}">
+                <input type="hidden" name="seg_id" id="seg_id" value="{$seg_name.id}">                        
+            </form>                     
+            <span><a href="javascript:()" onclick="sub()">查询</a></span>
+
+        </div>
+        <div class="accrodin">
+            <if condition="$chaps['_child'] eq ''">   <div class="acc-outside">无相关数据</div>  
+            <else/>     
+                <div class="acc-outside">
+                    <volist name="chaps['_child']" id="vo" key='key'>
+                        <div class="acc-list">
+                            <h5>{$vo.chap_name}</h5>
+                        </div>
+                        <if condition="$key eq 1"><div class="acc-inside open">                  
+                            <elseif condition="$key neq 1" /><div class="acc-inside">                  
+                        </if>                     
+                        <div>
+                            <volist name="vo._child" id="ve">
+                                <p><a href="{:U('reslist','chap_id='.$ve['id'])}">{$ve.chap_name}</a></p>
+                            </volist>
+                            </div>
+                        </div>            
+                    </volist>                          
+                </div>
+            </if>
+        </div>        
+    <script>
+        function sub(){
+            $('#form_adv_search').submit();           
+        }
+        
+        // 收藏下载动态
+        $(".download").on("click","span",function(){
+            $(this).toggleClass("on");
+        })
+        // 图片等比例缩放
+        var W=parseFloat($(".tu>img").css("width"));
+        $(".tu>img").css("height",parseFloat(((65*W)/54)+'px'));
+
+        // 手风琴
+        $(".accrodin").on("click",".acc-list",function(){
+            $(this).next().toggleClass("open").siblings(".open").removeClass("open");
+        })
+    </script>
+    <script>
+         var screen_Box1 = document.getElementById('screenBox1');
+         var screen_Box2 = document.getElementById('screenBox2');
+         var screen_Box3 = document.getElementById('screenBox3');
+         var screen_Box4 = document.getElementById('screenBox4');
+                    $('.type_id_name').click(function(){
+               // $(document).on("click", ".type_id_name", function () {
+                    screen_Box1.style.display = "none";
+                    var type_id = $(this).attr('data-id');    
+                    $('#type_id').val(type_id);
+                    var type_name = $(this).attr('data-typename');                   
+                    $("#type_name div").remove();//先清除数据 
+                    $("#topic_name div").remove();// 
+                    $("#topic_id").val('');//
+                    $("#ver_id").val('');//
+                    $("#seg_id").val('');//                   
+                    $("#ver_name div").remove();//
+                    $("#seg_name div").remove();//
+                    $('#type_name').append('<div class="chiose" onClick="javascript:screenBoxOn1();">'+type_name+'<i class="icon iconfont icon-OA_next"></i></div>');
+                    $('#topic_name').append('<div class="chiose" onClick="javascript:screenBoxOn2();">'+'选择科目'+'<i class="icon iconfont icon-OA_next"></i></div>');
+                    $('#ver_name').append('<div class="chiose" onClick="javascript:screenBoxOn3();">'+'选择版本'+'<i class="icon iconfont icon-OA_next"></i></div>');
+                    $('#seg_name').append('<div class="chiose" onClick="javascript:screenBoxOn4();">'+'选择年级'+'<i class="icon iconfont icon-OA_next"></i></div>');
+                    $("#topic div").remove();//先清除数据
+                    $("#ver div").remove();//先清除数据 
+                    $("#seg div").remove();//先清除数据                    
+                    $('#ver').append('<div class="chiose" onClick="javascript:screenBoxOff3();">'+'请先选择科目'+'<i class="icon iconfont icon-OA_next"></i></div>');
+                    $('#seg').append('<div class="chiose" onClick="javascript:screenBoxOff4();">'+'请先选择科目'+'<i class="icon iconfont icon-OA_next"></i></div>');
+                    sendAjax( "{:U('get_topic_list')}", "type_id="+type_id, function(data) {
+                        if(data.status==1) {                                
+                            $.each(data.items, function (i, item) {   
+                                var _html = '';
+                                _html += '<div class="screenList topic_id_name" data-id="'+item.id+'"  data-topicname="'+item.name+'" >'+item.name+'</div>';                                                                    
+                                $("#topic").append(_html);//赋值     
+                            });                            
+                            $(".topic_id_name").on("click", function() {  
+                                screen_Box2.style.display = "none";
+                                var topic_id = $(this).attr('data-id');  
+                                $('#topic_id').val(topic_id);
+                                var topic_name = $(this).attr('data-topicname');         
+                                $("#topic_name div").remove();//先清除数据   
+                                $("#ver_name div").remove();//
+                                $("#seg_name div").remove();//
+                                $("#ver_id").val('');//
+                                $("#seg_id").val('');//    
+                                $('#topic_name').append('<div class="chiose" onClick="javascript:screenBoxOn2();">'+topic_name+'<i class="icon iconfont icon-OA_next"></i></div>');                        
+                                $('#ver_name').append('<div class="chiose" onClick="javascript:screenBoxOn3();">'+'选择版本'+'<i class="icon iconfont icon-OA_next"></i></div>');
+                                $('#seg_name').append('<div class="chiose" onClick="javascript:screenBoxOn4();">'+'选择年级'+'<i class="icon iconfont icon-OA_next"></i></div>');
+                                $("#ver div").remove();//先清除数据
+                                $("#seg div").remove();//先清除数据        
+                                $('#seg').append('<div class="chiose" onClick="javascript:screenBoxOff4();">'+'请先选择版本'+'<i class="icon iconfont icon-OA_next"></i></div>');                                          
+                                sendAjax( "{:U('get_ver_list')}", "topic_id="+topic_id, function(data) {
+                                if(data.status==1) {                                                     
+                                    $.each(data.items, function (i, item) {   
+                                        var _html = '';
+                                        _html += '<div class="screenList ver_id_name" data-id="'+item.id+'" data-vername="'+item.name+'" >'+item.name+'</div>';                                                                    
+                                        $("#ver").append(_html);//赋值     
+                                    }); 
+
+                                    $(".ver_id_name").on("click", function() {   
+                                        screen_Box3.style.display = "none";
+                                        var ver_id = $(this).attr('data-id');
+                                        $('#ver_id').val(ver_id);
+                                        var ver_name = $(this).attr('data-vername');     
+                                        $("#seg div").remove();//先清除数据   
+                                        $("#ver_name div").remove();//先清除数据   
+                                        $("#seg_name div").remove();//
+                                        $("#seg_id").val('');//  
+                                        $('#ver_name').append('<div class="chiose" onClick="javascript:screenBoxOn3();">'+ver_name+'<i class="icon iconfont icon-OA_next"></i></div>');                        
+                                        $('#seg_name').append('<div class="chiose" onClick="javascript:screenBoxOn4();">'+'选择年级'+'<i class="icon iconfont icon-OA_next"></i></div>');                
+                                        sendAjax( "{:U('get_seg_list')}", "ver_id="+ver_id, function(data) {
+                                        if(data.status==1) {                                                     
+                                                $.each(data.items, function (i, item) {   
+                                                var _html = '';
+                                                _html += '<div class="screenList seg_id_name" data-id="'+item.id+'" data-segname="'+item.name+'" >'+item.name+'</div>';                                                         
+                                                $("#seg").append(_html);//赋值     
+                                            }); 
+                                            $(".seg_id_name").on("click", function() {  
+                                                screen_Box4.style.display = "none";
+                                                var seg_id = $(this).attr('data-id'); 
+                                                $('#seg_id').val(seg_id);
+                                                var seg_name = $(this).attr('data-segname');  
+                                                $("#seg_name div").remove();//先清除数据   
+                                                $('#seg_name').append('<div class="chiose" onClick="javascript:screenBoxOn4();">'+seg_name+'<i class="icon iconfont icon-OA_next"></i></div>');  
+
+                                            }); 
+                                        }
+                                    });               
+                                }); 
+                            }
+                        }); 
+                    });  
+                }
+            });
+        });                
+                      $('.topic_id_name').click(function(){              
+                                screen_Box2.style.display = "none";
+                                var topic_id = $(this).attr('data-id');  
+                                $('#topic_id').val(topic_id);
+                                var topic_name = $(this).attr('data-topicname');         
+                                $("#topic_name div").remove();//先清除数据   
+                                $("#ver_name div").remove();//
+                                $("#seg_name div").remove();//
+                                $("#ver_id").val('');//
+                                $("#seg_id").val('');//    
+                                $('#topic_name').append('<div class="chiose" onClick="javascript:screenBoxOn2();">'+topic_name+'<i class="icon iconfont icon-OA_next"></i></div>');                        
+                                $('#ver_name').append('<div class="chiose" onClick="javascript:screenBoxOn3();">'+'选择版本'+'<i class="icon iconfont icon-OA_next"></i></div>');
+                                $('#seg_name').append('<div class="chiose" onClick="javascript:screenBoxOn4();">'+'选择年级'+'<i class="icon iconfont icon-OA_next"></i></div>');
+                                $("#ver div").remove();//先清除数据
+                                $("#seg div").remove();//先清除数据        
+                                $('#seg').append('<div class="chiose" onClick="javascript:screenBoxOff4();">'+'请先选择年级'+'<i class="icon iconfont icon-OA_next"></i></div>');                                          
+                                sendAjax( "{:U('get_ver_list')}", "topic_id="+topic_id, function(data) {
+                                if(data.status==1) {                                                     
+                                    $.each(data.items, function (i, item) {   
+                                        var _html = '';
+                                        _html += '<div class="screenList ver_id_name" data-id="'+item.id+'" data-vername="'+item.name+'" >'+item.name+'</div>';                                                                    
+                                        $("#ver").append(_html);//赋值     
+                                    }); 
+
+                                    $(".ver_id_name").on("click", function() {   
+                                        screen_Box3.style.display = "none";
+                                        var ver_id = $(this).attr('data-id');
+                                        $('#ver_id').val(ver_id);
+                                        var ver_name = $(this).attr('data-vername');     
+                                        $("#seg div").remove();//先清除数据   
+                                        $("#ver_name div").remove();//先清除数据   
+                                        $("#seg_name div").remove();//
+                                        $("#seg_id").val('');//  
+                                        $('#ver_name').append('<div class="chiose" onClick="javascript:screenBoxOn3();">'+ver_name+'<i class="icon iconfont icon-OA_next"></i></div>');                        
+                                        $('#seg_name').append('<div class="chiose" onClick="javascript:screenBoxOn4();">'+'选择年级'+'<i class="icon iconfont icon-OA_next"></i></div>');                
+                                        sendAjax( "{:U('get_seg_list')}", "ver_id="+ver_id, function(data) {
+                                        if(data.status==1) {                                                     
+                                                $.each(data.items, function (i, item) {   
+                                                var _html = '';
+                                                _html += '<div class="screenList seg_id_name" data-id="'+item.id+'" data-segname="'+item.name+'" >'+item.name+'</div>';                                                         
+                                                $("#seg").append(_html);//赋值     
+                                            }); 
+                                            $(".seg_id_name").on("click", function() {  
+                                                screen_Box4.style.display = "none";
+                                                var seg_id = $(this).attr('data-id'); 
+                                                $('#seg_id').val(seg_id);
+                                                var seg_name = $(this).attr('data-segname');  
+                                                $("#seg_name div").remove();//先清除数据   
+                                                $('#seg_name').append('<div class="chiose" onClick="javascript:screenBoxOn4();">'+seg_name+'<i class="icon iconfont icon-OA_next"></i></div>');  
+
+                                            }); 
+                                        }
+                                    });               
+                                }); 
+                            }
+                        }); 
+                    }); 
+                     $('.ver_id_name').click(function(){                             
+                                        screen_Box3.style.display = "none";
+                                        var ver_id = $(this).attr('data-id');
+                                        $('#ver_id').val(ver_id);
+                                        var ver_name = $(this).attr('data-vername');     
+                                        $("#seg div").remove();//先清除数据   
+                                        $("#ver_name div").remove();//先清除数据   
+                                        $("#seg_name div").remove();//
+                                        $("#seg_id").val('');//  
+                                        $('#ver_name').append('<div class="chiose" onClick="javascript:screenBoxOn3();">'+ver_name+'<i class="icon iconfont icon-OA_next"></i></div>');                        
+                                        $('#seg_name').append('<div class="chiose" onClick="javascript:screenBoxOn4();">'+'选择年级'+'<i class="icon iconfont icon-OA_next"></i></div>');                
+                                        sendAjax( "{:U('get_seg_list')}", "ver_id="+ver_id, function(data) {
+                                        if(data.status==1) {                                                     
+                                                $.each(data.items, function (i, item) {   
+                                                var _html = '';
+                                                _html += '<div class="screenList seg_id_name" data-id="'+item.id+'" data-segname="'+item.name+'" >'+item.name+'</div>';                                                         
+                                                $("#seg").append(_html);//赋值     
+                                            }); 
+                                            $(".seg_id_name").on("click", function() {  
+                                                screen_Box4.style.display = "none";
+                                                var seg_id = $(this).attr('data-id'); 
+                                                $('#seg_id').val(seg_id);
+                                                var seg_name = $(this).attr('data-segname');  
+                                                $("#seg_name div").remove();//先清除数据   
+                                                $('#seg_name').append('<div class="chiose" onClick="javascript:screenBoxOn4();">'+seg_name+'<i class="icon iconfont icon-OA_next"></i></div>');  
+
+                                            }); 
+                                        }
+                                    });               
+                                }); 
+                                      $('.seg_id_name').click(function(){                                        
+                                                screen_Box4.style.display = "none";
+                                                var seg_id = $(this).attr('data-id'); 
+                                                $('#seg_id').val(seg_id);
+                                                var seg_name = $(this).attr('data-segname');  
+                                                $("#seg_name div").remove();//先清除数据   
+                                                $('#seg_name').append('<div class="chiose" onClick="javascript:screenBoxOn4();">'+seg_name+'<i class="icon iconfont icon-OA_next"></i></div>');  
+
+                                            }); 
+                function screenBoxOn1(){
+                    screen_Box1.style.display = "block";
+                } 
+                function screenBoxOff1(){
+                    screen_Box1.style.display = "none";
+                }                                                          
+                function screenBoxOn2(){
+                    screen_Box2.style.display = "block";
+                }   
+                function screenBoxOff2(){
+                    screen_Box2.style.display = "none";
+                }                       
+                function screenBoxOn3(){
+                    screen_Box3.style.display = "block";
+                }  
+                function screenBoxOff3(){
+                    screen_Box3.style.display = "none";
+                }                         
+                function screenBoxOn4(){
+                    screen_Box4.style.display = "block";
+                }
+                function screenBoxOff4(){
+                    screen_Box4.style.display = "none";
+                }
+    </script>
+    </body>
+</html>

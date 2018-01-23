@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title>资源</title>     
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/phone/res.css">
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/bootstrap.min.css">       
+    </head>  
+ <body>
+        <div class="all-content">
+            <!-- 资源标题 -->
+            <header class="res-title xiti">
+                <h3>{$uidname}</h3>
+                <div class="goback">
+                    <a href="JavaScript:history.back(-1);" style='text-decoration:none;'>返回</a>
+                    <img src="__PUBLIC__/images/phone/goback.png">
+                </div>
+            </header>
+            <div class="res-lists xitilist">
+                <input type="hidden" id='number' value="1">
+                <input type="hidden" id='cid' value="{$cid}">
+                <if condition="$reslist eq ''"> 
+                    <div class="list-content">无相关数据</div>
+                </if>
+                <?php		 		
+                  $type = get_device_type();								
+                ?>
+                <input type="hidden" id='type' value="{$type}">
+                <volist name='reslist' id='vo'>
+                    <div class="list-content">
+                        <div class="tu">
+                             <img src="{$vo.imgs}" style="width:38px;">
+                        </div>
+                        <div class="content-detail">
+                            <if condition="$type eq 'ios' && $vo.ext eq 'pdf'">
+                                <p onclick="javascript:window.open('{$vo.savename}')">{$vo.title}</p>
+                                <else />
+                                <p class='resdetail' data-id='{$vo.id}'>{$vo.title}</p>
+                            </if>
+                            <h5> 
+                                <if condition="$vo.cid eq 16"> 习题                 
+                                    <elseif condition="$vo.cid eq 17" />课件
+                                    <elseif condition="$vo.cid eq 18" />视频
+                                    <elseif condition="$vo.cid eq 19" />教研成果                                    
+                                </if> 
+                                <span>上传时间：{$vo.publishtime|date='Y-m-d H:i:s', ###}</span>
+                            </h5>                                 
+                        </div>
+                    </div>               
+                </volist>      
+                <div id="orlist"></div>
+            </div>          
+            <if condition="$reslist neq ''"> 
+            <div class='loding' onclick='more()'>加载更多</div>
+            </if>
+        </div>      
+    <script src="__PUBLIC__/js/jquery-1.8.3.min.js" type="text/javascript"></script>  
+    <script src="__PUBLIC__/js/news.js" type="text/javascript"></script>    
+    <script>
+         function more() {
+            var type = $('#type').val();
+            var number = $('#number').val();   
+            var cid =  $('#cid').val();
+            if(cid == ''){
+                $('.loding').text('没有更多内容啦');
+                return false;
+            }
+            number = number + '|' + cid;
+            sendAjax("{:U('orlist')}", "number=" + number, function (data) {
+                if (data.status == 1) {
+                    var _html='';
+                    $.each(data.data, function (i, item) {                  
+                        var _html = '<div class="list-content"><div class="tu"><img src="'+item.imgs+'" style="width:38px;"></div><div class="content-detail">';                
+                        if(type == 'ios' && item.ext == 'pdf'){
+                            _html+= '<p onclick="javascript:window.open('+"'"+item.savename+"'"+')">'+item.title+'</p>';
+                        }else{
+                            _html+=  '<p class="resdetail" data-id="'+item.id+'">'+item.title+'</p>';
+                        }       
+                        _html+= '<h5>'+is_cid(item.cid)+'<span>上传时间：'+date('Y-m-d H:i:s',item.publishtime)+'</span>'+'</h5>';                           
+                        _html+= '</div></div>';                                           
+                        $('#orlist').append(_html);                    
+                    });
+                    $(".resdetail").on("click", function() { 
+                        var id = $(this).attr('data-id');
+                        location.href="{:U('resdetail')}&resid="+id;    
+                    });
+                    $('#number').val(data.number);                  
+                } else {
+                  $('.loding').text('没有更多内容啦'); 
+		  $('.loding').attr('onclick','');            
+                }
+            });
+        }
+        $('.resdetail').click(function(){       
+            var id = $(this).attr('data-id');
+            location.href="{:U('resdetail')}&resid="+id;    
+        });          
+        function is_cid(category) {
+            if (category == 16) {
+                return '习题';
+            } else if (category == 17) {
+                return '课件';
+            } else if (category == 18) {
+                return '视频';
+            } else if (category == 19) {
+                return '教研成果';
+            } else {
+                return '未知';
+            }
+        }     
+        // 收藏下载动态
+        $(".download").on("click","span",function(){
+            $(this).toggleClass("on");
+        })
+        // 图片等比例缩放
+        var W=parseFloat($(".tu>img").css("width"));
+        $(".tu>img").css("height",parseFloat(((65*W)/54)+'px'));
+    </script>
+    </body>
+</html>

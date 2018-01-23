@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>资源播放</title>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="keywords" content=""/>
+	<meta name="description" content=""/>
+        <link href="__PUBLIC__/css/css_res.css?{$version}" rel="stylesheet" type="text/css" />
+	<!--bootstrap样式文件-->
+	<link href="__PUBLIC__/css/bootstrap.min.css?{$version}" rel="stylesheet" type="text/css" />
+	<!--通用样式文件-->
+	<link href="__PUBLIC__/css/common.css?{$version}" rel="stylesheet" type="text/css" />	
+	<link href="__PUBLIC__/css/educationwisdom_res.css?{$version}" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/resource.css">
+	<!--jquery库-->
+	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js"></script>
+</head>
+<body>
+	<div class="main resources-details-page">
+		<!--顶部通栏-->
+		<div class="common-top" style="margin-top:-75px;">
+			<include file="Public:head" />
+		</div>
+		<!--主体内容区域-->
+		<div class="page-content w1002" style="width:1110px;">
+			
+			<div class="pic-detail">
+				<header>
+                                    <h3>
+                                        <if condition="$content['cid'] eq $type['teach_cid']">{$type.teach_name}
+                                            <else/>
+                                            {$type.stude_name}
+                                        </if>
+                                    </h3>
+  				</header>
+  				<div class="detail-content">
+  					<div class="detail-title">
+  						<h1>{$content.title}</h1>
+  					</div>
+  					<div class="detail-img">
+  						<foreach name="content['pictureurls']" item="v">
+                                                        <img src="{$v['url']}" />
+                                                </foreach>
+  					</div>
+  					<p>发布时间:{$content.publishtime|date='Y-m-d H:i:s', ###}</p>
+  				</div>
+			</div>
+                    
+                    <div class="pro_h3">介绍</div>
+			<div class="wzzw lh" style="margin-top:10px;margin-bottom:5px;border:1px solid #d7d7d7">
+			   {$content.content}
+			</div>
+                    <div class="fenye1" style="text-align:left;margin-bottom:10px;">  ↑上一条：
+                                       <if condition="$pro eq ''">第一条<br/>           
+                                           <else/><a href="{:U('picdetail','id='.$pro['id'])}">{$pro.title}</a><br/>
+                                       </if>                              
+                                       ↓下一条：
+                                       <if condition="$next eq ''">最后一条<br/>           
+                                           <else/><a href="{:U('picdetail','id='.$next['id'])}">{$next.title}</a>
+                                       </if>             
+                    </div>
+
+			<div class="comment">
+				<!--comment -->
+				<if condition="$content['commentflag'] eq 0">
+				<div class="comment-box">
+					<h3 style="margin-bottom:10px;">评论(<span class="review-count">0</span>)</h3>		
+					<div class="more-comment">
+						后面还有<span id="more_count"></span>条评论，<a href="javascript:get_review();">点击查看>></a>
+					</div>
+					<form action="{:U('add')}" method="post" class="comment-item" id="reviewForm"  autocomplete="off">
+						<a name="reply_" id="reply_"></a>
+						<input type="hidden" name="post_id" value="{$content.id}" id="res_id"/>
+						<input type="hidden" name="model_id" value="{$content.cid}" />
+                                                <input type="hidden" name="username" value="{$username}" />
+						<input type="hidden" name="title" value="{$content.title}"/>
+						<input type="hidden" name="review_id" value="0" />
+						<span class="avatar"><img src="{:get_avatar(get_cookie('face'),30)}" alt="" id="my_avatar"></span>
+						<div class="comment-bd" id="review">
+							<div class="comment-textarea">
+								<textarea name="content" placeholder="我也来说两句..."></textarea>
+							</div>
+						</div>
+						<div class="comment-ft">
+							<input type="submit" class="btn_blue" value="评论&nbsp;[&nbsp;Ctrl+Enter&nbsp;]">
+						</div>
+					</form>      				
+				</div>
+			</div>
+		</div>
+	</div>
+<!--	SuperSlide核心库
+	<script type="text/javascript" src="__PUBLIC__/js/common-focus.js"></script>
+	私有js文件
+	<script type="text/javascript" src="__PUBLIC__/js/educationwisdom.js"></script>
+	 私有js文件
+	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>        
+	自定义select
+	<script type="text/javascript" src="__PUBLIC__/js/select.js"></script>-->
+	<!--自定义评论js-->
+	<script type="text/javascript" src="__PUBLIC__/js/review_word.js"></script>     
+	<script type="text/javascript">
+		var app_path = "__ROOT__";
+		var public_path = "__PUBLIC__";			
+	</script>
+	<script type="text/javascript" language="javascript">            
+        var get_review_url = "{:U('getlist')}";
+        var post_review_url = "{:U(MODULE_NAME.'/Article/add')}"; 
+
+        function changeVcode(obj){
+            $("#VCode").attr("src",'<yang:vcodeurl />'+ '#'+Math.random());
+            return false;
+        }	
+	</script>
+</body>
+</html>

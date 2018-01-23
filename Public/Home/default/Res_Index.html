@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+        <title>{$title}-<yang:sitename /></title>
+        <meta name="keywords" content="{$keywords}" />
+        <meta name="description" content="{$description}" />
+        <link rel="shortcut icon" href="" type="image/x-icon"/>
+        <link href="__PUBLIC__/css/css.css?{$version}" rel="stylesheet" type="text/css" />
+        <!--通用样式文件-->
+        <link href="__PUBLIC__/css/common.css" rel="stylesheet" type="text/css" />
+        <!--私有样式文件-->
+        <link href="__PUBLIC__/css/educationwisdom.css?{$version}" rel="stylesheet" type="text/css" />
+        <!--分页样式文件-->
+        <link href="__PUBLIC__/css/jPages.css?{$version}" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/static/bootstrap.min.css" rel="stylesheet">
+        <link href="__PUBLIC__/static/bootstrap-table.min.css" rel="stylesheet">     
+        <script type="text/javascript">
+            var app_path = "__ROOT__";
+            var public_path = "__PUBLIC__";
+        </script>         
+        <style>
+            *{
+                -webkit-box-sizing:inherit !important;
+                box-sizing:inherit !important;
+            }
+        </style>
+    </head>    
+    <body>
+        <div class="main search-page resourcesHome-page">
+            <!--头部-->
+            <div class="common-top" style="margin-top:-75px;">
+                <include file="Public:head" />
+            </div>				
+            <!--主体内容区域-->
+            <div class="page-content article-content w1002">
+                <div class="page-content-left page-content-left2">                                    
+                    <volist name="type_list" id="vo">    
+                        <div class="page-content-header"><p>{:strstr($key, '|', ture)}</p><span style="float:right;color:#aaa;cursor:pointer;font-size:14px;"><a href="{:U('search','type_id='.substr($key,strpos($key,'|')+1))}">更多></a></span></div>
+                        <ul class="ul course-ul">
+                            <volist name="vo" id="topicvo">
+                                <li><a href="javascript:void(0);" id="topic_id" data-id="{$topicvo.id}" onclick="return false;">{$topicvo.topic_name}</a></li>
+                            </volist>
+                        </ul>
+                    </volist>
+                    <div class="tab-btn">
+                        <a href="javascript:void(0)" id="navButton1" onClick="javascript:navChange_01();" class="grade on"><i>年级段</i></a>
+                        <a href="javascript:void(0)" id="navButton2" onClick="javascript:navChange_02();" class="knowledge-point"><i>知识点</i></a>
+                    </div>
+                    <div class="tab-content" id="change01" style="display:block">
+                        <div class="page-content-header page-content-header02" style="border-bottom:1px solid #d2d2d2"><p style="border-bottom: 2px solid #00a2e3;">版本</p></div>
+                        <ul class="ul versions-ul" id="ver_list">
+                            <volist name="ver_list" id="vo">
+                                <li><a dete-id="{$vo.id}">{$vo.ver_name}</a></li>
+                            </volist>
+                        </ul>
+                        <div class="page-content-header page-content-header02" style="border-bottom:1px solid #d2d2d2"><p style="border-bottom: 2px solid #00a2e3;">年级</p></div>
+                        <ul class="ul versions-ul" id="seg_list">
+                            <volist name="gra_list" id="vo">
+                                <li><a dete-id="{$vo.id}">{$vo.seg_name}</a></li>
+                            </volist>
+                        </ul>
+                        <div class="accordion">
+                            <div class="accordion-content seg_list" id="seg_list_1"></div> 
+                        </div>                         
+                    </div>	                                    
+                    <div class="tab-content" id="change02" style="display:none">					
+                        <div class="accordion">
+                            <div class="accordion-content know_list" id="know_list_1"></div> 
+                        </div>                         
+                    </div>                                    
+                </div>
+                <div class="page-content-right" style="margin-left:10px;">
+                    <div class="page-content-right-content-lg">
+                        <div class="swiper">
+                            <!--轮播图-->
+                            <div class="bd">
+                                <ul>
+                                    <volist name="model_abc" id="vo">
+                                        <li data-details = "{$vo.title}"><a href="{$vo.url}"><img src="{$vo.content}"/></a></li>                             
+                                    </volist>
+                                </ul>
+                            </div>                                                 
+                        </div>
+                        <div class="tabs">
+                            <ul>
+                                <li class="all on">全部</li>
+                                <volist name="model_list" id="vo">
+                                    <li data-cid="{$vo.id}" class="res_cid">{$vo.name}</li>					
+                                </volist>
+                            </ul>
+                        </div>
+                        <!--全部-->
+                        <div class="tabs-content">                       
+                            <input type="hidden" name="topic_id_" id="topic_id_" value="">
+                            <input type="hidden" name="ver_id_" id="ver_id_" value="">
+                            <input type="hidden" name="seg_id_" id="seg_id_" value="1">
+                            <input type="hidden" name="chap_id_" id="chap_id_" value="">
+                            <input type="hidden" name="know_id_" id="know_id_" value="">
+                            <input type="hidden" name="cid_" id="cid_" value="">	
+                            <ul class="list">
+                                <table id="tbs"></table> 
+                            </ul>  				                                                       
+                        </div>
+                    </div>
+                </div>
+                <div class="page-content-left"  style="margin-right:0;width:230px;">
+                    <div class="page-content-header"><p>资源搜索</p></div>
+                    <form method="post" id="form_adv_search"  method="post" action="{:U('select/index')}">        
+                        <div class="search">                                                 
+                            <input type="text" id='select' name='select' style="width:139px;font-family:'microsoft yahei'">
+                            <input type="hidden" id='cid' name='cid' value=''>
+                            <div class="customSelectStyle">
+                                <div class="customSelectValue">全部</div>
+                                <div class="customSelectBtn"></div>
+                                <div class="customSelectValueList">
+                                    <p class="listValue" data-delid="">全部</p>	
+                                    <volist name="model_list" id="vo">
+                                        <p class="listValue" data-delid="{$vo.id}">{$vo.name}</p>		
+                                    </volist>						
+                                </div>
+                            </div>
+                        </div>
+                        <div class="search-btn">搜索</div>
+                    </form>
+                    <div class="my-resources">
+                        <ul>
+                            <li class="resources-num">
+                                <p>资源总数</p>
+                                <span>{$count_all}</span>
+                            </li>
+                            <li class="video">
+                                <p>视频</p>
+                                <span>{$count_mov}</span>
+                            </li>
+                            <li class="courseware">
+                                <p>课件</p>
+                                <span>{$count_ppt}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="article-management"><i id="my_res_down">管理我的资源</i></div>
+                    <div class="new-article new-article-content">
+                        <div class="new-article-header">最新资源</div>
+                        <ul class="new-article-list">
+                            <volist name="del_list" id="vo">  
+                                <li style="height:62px;background:url({:$vo['imgs']});background-repeat:no-repeat;background-position:left center;">
+                                    <a href="#" class="res_id" data-resid='{$vo.id}' >
+                                        <span>{:str2sub($vo['title'],12,$flag = 1,$sp = '...')}</span>
+                                        <span class="time">上传于{$vo.publishtime|date='Y-m-d H:i:s', ###}</span>
+                                    </a>
+                                </li>			
+                            </volist>   
+                        </ul>
+                    </div>
+                    <div class="new-article tuijian-content">
+                        <div class="new-article-header">推荐资源</div>
+                        <ul class="new-article-list">
+                            <volist name="del_list_coll" id="vo">  
+                                <li style="height:62px;background:url({:$vo['imgs']});background-repeat:no-repeat;background-position:left center;">
+                                    <a href="#" class="res_id" data-resid='{$vo.id}' >
+                                        <span>{:str2sub($vo['title'],12,$flag = 1,$sp = '...')}</span>
+                                        <span class="time">上传于{$vo.publishtime|date='Y-m-d H:i:s', ###}</span>
+                                    </a>
+                                </li>			
+                            </volist> 
+                        </ul>
+                    </div>
+                    <div class="new-article">
+                        <div class="new-article-header">热门资源</div>
+                        <ul class="new-article-list">
+                            <volist name="del_list_dow" id="vo">  
+                                <li style="height:62px;background:url({:$vo['imgs']});background-repeat:no-repeat;background-position:left center;">
+                                    <a href="#" class="res_id" data-resid='{$vo.id}' >
+                                        <span>{:str2sub($vo['title'],12,$flag = 1,$sp = '...')}</span>
+                                        <span class="time">上传于{$vo.publishtime|date='Y-m-d H:i:s', ###}</span>
+                                    </a>
+                                </li>			
+                            </volist>   
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <include file="Public:footer" /--> 
+        <!--jquery库-->
+        <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js"></script>
+        <!--SuperSlide核心库-->
+        <script type="text/javascript" src="__PUBLIC__/js/common-focus.js"></script>
+        <!--私有js文件-->
+        <script type="text/javascript" src="__PUBLIC__/js/educationwisdom.js"></script>
+        <!-- 私有js文件-->
+        <script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+        <!--自定义select-->
+        <script type="text/javascript" src="__PUBLIC__/js/select.js"></script>
+        <!--自定义分页js-->
+        <!--	<script type="text/javascript" src="__PUBLIC__/js/jPages.js"></script>        -->
+        <script src="__PUBLIC__/static/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/static/bootstrap-table.min.js"></script>
+        <script src="__PUBLIC__/static/bootstrap-table-zh-CN.min.js"></script>
+    </body>
+</html>
+<script type="text/javascript" language="javascript">	
+    $(document).on("click", "#topic_id", function () {
+        var know_list_1 = $('#know_list_1');
+        var topic_id = $(this).attr('data-id');
+        //清空数据
+        $('#ver_list li').remove();
+        $('#seg_list li').remove();
+        $('#seg_list_1 div').remove();
+        $('#know_list_1 div').remove();
+        sendAjax("{:U('get_ver')}", "topic_id=" + topic_id, function (data) {
+            if (data && data.status == 1) {
+                $.each(data.data_ver, function (i, item) {
+                    $('#ver_list').append('<li><a dete-id="' + item.id + '">' + item.ver_name + '</a></li>');
+                });
+                $.each(data.data_know, function (i, item) {
+                    if (item._child) {
+                        var content_list_know = '';
+                        $.each(item._child, function (ii, item_) {
+                            content_list_know += '<div class="accordion-content-list"><div class="accordion-content-list-header"  title="' + item_.know_name + '">' + cutstr(item_.know_name, 18) + '</div>'
+                            content_list_know += '<div class="accordion-content-list-content' + (ii == 0 ? ' on' : '') + '" id="know_id"><ul>';
+                            if (item_._child) {
+                                $.each(item_._child, function (iii, item__) {
+                                    content_list_know += '<li title="' + item__.know_name + '" data-knowid="' + item__.id + '">' + item__.know_name + '</li>';
+                                });
+                            }
+                            content_list_know += '</ul></div></div>';
+                        });
+                        know_list_1.append(content_list_know);
+                    }
+                    $('#know_list_1').resourcesHomepage();
+                });
+                $("#ver_list li a").on("click", function () {
+                    var ver_id = $(this).attr('dete-id');
+                    $('#seg_list li').remove();
+                    sendAjax("{:U('get_seg')}", "ver_id=" + ver_id, function (data) {
+                        if (data && data.status == 1) {
+                            $.each(data.data_seg, function (i, item) {
+                                $('#seg_list').append('<li><a dete-id="' + item.id + '">' + item.seg_name + '</a></li>');
+                            });
+                        }
+                        $("#seg_list li a").on("click", function () {
+                            var seg_id = $(this).attr('dete-id');
+                            sendAjax("{:U('get_chapter')}", "seg_id=" + seg_id, function (data) {
+                                var seg_list_1 = $('#seg_list_1');
+                                $('#seg_list_1 div').remove();
+                                if (data && data.status == 1) {
+                                    $.each(data.data_seg, function (i, item) {
+                                        if (item._child) {
+                                            var content_list = '';
+                                            $.each(item._child, function (ii, item_) {
+                                                content_list += '<div class="accordion-content-list"><div class="accordion-content-list-header" title="' + item_.chap_name + '">' + cutstr(item_.chap_name, 18) + '</div>';
+                                                content_list += '<div class="accordion-content-list-content' + (ii == 0 ? ' on' : '') + '" id="chap_id"><ul>';
+                                                if (item_._child) {
+                                                    $.each(item_._child, function (iii, item__) {
+                                                        content_list += '<li title="' + item__.chap_name + '" data-catid=' + item__.id + ' id=' + "cat_res_id" + '>' + item__.chap_name + '</li>';
+                                                    });
+                                                }
+                                                content_list += '</ul></div></div>';
+                                            });
+                                            seg_list_1.append(content_list);
+                                        }
+                                    });
+                                    $('#seg_list_1').resourcesHomepage();
+                                    $("#chap_id ul li").on("click", function () {
+                                        var chap_id = $(this).attr('data-catid');
+                                        $('#topic_id_').val('');
+                                        $("#ver_id_").val('');
+                                        $("#seg_id_").val('');
+                                        $("#chap_id_").val(chap_id); 
+                                        $("#know_id_").val('');
+                                        more_select();
+                                    });
+                                }
+                            });
+                            $("#seg_id_").val(seg_id);
+                            $("#chap_id_").val(''); 
+                            $("#know_id_").val('');
+                            more_select();                        
+                        });
+                    });
+                    $("#ver_id_").val(ver_id);
+                    $("#seg_id_").val('');
+                    $("#chap_id_").val(''); 
+                    $("#know_id_").val('');
+                    more_select();                    
+                });               
+            }
+        });
+        $('#topic_id_').val(topic_id);
+        $("#ver_id_").val('');
+        $("#seg_id_").val('');
+        $("#chap_id_").val(''); 
+        $("#know_id_").val('');
+        more_select();
+    });
+
+    $(document).on("click", ".res_id", function () {
+        var resid = $(this).attr('data-resid');
+        location.href = "{:U('show_res')}&resid=" + resid;
+    });    
+    
+    function more_select(){
+        var aArray = {};
+        aArray['type_id'] = $('#type_id_').val();
+        aArray['topic_id'] = $('#topic_id_').val();
+        aArray['ver_id'] = $("#ver_id_").val();
+        aArray['seg_id'] = $("#seg_id_").val();
+        aArray['chap_id'] = $("#chap_id_").val(); 
+        aArray['know_id'] = $("#know_id_").val();
+        aArray['cid'] = $("#cid_").val();
+        initTable(aArray);
+    }
+
+    function initTable(aArray) {
+        $('#tbs').bootstrapTable('destroy');
+        $("#tbs").bootstrapTable({
+            method: "get",
+            url:"{:U('res_new')}",
+            striped:true,
+            pagination:true,
+            pageSize:8,
+            pageNumber:1,
+            pageList: [5, 10, 15, 20, 25],
+            sidePagination:"server",
+            paginationFirstText: "首页",
+            paginationPreText:"上一页",
+            paginationNextText:"下一页",
+            paginationLastText:"尾页",
+            queryParamsType : "undefined",
+            queryParams:function queryParams(params) {
+                var param = {
+                    page: params.pageNumber,
+                    aArray: aArray,
+                    pageSize: params.pageSize,
+                    account:$('#account').val(),
+                    start: $("#start").val(),
+                    end: $("#end").val(),
+                    sortName: this.sortName,
+                }
+                return param;
+            },
+            onLoadSuccess: function(res){
+                var res_list = '';
+                if (res.total == 0){
+                $('.fixed-table-loading').text('无相关资源');
+                }
+                $.each(res.rows, function (i,item) {
+                    res_list += '<li style="height:90px;">' + ((item.litpic == '') ? '<img src="' + item.imgs + '" class="upimg">' : '<img src="' + item.litpic + '" class="upimg">') + '<div class="functions">' + '<span>' + '<a class="res_id" data-resid="' + item.id + '" style="float:left;text-decoration:none;cursor: pointer;">' + item.title + '</a></span>';
+                    res_list += '<span class="article-details">' + "作者：" + ((item.userid == 6) ? "资源管理" : "{$name}") + "&nbsp;" + "上传时间：";
+                    res_list += date("Y-m-d H:i:s", item.publishtime);
+                    res_list += '</span>' + '<span class="article-details" style="padding-top:0">' + '大小：' + ((item.filesize == 0) ? "未知" : item.filesize) + "&nbsp;" + '<p class="download">' + "下载" + '<i>' + item.downcnt + '</i></p><p class="collect">' + "收藏" + '<i>' + item.collection + '</i></p><p class="browse">' + "浏览" + item.click + '</p>';
+                    res_list += '</span></div></li>';
+                });
+                $('#tbs tbody').html(res_list);
+                $('.pagination-detail').remove();
+                return false;
+            },
+            onLoadError: function(){
+                console.log("加载数据失败");
+            },
+        });
+    }
+
+    $(document).on("click", "#know_id ul li", function () {
+        var know_id = $(this).attr('data-knowid');
+        $('#topic_id_').val('');
+        $("#ver_id_").val('');
+        $("#seg_id_").val('');
+        $("#chap_id_").val(''); 
+        $("#know_id_").val(know_id);
+        more_select();
+    });
+
+    $('.search-btn').click(function () {
+        $('#form_adv_search').submit();
+    });
+    
+    $('#ver_list li a').click(function () {
+    	var ver_id = $(this).attr('dete-id');
+        $('#seg_list li').remove();
+        sendAjax("{:U('get_seg')}", "ver_id=" + ver_id, function (data) {
+            if (data && data.status == 1) {
+                $.each(data.data_seg, function (i, item) {
+                    $('#seg_list').append('<li><a dete-id="' + item.id + '">' + item.seg_name + '</a></li>');
+                });
+            }
+            $("#seg_list li a").on("click", function () {
+                var seg_id = $(this).attr('dete-id');
+                sendAjax("{:U('get_chapter')}", "seg_id=" + seg_id, function (data) {
+                    var seg_list_1 = $('#seg_list_1');
+                    $('#seg_list_1 div').remove();
+                    if (data && data.status == 1) {
+                        $.each(data.data_seg, function (i, item) {
+                            if (item._child) {
+                                var content_list = '';
+                                $.each(item._child, function (ii, item_) {
+                                    content_list += '<div class="accordion-content-list"><div class="accordion-content-list-header" title="' + item_.chap_name + '">' + cutstr(item_.chap_name, 18) + '</div>';
+                                    content_list += '<div class="accordion-content-list-content' + (ii == 0 ? ' on' : '') + '" id="chap_id"><ul>';
+                                    if (item_._child) {
+                                        $.each(item_._child, function (iii, item__) {
+                                            content_list += '<li title="' + item__.chap_name + '" data-catid=' + item__.id + ' id=' + "cat_res_id" + '>' + item__.chap_name + '</li>';
+                                        });
+                                    }
+                                    content_list += '</ul></div></div>';
+                                });
+                                seg_list_1.append(content_list);
+                            }
+                        });
+                        $('#seg_list_1').resourcesHomepage();
+                        $("#chap_id ul li").on("click", function () {
+                            var chap_id = $(this).attr('data-catid');
+                            $('#topic_id_').val('');
+                            $("#ver_id_").val('');
+                            $("#seg_id_").val('');
+                            $("#chap_id_").val(chap_id); 
+                            $("#know_id_").val('');
+                            more_select();
+                        });
+                    }
+                });
+                $("#seg_id_").val(seg_id);
+                $("#chap_id_").val(''); 
+                $("#know_id_").val('');
+                more_select();                        
+            });
+        });
+        $("#ver_id_").val(ver_id);
+        $("#seg_id_").val('');
+        $("#chap_id_").val(''); 
+        $("#know_id_").val('');
+        more_select();
+    });
+
+    $('#seg_list li a').click(function () {
+		var seg_id = $(this).attr('dete-id');
+	    sendAjax("{:U('get_chapter')}", "seg_id=" + seg_id, function (data) {
+	        var seg_list_1 = $('#seg_list_1');
+	        $('#seg_list_1 div').remove();
+	        if (data && data.status == 1) {
+	            $.each(data.data_seg, function (i, item) {
+	                if (item._child) {
+	                    var content_list = '';
+	                    $.each(item._child, function (ii, item_) {
+	                        content_list += '<div class="accordion-content-list"><div class="accordion-content-list-header" title="' + item_.chap_name + '">' + cutstr(item_.chap_name, 18) + '</div>';
+	                        content_list += '<div class="accordion-content-list-content' + (ii == 0 ? ' on' : '') + '" id="chap_id"><ul>';
+	                        if (item_._child) {
+	                            $.each(item_._child, function (iii, item__) {
+	                                content_list += '<li title="' + item__.chap_name + '" data-catid=' + item__.id + ' id=' + "cat_res_id" + '>' + item__.chap_name + '</li>';
+	                            });
+	                        }
+	                        content_list += '</ul></div></div>';
+	                    });
+	                    seg_list_1.append(content_list);
+	                }
+	            });
+	            $('#seg_list_1').resourcesHomepage();
+	            $("#chap_id ul li").on("click", function () {
+	                var chap_id = $(this).attr('data-catid');
+	                $('#topic_id_').val('');
+	                $("#ver_id_").val('');
+	                $("#seg_id_").val('');
+	                $("#chap_id_").val(chap_id); 
+	                $("#know_id_").val('');
+	                more_select();
+	            });
+	        }
+	    });
+	    $("#seg_id_").val(seg_id);
+	    $("#chap_id_").val(''); 
+	    $("#know_id_").val('');
+	    more_select(); 
+    });
+    
+    $('#my_res_down').click(function () {
+        location.href = "{:U('myreslist')}";
+    });
+
+    //加入收藏
+    function AddFavorite(sURL, sTitle) {
+        sURL = encodeURI(sURL);
+        try {
+            window.external.addFavorite(sURL, sTitle);
+        } catch (e) {
+            try {
+                window.sidebar.addPanel(sTitle, sURL, "");
+            } catch (e) {
+                alert("加入收藏失败，请使用Ctrl+D进行添加,或手动在浏览器里进行设置.");
+            }
+        }
+    }
+
+    //设为首页
+    function SetHome(url) {
+        if (document.all) {
+            document.body.style.behavior = 'url(#default#homepage)';
+            document.body.setHomePage(url);
+        } else {
+            alert("您好,您的浏览器不支持自动设置页面为首页功能,请您手动在浏览器里设置该页面为首页!");
+        }
+    }
+
+    /*切换选项*/
+    var navButton_01 = document.getElementById('navButton1')
+    var navButton_02 = document.getElementById('navButton2')
+    function navChange_01() {
+        change01.style.display = "block";
+        change02.style.display = "none";
+    }
+    function navChange_02() {
+        change01.style.display = "none";
+        change02.style.display = "block";
+    }
+
+    var _init_ = false;
+    $(document).ready(function () {
+        _init_ = true;
+        more_select();
+        //$(".course-ul a").eq(0).click();       
+    });
+
+    function cutstr(str, len) {
+        var str_length = 0;
+        var str_len = 0;
+        str_cut = new String();
+        str_len = str.length;
+        for (var i = 0; i < str_len; i++) {
+            a = str.charAt(i);
+            str_length++;
+            if (escape(a).length > 4) {
+                //中文字符的长度经编码之后大于4  
+                str_length++;
+            }
+            str_cut = str_cut.concat(a);
+            if (str_length >= len) {
+                str_cut = str_cut.concat("...");
+                return str_cut;
+            }
+        }
+        //如果给定字符串小于指定长度，则返回源字符串；  
+        if (str_length < len) {
+            return str;
+        }
+    }
+
+</script>

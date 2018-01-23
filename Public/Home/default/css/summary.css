@@ -1,0 +1,253 @@
+/*头部*/
+.common-top{
+	position:fixed;width:100%;height:65px;z-index:5000000000;
+}
+/*文章首页*/
+ul{
+     margin:0;
+     border:0;
+     padding:0;
+}
+*{
+    -webkit-box-sizing:inherit !important;
+    box-sizing:inherit !important;
+}
+body{
+    font-family: 'microsoft yahei' !important;
+} 
+.sum-banner{
+    margin-bottom: 10px;
+}
+.sum-banner img{
+    width:100%;
+}
+.visits:after{
+    display: block;
+    content:"";
+    clear:both;
+}
+.visits{
+    height:120px;
+    margin-bottom: 20px;
+    font-size: 16px;
+ }
+.visits div{
+    float:left;
+}
+.visits .v-logo{
+    width:150px;
+    height:120px;
+    margin-right: 10px; 
+    vertical-align: middle;
+    text-align: center;
+}
+.visits .v-logo .v-logo-img{
+    height:95px;
+    width:150px;
+    text-align: center;
+    vertical-align: middle;
+}
+.v-logo .v-logo-img img{
+    max-width: 100%;
+}
+.v-logo p{
+    margin:0;
+    padding:5px 0;
+    color:#aaa;
+}
+.visits .record:after{
+    display: block;
+    content:"";
+    clear:both;
+}
+.visits .record{
+    position:relative;
+    width:215px;
+    height:118px;
+    transition: background 300ms linear;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.visits .record.nomargin{
+    margin-right:0;
+}
+.visits .record:hover{
+    background-position: -10px 0;
+}
+div.record1{
+    background:url(../images/r1.png);
+}
+div.record2{
+    background:url(../images/r2.png);
+}
+div.record3{
+    background:url(../images/r3.png);
+}
+div.record4{
+    background:url(../images/r4.png);
+}
+.visits .record .data{
+    position:absolute;
+    top:30px;
+    left:15px;
+}
+.visits .record b{
+    display: block;
+    width:55%;
+    height:100%;
+    /*background:rgba(190, 190, 190, 0.27);*/
+    /*opacity:0.6;*/
+}
+.visits .record .data span{
+    font-weight: bold;
+    font-size: 16px;
+}
+/*统计项目*/
+.counts{
+    margin-top: 10px;
+    padding-bottom: 10px ;
+    border-bottom:1px solid #ddd;
+}
+.counts div.xiangmu:after{
+    display: block;
+    content:"";
+    clear:both;
+}
+.counts div.xiangmu{
+     border-bottom:1px solid #ddd;
+}
+.counts h3{
+    float:left;
+    margin:0;
+    font-size: 22px;
+    padding-bottom: 10px;
+    border-bottom:2px solid #00a2e3;
+}
+.counts .classfiy:after{
+    display: block;
+    content:"";
+    clear:both;
+}
+.counts .classfiy{
+    padding-top:10px;
+}
+.counts .classfiy li{
+    float:left;
+    width:525px;
+    padding:8px 0;
+    position:relative;
+}
+.counts .classfiy li div{
+    font-size: 18px;
+}
+.counts .classfiy li a{
+    color:#333;
+    text-decoration: none;
+}
+.counts .classfiy li a:hover{
+    color:#337ab7;
+    text-decoration: none;
+}
+.counts .classfiy li a:visited{
+    text-decoration: none;
+}
+.counts .classfiy li span{
+    position:absolute;
+    left:135px;
+    width:25px;
+    height:25px;
+    border-radius: 50%;
+    top:10px;
+    background:url(../images/wenhao.png);
+    cursor: pointer;
+}
+.counts .classfiy li.border-right{
+    border-right:1px solid #ddd;
+    width:514px;
+    margin-right: 10px;
+    padding-right:10px;
+}
+.counts .classfiy li p{
+    position: absolute;
+    left: 170px;
+    top: 8px;
+    background: #1ABC9C;
+    margin: 0;
+    color: #fff;
+    padding: 4px 5px;
+    opacity: 0.7;
+    border-radius: 5px;
+    display: none;
+}
+.graph{
+    margin:10px 0;
+    padding-bottom: 40px;
+}
+/*课程统计*/ 
+.sum-title:after{
+    display: block;
+    content:"";
+    clear:both;
+}
+.sum-title{
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+.sum-title .th-title{
+    float:left;
+    font-size: 22px;
+    border-bottom: 2px solid #00a2e3;
+    padding-bottom: 10px;
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+.date:after{
+    display:block;
+    content:"";
+    clear:both;
+}
+.date div{
+    float:left;
+    width:43%;
+    text-align: center;
+    margin:5px 0;
+}
+.date div.t-left{
+    text-align:left; 
+}
+.date div.others{
+    width:28%;
+}
+.date div input{
+    height:30px;
+}
+.date div select{
+    width:150px;
+}
+.result{
+    text-align: center;
+    margin-top:20px;
+}
+.result .rtbl{
+    width:980px;
+    border:1px solid #ddd;
+    border-radius: 5px;
+    text-align:center;
+    margin:0 auto;
+}
+
+.rtbl thead th{
+    text-align: center;
+    font-weight: 400;
+    font-size: 16px;
+    padding:5px 0;
+    border:1px solid #ddd;
+}
+.rtbl tbody td{
+    border:1px solid #ddd;
+    padding:5px 0;
+}
+.th1,.th2,.th3,.th4,.th5,.th6,.th7,.th8{
+    display: none;
+}

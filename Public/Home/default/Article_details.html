@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>文章详情</title>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+		<meta name="keywords" content=""/>
+		<meta name="description" content=""/>
+		<link href="__PUBLIC__/css/css_res.css?{$version}" rel="stylesheet" type="text/css" />
+		<!--通用样式文件-->
+		<link href="__PUBLIC__/css/common.css?{$version}" rel="stylesheet" type="text/css" />
+		<!--私有样式文件-->
+		<link href="__PUBLIC__/css/zixun_res.css?{$version}" rel="stylesheet" type="text/css" />
+			<script type="text/javascript">
+			var app_path = "__ROOT__";
+			var public_path = "__PUBLIC__";			
+		</script>
+	</head>
+	<body>
+		<div class="main article-details-page">
+			<!--顶部通栏-->
+			<div class="common-top" style=" margin-top: -75px;">
+				<!--页眉-->
+                            <include file="Public:head" />
+			</div>
+			<!--主体内容区域-->
+			<div class="page-content article-details w1002">
+				<div class="style">
+					<img src="__PUBLIC__/images/articlebanner.jpg" alt="">
+				</div>
+				<div class="article-left">
+					<div class="article-details-header">
+						<div class="article-title">{$list.title}</div>
+						<div class="article-time">
+							<i>作者：
+	                                                    <if condition="$list.author eq ''"> 管理员                       
+	                                                    <elseif condition="$list.author neq ''" />{$list.author}                                             
+	                                                    </if>                                         
+							</i>                                             
+							<i>日期：{$list.updatetime|date='Y-m-d H:i:s', ###}</i>
+							<i style="margin-right:0;">人气：{$list.click}</i>
+						</div>
+					</div>
+					<div class="article">{$list.content}</div>
+                    <div class="fenye1" style="text-align:left;">
+	                    ↑上一篇：
+	                    <if condition="$pro eq ''">第一篇<br/>           
+	                        <else/><a href="{:U('details','id='.$pro['id'])}">{$pro.title}</a><br/>
+	                    </if>                              
+	                    ↓下一篇：
+	                    <if condition="$next eq ''">最后一篇<br/>           
+	                        <else/><a href="{:U('details','id='.$next['id'])}">{$next.title}</a>
+	                    </if>                             
+                	</div>
+					<div class="h-title"></div>				
+					<if condition="$list['commentflag'] eq 1">
+					<div class="comment-box">                             
+						<h3 style="margin-bottom:10px;">评论:</h3>		
+						<div class="more-comment">
+							后面还有<span id="more_count"></span>条评论，<a href="javascript:get_review();">点击查看>></a>
+						</div>
+						<form action="{:U('add')}" method="post" class="comment-item" id="reviewForm"  autocomplete="off">
+						<a name="reply_" id="reply_"></a>                                        
+							<input type="hidden" name="post_id" value="{$list.id}"/>
+							<input type="hidden" name="model_id" value="{$list.cid}" />
+							<input type="hidden" name="title" value="{$list.title}"/>
+	                                                <input type="hidden" name="username" value="{$list.username}" />                                         
+	                                                <input type="hidden" name="review_id" value="0" />
+							<span class="avatar"><img src="{:get_avatar(get_cookie('face'),30)}" alt="" id="my_avatar"></span>
+							<div class="comment-bd" id="review">
+								<div class="comment-textarea">
+									<textarea name="content" placeholder="我也来说两句..." style="height:10%;"></textarea>
+								</div>
+									<!--							<if condition="C('cfg_verify_review') eq 1">
+								<div class="comment-vcode">								
+									<input type="text" name="vcode" class="inp_small" />
+									<img src="<yang:vcodeurl />" id="VCode" onclick="javascript:changeVcode(this);" />
+								</div>
+								</if>-->
+							</div>
+							<div class="comment-ft">
+								<input type="submit" class="btn_blue" value="评论&nbsp;[&nbsp;Ctrl+Enter&nbsp;]">
+							</div>
+						</form>        
+							<!--				<div class="login-tip" style="display:none;">
+						您可以选择 <a href="">登录</a> | <a href="">立即注册</a>
+					</div>    
+					</div>-->
+					</div>
+				</div>
+				<div class="article-right">
+					<div class="newarticle">
+						<h3>最新文章</h3>
+					  	<ul class="article-content">
+	                                            <volist name='art_list' id='vo' key='key'>
+	                                                <li>
+	                                                    <em class="sn theo">{$key}</em>
+	                                                    <a href="{:U('details','id='.$vo['id'])}">{$vo.title}</a>
+	                                                    <em class="emen">{$vo.publishtime|date='Y-m-d H:00', ###}</em>
+							</li>
+	                                            </volist>
+					  	</ul>
+					</div>
+					<div class="newarticle">
+						<h3>热门文章</h3>
+					  	<ul class="article-content">
+	                                            <volist name='art_relist' id='vo' key='key'>
+	                                                <li>
+	                                                    <em class="sn theo">{$key}</em>
+	                                                    <a href="{:U('details','id='.$vo['id'])}">{$vo.title}</a>
+	                                                    <em class="emen">{$vo.publishtime|date='Y-m-d H:00', ###}</em>
+							</li>
+	                                            </volist>
+					  	</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--jquery库-->
+		<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js"></script>
+		<!--SuperSlide核心库-->
+		<script type="text/javascript" src="__PUBLIC__/js/common-focus.js"></script>
+		<!--私有js文件-->
+		<script type="text/javascript" src="__PUBLIC__/js/educationwisdom.js"></script>
+		<!-- 私有js文件-->
+		<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+		<!--自定义select-->
+		<script type="text/javascript" src="__PUBLIC__/js/select.js"></script>  
+		<!--自定义评论js-->
+		<script type="text/javascript" src="__PUBLIC__/js/review_word.js"></script>               
+	</body>
+</html>
+ <script type="text/javascript" language="javascript">
+    var get_review_url = "{:U('getlist')}";
+    var post_review_url = "{:U(MODULE_NAME.'/Article/add')}"; 
+   
+    function changeVcode(obj){
+        $("#VCode").attr("src",'<yang:vcodeurl />'+ '#'+Math.random());
+        return false;
+    }
+    //加入收藏
+    function AddFavorite(sURL, sTitle) {
+        sURL = encodeURI(sURL); 
+	    try{   
+	        window.external.addFavorite(sURL, sTitle);   
+	    }catch(e) {   
+	        try{   
+	            window.sidebar.addPanel(sTitle, sURL, "");   
+	        }catch (e) {   
+	            alert("加入收藏失败，请使用Ctrl+D进行添加,或手动在浏览器里进行设置.");
+	        }   
+	    }
+	}
+	//设为首页
+    function SetHome(url){
+        if (document.all) {
+            document.body.style.behavior='url(#default#homepage)';
+               document.body.setHomePage(url);
+        }else{
+            alert("您好,您的浏览器不支持自动设置页面为首页功能,请您手动在浏览器里设置该页面为首页!");
+        }
+    }
+</script>

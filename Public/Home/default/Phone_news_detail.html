@@ -1,0 +1,26 @@
+<extend name="Layout/phone_base" />
+<block name="css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/phone/iframedetails.css">	
+</block>		
+<block name="content">
+    <div class="caipu-details">
+        <h1>{$new_detail['title']}</h1>
+        <div class="details-time">
+            <span>发布人：
+                <if condition="$new_detail['author'] eq ''"> 管理员                       
+                    <elseif condition="$new_detail['author'] neq ''" /> {$new_detail['author']}                        
+                </if>					
+               </span>
+            <span>发布时间：{$new_detail.updatetime|date='Y-m-d H:i:s', ###}</span>
+        </div>
+        <!-- <div class="goback">
+            <a href="{:U('news')}" style='text-decoration:none;'>返回</a>
+            <img src="__PUBLIC__/images/phone/goback.png">
+        </div> -->
+        <div class="articles">
+            <div>{$new_detail.content} </div>
+        </div>
+    </div>
+</block>
+<block name="js">
+</block>

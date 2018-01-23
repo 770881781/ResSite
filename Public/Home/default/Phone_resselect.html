@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title>资源</title>
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/phone/res.css">
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/bootstrap.min.css">
+        <link href="__PUBLIC__/css/phone/css.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="__PUBLIC__/css/iconfont.css">       
+        <script src="__PUBLIC__/js/jquery-1.8.3.min.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/js/bootstrap.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/js/news.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <div class="all">
+            <!-- <header class="res-title xiti">
+                <h3>资源搜索</h3>
+                <div class="goback">
+                    <a href="JavaScript:history.back(-1);" style='text-decoration:none;'>返回</a>
+                    <img src="__PUBLIC__/images/phone/goback.png">
+                </div>
+            </header> -->
+            <?php $type = get_device_type();?>
+           <form method="post" id="form_adv_search"  method="post" action="{:U('resselect')}">
+               <input type="hidden" class='cid' value="{$cid}">            
+               <input type="hidden" id='number' value="1">
+               <input type="hidden" id='type' value="{$type}">
+                <div class="choose">
+                    <div><input type="radio" name="cid" value="">全部</div>
+                    <volist name="list" id="vo">
+                    <div><input type="radio" name="cid" value="{$vo.id}">{$vo.name}</div>                
+                    </volist>
+                </div>
+                <div class="container">
+                    <div class="row search-keywords search-res">
+                        <div class="col-xs-2">
+                            <a href="{:U('resindex')}" style='text-decoration: none;float: left;font-weight: 400;margin-right:10px;margin-top:5px;'>返回      
+                                <img src="__PUBLIC__/images/phone/goback.png" style="vertical-align:sub;">
+                            </a>
+                        </div>
+                        <div class="col-xs-8">
+                            <input type="search" name="title" results="s" id=title placeholder="请输入关键字" value="{$title}"> 
+                        </div>
+                        <div class="col-xs-2"><span><a href="javascript:()" onclick="sub()" style="margin-right:0;">查询</a></span></div>
+                    </div>
+                </div>
+            </form>     
+            <div class="accrodin" style="background:#f5f5f5">
+                <if condition="$reslist eq ''">  
+                    <if condition="$cid eq '' && $title eq ''">  
+                        <div class="acc-outside">请输入关键词点击查询按钮查询</div>  
+                    <else/>
+                        <div class="acc-outside">未搜索到相关数据</div>  
+                    </if>
+                <else/>     
+                    <div class="acc-inside open">                                                
+                    <div id="reslist_sele">
+                        <volist name="reslist" id="vo">                             
+                            <div class="list-content">                    
+                                <div class="tu">
+                                    <img src="{$vo.imgs}" style="width:38px;">
+                                </div>
+                                <div class="content-detail">
+                                    <if condition="$type eq 'ios' && $vo.ext eq 'pdf'">                   
+                                        <p onclick="javascript:window.open('{$vo.savename}')"><a>{$vo.title}</a></p>                          
+                                    <else />
+                                        <p><a href="{:U('resdetail','resid='.$vo['id'])}">{$vo.title}</a></p>
+                                    </if>
+                                    <h5>
+                                        <if condition="$vo.cid eq 16"> 习题                 
+                                            <elseif condition="$vo.cid eq 17" />课件
+                                            <elseif condition="$vo.cid eq 18" />视频
+                                            <elseif condition="$vo.cid eq 19" />教研成果                                    
+                                        </if>    
+                                        <span>上传时间：{$vo.publishtime|date='Y-m-d H:i:s', ###}</span>
+                                    </h5>          
+                                </div>
+                            </div>      
+                        </volist>
+                   </div>               
+                </if>
+            </div> 
+            <if condition="$reslist neq ''">  
+                <div class='loding' onclick='more_select()'>加载更多</div> 
+            </if>
+    </body>
+</html> 
+<script>      
+    var cid = $('.cid').val();    
+    var val = "[value="+cid+"]";
+    $("input[name='cid']"+val).attr("checked",true);
+    
+    function sub(){          
+        $('#form_adv_search').submit();           
+    }    
+    
+    function more_select(){ 
+        var type = $('#type').val();
+        var aArray = {};
+        aArray['title'] = $('#title').val();
+        aArray['number'] = $('#number').val();  
+        aArray['cid'] = $("input[type='radio']:checked").val();
+        sendAjax_data("{:U('orlist_select')}",aArray, function (data) {
+            if (data.status == 1) {
+                var _html='';
+                $.each(data.data, function (i, item) {  
+                    var _html = '<div class="list-content"><div class="tu"><img src="'+item.imgs+'" style="width:38px;"></div><div class="content-detail">';                       
+                        if(type == 'ios' && item.ext == 'pdf'){
+                            _html+= '<p onclick="javascript:window.open('+"'"+item.savename+"'"+')">'+item.title+'</p>';
+                        }else{
+                            _html+=  '<p class="resdetail" data-id="'+item.id+'">'+'<a>'+item.title+'</a>'+'</p>';
+                        }     
+                        _html+= '<h5>'+is_cid(item.cid)+'<span>上传时间：'+date('Y-m-d H:i:s',item.publishtime)+'</span></h5>';                    
+                        _html+= '</div></div>';                                           
+                        $('#reslist_sele').append(_html);                                         
+                });       
+                $(".resdetail").on("click", function() { 
+                    var id = $(this).attr('data-id');
+                    location.href="{:U('resdetail')}&resid="+id;    
+                });
+                $('#number').val(data.number);                  
+            } else {
+              $('.loding').text('没有更多内容啦'); 
+              $('.loding').attr('onclick','');            
+            }
+        });
+    }       
+    
+     function is_cid(category) {
+            if (category == 16) {
+                return '习题';
+            } else if (category == 17) {
+                return '课件';
+            } else if (category == 18) {
+                return '视频';
+            } else if (category == 19) {
+                return '教研成果';
+            } else {
+                return '未知';
+            }
+        }      
+   
+       
+    </script>     

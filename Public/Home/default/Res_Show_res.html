@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>资源播放</title>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="keywords" content=""/>
+	<meta name="description" content=""/>	
+        <link href="__PUBLIC__/css/css_res.css?{$version}" rel="stylesheet" type="text/css" />
+	<!--bootstrap样式文件-->
+	<link href="__PUBLIC__/css/bootstrap.min.css?{$version}" rel="stylesheet" type="text/css" />
+	<!--通用样式文件-->
+	<link href="__PUBLIC__/css/common.css?{$version}" rel="stylesheet" type="text/css" />	
+	<link href="__PUBLIC__/css/educationwisdom_res.css?{$version}" rel="stylesheet" type="text/css" />
+	<style>
+	.mainContainer {
+		display: block;
+		width: 100%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.urlInput {
+		display: block;
+		width: 100%;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 8px;
+		margin-bottom: 8px;
+	}
+
+	.centeredVideo {
+		display: block;
+		width: 100%;
+		height: 100%;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: auto;
+	}
+
+	.controls {
+		display: block;
+		width: 100%;
+		text-align: left;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	</style>
+	<!--jquery库-->
+</head>
+<body>
+	<div class="main resources-details-page">
+		<!--顶部通栏-->
+		<div class="common-top" style="margin-top:-75px;">
+			<include file="Public:head" />
+		</div>
+		<!--主体内容区域-->
+		<div class="page-content w1002" style="width:1110px;">
+			<div class="page-content-right" style="width:810px;">
+				<if condition="$res_li.type eq 1">
+				<script type="text/javascript" src="__PUBLIC__/js/flv/flv.min.js"></script>
+				<div class="mainContainer">
+					<input type="hidden" id="videourl" name="videourl" value="">
+						<video name="videoElement" class="centeredVideo" controls autoplay width="100%" height="100%">
+							Your browser is too old which doesn't support HTML5 video.
+						</video>
+					<script>
+						function flv_load(source) {
+							console.log('isSupported: ' + flvjs.isSupported());
+							var mediaDataSource = source;
+							var element = document.getElementsByName('videoElement')[0];
+							if (typeof player !== "undefined") {
+								if (player != null) {
+									player.unload();
+									player.detachMediaElement();
+									player.destroy();
+									player = null;
+								}
+							}
+							player = flvjs.createPlayer(mediaDataSource, {
+								enableWorker: false,
+								lazyLoadMaxDuration: 3 * 60,
+								seekType: 'range',
+							});
+							player.attachMediaElement(element);
+							player.load();
+						}
+
+						function flv_start() {
+							player.play();
+						}
+
+						function flv_pause() {
+							player.pause();
+						}
+
+						function flv_destroy() {
+							player.pause();
+							player.unload();
+							player.detachMediaElement();
+							player.destroy();
+							player = null;
+						}
+						
+						document.addEventListener('DOMContentLoaded', function () {
+							var videourl = eval({$res_li.file});
+							if(videourl) flv_load(videourl);
+						});
+					</script>
+				</div>
+				<else />
+				<iframe id="pdfiframe" name="pdfiframe" src="{:C('ISPOA_RESROOT')}/ResSite/Public/Home/default/js/pdf/web/viewer.htm?file={$res_li.file}" frameborder="0"></iframe>
+				</if>
+			</div>
+			<div class="page-content-left" style="width:250px;">
+
+				<div class="resources-information">
+					<div class="resources-information-header">资源信息</div>
+					<div class="resources-information-details">
+						<ul>
+							<li>标题：<i>{$res.title}</i></li>
+							<!-- <li>所需积分：<i>免费</i></li> -->
+							<li>教材版本：<i>{$ver_name}</i></li>
+							<li>文件大小：<i>{$res.filesize}</i></li>
+							<li>资源介绍：
+								<i>
+								    <if condition="$res['content'] eq ''">									
+                                        暂无
+                                    <else/> 
+                                        {$res.content}
+                                    </if>                                             
+								</i>
+							</li>
+						</ul>
+					</div>
+<!--					<div class="start">
+						<ul>
+							<li class="on"></li>
+							<li class="on"></li>
+							<li class="on"></li>
+							<li></li>
+							<li></li>
+						</ul>
+					</div>
+					<div class="score">
+						<i>3分</i>共（28）人参与打分
+					</div>-->
+				</div>
+				
+				<div class="article-management" style="margin-top:0;" id='my_res_down'><i>管理我的文件</i></div>
+				
+				<div class="resources-btn">
+                    <if condition="$is_collect eq '收藏'">
+                        <a href="javascript:void(0)" class="collecting-btn" id="collect"><i>{$is_collect}</i></a>
+                    <else/>
+                        <a href="javascript:void(0)" class="collecting-btn" style='background-position: 13px center;'><i style='padding-left:37px;'>{$is_collect}</i></a>
+                    </if>
+					<a href="{$res['down']}" class="download-btn" target="_blank" id="download" download="{$res.filename}"><i>下载</i></a>     
+				</div><br><i>如在线观看不清晰，可下载源文件观看！</i>
+			</div>  
+        
+		<div class="comment">
+            <if condition="$res['commentflag'] eq 0">
+            <!--comment -->
+	            <div class="comment-box">
+	                <h3>评论(<span class="review-count">0</span>)</h3>					
+	                <div class="more-comment">
+	                    后面还有<span id="more_count"></span>条评论，<a href="javascript:get_review();">点击查看>></a>
+	                </div>
+	                <form action="{:U('add')}" method="post" class="comment-item" id="reviewForm"  autocomplete="off">
+	                    <a name="reply_" id="reply_"></a>
+	                    <input type="hidden" name="post_id" value="{$res.id}" id="res_id"/>
+	                    <input type="hidden" name="model_id" value="{$res.cid}" />
+	                    <input type="hidden" name="username" value="{$username}" />
+	                    <input type="hidden" name="title" value="{$res.title}"/>
+	                    <input type="hidden" name="review_id" value="0" />
+	                    <span class="avatar"><img src="{:get_avatar(get_cookie('face'),30)}" alt="" id="my_avatar"></span>
+	                    <div class="comment-bd" id="review">
+	                        <div class="comment-textarea">
+	                            <textarea name="content" placeholder="我也来说两句..."></textarea>
+	                        </div>								
+	                    </div>
+	                    <div class="comment-ft">
+	                        <input type="submit" class="btn_blue" value="评论">
+	                    </div>
+	                </form>						
+	            </div>
+            </if> 
+	    </div>           
+	</div>
+	<!--SuperSlide核心库-->
+	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/common-focus.js"></script>
+	<!--私有js文件-->
+	<script type="text/javascript" src="__PUBLIC__/js/educationwisdom.js"></script>
+	<!-- 私有js文件-->
+	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>        
+	<!--自定义select-->
+	<script type="text/javascript" src="__PUBLIC__/js/select.js"></script>
+	<!--自定义评论js-->
+	<script type="text/javascript" src="__PUBLIC__/js/review_word.js"></script>       
+	<script type="text/javascript">
+		var app_path = "__ROOT__";
+		var public_path = "__PUBLIC__";			
+	</script>
+	<script type="text/javascript" language="javascript">            
+        var get_review_url = "{:U('getlist')}";
+        var post_review_url = "{:U(MODULE_NAME.'/Article/add')}"; 
+
+        function changeVcode(obj){
+            $("#VCode").attr("src",'<yang:vcodeurl />'+ '#'+Math.random());
+            return false;
+        }	
+        
+        $('#my_res_down').click(function(){
+            location.href="{:U('download')}";   
+        });		
+		
+		$(document).on("click", "#collect", function () {     
+			var res_id = $('#res_id').val();  
+			sendAjax("{:U('get_is_collect')}", 'res_id='+res_id, function(data) {
+				if (data.status==1) {
+					alert(data.info);
+				}else{  
+					alert(data.info);
+                    $('.collecting-btn').attr('style','background-position: 13px center;');
+                    $('#collect').attr('style','padding-left: 37px;');
+					$('#collect').text('已收藏');                               
+				}
+			});
+		});        
+                
+		$(document).on("click", "#download", function () {     
+			var res_id = $('#res_id').val();             
+			sendAjax("{:U('get_is_download')}", 'res_id='+res_id, function(data) {
+				if (data.status==1) {
+					console.log(data.info);
+				}else{  
+					console.log(data.info);                                                              
+				}
+			});
+		});        
+		
+		//加入收藏
+		function AddFavorite(sURL, sTitle) {
+			sURL = encodeURI(sURL); 
+			try{   
+				window.external.addFavorite(sURL, sTitle);   
+			}catch(e) {   
+				try{   
+					window.sidebar.addPanel(sTitle, sURL, "");   
+				}catch (e) {   
+					alert("加入收藏失败，请使用Ctrl+D进行添加,或手动在浏览器里进行设置.");
+				}   
+			}
+		}
+		//设为首页
+		function SetHome(url){
+			if (document.all) {
+				document.body.style.behavior='url(#default#homepage)';
+				   document.body.setHomePage(url);
+			}else{
+				alert("您好,您的浏览器不支持自动设置页面为首页功能,请您手动在浏览器里设置该页面为首页!");
+			}
+		}
+	</script>
+</body>
+</html>
+ 

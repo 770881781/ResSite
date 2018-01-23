@@ -1,0 +1,133 @@
+<extend name="Layout/phone_base" />
+<block name="css">	
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/phone/newslist.css">
+	<link rel="stylesheet" href="__PUBLIC__/css/bootstrap.min.css">
+</block>	
+<block name="content">
+	<div class="container">
+		<!-- 头部 -->
+		<!-- <header class="mui-bar mui-bar-nav">
+		    <a class="mui-icon"></a>
+		    <h1 class="mui-title">更多资讯</h1>
+		</header> -->
+		<!-- 正文部分 -->
+		<div class="nav">
+			<!-- <div style="height:44px;"></div> -->
+			<!-- 搜索部分 -->
+<!--			<div class="row">
+				<div class="col-xs-12 search">
+					<input class="col-xs-9" type="search" placeholder="搜索">
+					<div class="col-xs-3 mores">
+						<a href="">更多<i></i></a>
+					</div>
+				</div>
+			</div>-->
+			<!-- 列表部分 -->
+			<div class="row">
+                            <div class="kinds col-xs-12">
+                                <div class="col-xs-3 cation" onclick='cid_list(0)'><a class="colors">全部</a></div>
+                                <volist name="model_list" id="vo"> 	                                                   
+                                    <div class="col-xs-3 cation" onclick='cid_list({$vo.id})'><a>{$vo.name}</a></div>
+                                </volist>                                         
+                            </div>
+			</div>
+			<div class="row">
+				<div class="buffer">
+					<div class="kinds-list col-xs-12 on" id="alllist">
+						<ul class='art_list'>
+                            <input type="hidden" id='number' value="1">
+							<volist name='reslist' id='vo'>
+                                <li data-id='{$vo.id}' class='airdetail'>
+                                    <if condition="$vo.litpic eq ''">    
+                                       <img class="col-xs-3 img-responsive" src="__PUBLIC__/images/moren.png">
+                                    <else/>
+                                       <img class="col-xs-3 img-responsive" src="{$vo.litpic}">
+                                    </if>
+                                    <div class="col-xs-9 list-content">
+                                            <div class="newstitle">{$vo.title}</div>									
+                                            <p class="pull-left">{$vo.username}</p>
+                                            <p class="pull-right">{$vo.publishtime|date='Y-m-d H:i', ###}</p>
+                                    </div>
+                                </li>
+							</volist>
+						    <div id='art_rec'></div>
+                            <span id='more_rec' class="onloading" onclick='morelist(0)'>加载更多</span>     
+						</ul>	
+                        			
+					</div>		
+				</div>
+			</div>			
+		</div>
+	</div> 
+</block>
+<block name="js">
+    <script src="__PUBLIC__/js/jquery-1.11.3.js"></script>
+    <script src="__PUBLIC__/js/bootstrap.js"></script>
+    <script src="__PUBLIC__/js/news.js"></script>
+    <script>
+        $('.cation').on('click','a',function(e){
+            e.preventDefault();
+            $(this).addClass('colors').parent().siblings().children().removeClass('colors'); 			
+        });
+        
+        function cid_list(cid){
+            $('#number').val(1);
+            $('#more_rec').text('加载更多'); 
+            $('.art_list li').remove();
+            sendAjax("{:U('cid_list')}", 'cid='+cid, function(data) {
+                if (data && data.status==1) {
+                    var res_list = '';                         
+                    $.each(data.data, function (i, item) {                         
+                        res_list +='<li data-id="'+item.id+'" class="airdetail">'+((item.litpic == '')?'<img class="col-xs-3 img-responsive" src="__PUBLIC__/images/moren.png">':'<img src="'+item.litpic+'" class="col-xs-3 img-responsive">');
+                        res_list +='<div class="col-xs-9 list-content"><div class="newstitle">'+item.title;
+                        res_list +='</div><p class="pull-left">'+item.username;
+                        res_list +='</p><p class="pull-right">';
+                        res_list += date("Y-m-d H:i",item.publishtime);
+                        res_list +='</p></div></li>';                         					           
+                    });                        
+                    $('#art_rec').html(res_list);click();
+                    $('#more_rec').attr('onclick','morelist("'+cid+'")');                  
+                }else{  
+                    $('#more_rec').text('无相关数据');                                  
+                }
+            });         
+        }
+        
+        function morelist(cid){
+            var number = $('#number').val();
+            number = number + '|' + cid;          
+            sendAjax("{:U('morelist')}", 'number='+number, function(data) {
+                if (data && data.status==1) {
+                    var res_list = '';                         
+                    $.each(data.data, function (i, item){                         
+                        res_list +='<li data-id="'+item.id+'" class="airdetail">'+((item.litpic == '')?'<img class="col-xs-3 img-responsive" src="__PUBLIC__/images/moren.png">':'<img src="'+item.litpic+'" class="col-xs-3 img-responsive">');
+                        res_list +='<div class="col-xs-9 list-content"><div class="newstitle">'+item.title;
+                        res_list +='</div><p class="pull-left">'+item.username;
+                        res_list +='</p><p class="pull-right">';
+                        res_list += date("Y-m-d H:i",item.publishtime);
+                        res_list +='</p></div></li>';                                   					           
+                    });                          
+                    $('#art_rec').append(res_list);click();                    
+                    $('#number').val(data.number);    
+                }else{  
+                    $('#more_rec').text('没有更多内容啦');                                    
+                }
+            });            
+        }          
+        
+        function click(){
+            $(".airdetail").on("click", function() { 
+                var airid = $(this).attr('data-id');      
+                location.href="{:U('news_detail')}&id="+airid;      
+            });
+        }          
+   
+        $('.airdetail').click(function(){
+            var airid = $(this).attr('data-id');      
+            location.href="{:U('news_detail')}&id="+airid;        
+        }); 
+        
+        
+        
+    </script>
+</block>

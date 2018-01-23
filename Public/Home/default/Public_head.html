@@ -1,0 +1,84 @@
+<!--顶部通栏-->
+    <?php $is_st = is_student(); if($is_st == ''){ $is_st = 2; } ?>
+    <div class="common-top" >
+            <!--导航栏-->
+            <div class="page-nav">
+                    <div class="w1002 nav">
+                        <span onclick="javascript:window.location.href='/sns/index.php/Home/index/index'" style="display: inline-block;width: 300px;height: 60px;"></span>
+                        <ul>
+                            <foreach name="Think.config.ISP_NAV" item="vo">
+                                <if condition="!is_student() and $vo.tag eq 1">
+                                <li><a href="{$vo.url}">{$vo.title}</a></li>
+                            <elseif condition="$vo.tag eq 0" />
+                                <li><a href="{$vo.url}">{$vo.title}</a></li>
+                            </if>
+                            </foreach>                            
+                        </ul>
+                    </div>
+                    <iframe scrolling=no frameBorder="no" onLoad="IframeLoadEND()" frameborder=0 id="frmrightChild" style="scrollbar-arrow-color:yellow;scrollbar-base-color:lightsalmon; width:220px;float:right;height:65px;" name="frmrightChild" src="{:C('ISPSNS_ROOT')}index.php?s=/weibo/share/logout.html"></iframe>
+	  </div>
+    </div>
+ 
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.7.2.min.js"></script>
+<script>
+        var is_st = {$is_st};
+        var urlstr = location.href;
+        var urlstatus=false;  
+        $('.w1002 a').each(function () {  
+        if ((urlstr + '/').indexOf($(this).attr('href')) > -1&&$(this).attr('href')!='') 
+        {  
+            $(this).addClass('selected'); 
+            urlstatus = true;  
+        } 
+        else 
+        {  
+            $(this).removeClass('selected');  
+        }  
+        });  
+        // if (!urlstatus) {$('.w1002 a').eq(1).addClass('selected'); } 
+        
+        
+     
+
+      var obj={'jxzy1':'ResSite/index.php?s=/Res',//教学资源
+              'zxzx1':'ResSite/index.php?s=/Article',
+              'zxks1':'ResSite/index.php?s=/Exam',
+              'zhkt1':'ResSite/index.php?s=/Wisdom',
+              'wlkj1':'sns/index.php?s=/weibo',
+              // 'zxzx2':''
+          }
+        var local=location.href;
+        if(is_st == 2){           
+            $.each(obj,function(i,m){
+                if(local.indexOf(m)>-1){
+                    if(i=='zxzx1'){
+                        $('.w1002 a').eq(7).addClass('selected'); 
+                    }else if(i=='jxzy1'){
+                        $('.w1002 a').eq(2).addClass('selected'); 
+                    }else if(i=='zxks1'){
+                        $('.w1002 a').eq(5).addClass('selected'); 
+                    }else if(i=='zhkt1'){
+                        $('.w1002 a').eq(6).addClass('selected'); 
+                    }else if(i=='wlkj1'){
+                        $('.w1002 a').eq(1).addClass('selected'); 
+                    }
+                }
+            })
+        }else{
+            $.each(obj,function(i,m){
+                if(local.indexOf(m)>-1){
+                  if(i=='zxzx1'){
+                      $('.w1002 a').eq(5).addClass('selected'); 
+                  }else if(i=='jxzy1'){
+                      $('.w1002 a').eq(2).addClass('selected'); 
+                  }else if(i=='zxks1'){
+                      $('.w1002 a').eq(3).addClass('selected'); 
+                  }else if(i=='zhkt1'){
+                      $('.w1002 a').eq(4).addClass('selected'); 
+                  }else if(i=='wlkj1'){
+                      $('.w1002 a').eq(1).addClass('selected'); 
+                  }
+                }
+            });            
+        }
+</script>

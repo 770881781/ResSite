@@ -1,0 +1,50 @@
+<extend name="Layout/phone_base" />
+<block name="css">	
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/education.css">
+	<link rel="stylesheet" href="__PUBLIC__/css/idangerous.swiper.css">
+</block>	
+<block name="content">
+	<!--  <header class="mui-bar mui-bar-nav base-header-background">
+	 	<a href="" onClick="javascript:history.go(-1);"></a>
+	 	<h1 class="mui-title">教育资讯</h1>
+	 </header> -->
+	 <div class="banner">
+	 	<div class="swiper-container">
+	 		<div class="swiper-wrapper"> 
+                            <volist name="model_abc" id ="vo">
+	 			<div class="swiper-slide">
+	 				<a href="{$vo.url}"><img src="{$vo.content}" alt="" /></a>
+	 			</div>
+                             </volist>
+	 		</div>
+	 	</div>
+	 </div>
+	 <div class="fenlei-list">
+		<volist name='list' id ='vo'>
+			<div class="school-news cat_id" data-id='{$vo.id}' data-name='{$vo.name}'>
+                            	<if condition="$vo.catpic eq ''"><img src="__PUBLIC__/images/phone/news.jpg">              
+                                <elseif condition="$vo.catpic neq ''" /><img src="{$vo.catpic}" style="width:70px;height:70px;">                      
+                                </if>                              
+				<div>
+					<h5>{$vo.name}</h5>
+					<p>{$vo.content}</p>
+				</div>
+				<span>&gt;</span>
+			</div>
+		 </volist>	
+	 </div>
+</block>
+<block name="js">
+<script src="__PUBLIC__/js/idangerous.swiper.min.js"></script>
+    <script>
+        var mySwiper = new Swiper('.swiper-container',{
+	    loop: true,
+            autoplay: 3000,
+            calculateHeight:true,
+        });
+        $(document).on("click", ".cat_id", function (){
+            var cat_id = $(this).attr('data-id');          
+            location.href="{:U('news_list')}&cat_id="+cat_id;
+        });     
+    </script>
+</block>

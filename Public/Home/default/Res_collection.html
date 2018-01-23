@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+		<title>{$title}<yang:sitename /></title>
+		<meta name="keywords" content="{$keywords}" />
+		<meta name="description" content="{$description}" />
+		<link rel="shortcut icon" href="" type="image/x-icon"/>
+		<link href="__PUBLIC__/css/css.css?{$version}" rel="stylesheet" type="text/css" />		
+                <!--通用样式文件-->
+		<link href="__PUBLIC__/css/common.css?{$version}" rel="stylesheet" type="text/css" />
+		<!--私有样式文件-->
+                <link href="__PUBLIC__/css/educationwisdom_down.css?{$version}" rel="stylesheet" type="text/css" >
+		<script type="text/javascript">
+			var app_path = "__ROOT__";
+			var public_path = "__PUBLIC__";			
+		</script>
+	</head>
+	<body>
+	<div class="main resources-details-page my-resources">
+			<!--顶部通栏-->
+			<div class="common-top" style="margin-top:-75px;">
+				<!--页眉-->
+                            <include file="Public:head" />
+			</div>
+			<!--主体内容区域-->
+			<div class="page-content article-content w1002">
+				<div class="page-content-left" style="margin-left:0;">
+					<div class="page-content-header"><p>资源搜索</p></div>
+						<form method="post" id="form_adv_search"  method="post" action="{:U('select/index')}"> 					       <div class="search">                                                 
+							<input type="text" id='select' name='select'>
+							<input type="hidden" id='cid' name='cid' value='18'>
+								<div class="customSelectStyle">
+								<div class="customSelectValue">视频</div>
+								<div class="customSelectBtn"></div>
+									<div class="customSelectValueList">
+									<volist name="model_list" id="vo">
+									<p class="listValue" data-delid="{$vo.id}">{$vo.name}</p>		
+									</volist>						
+									</div>
+								</div>
+							</div>
+							<div class="search-btn">搜索</div>
+						</form>
+					<div class="article-management"><i id="my_res_list">我的上传</i></div>
+					<div class="article-management my-download"><i id="my_res_down">我的下载</i></div>
+					<div class="article-management my-favorite"><i id="my_res_coll">我的收藏</i></div>
+					<div class="article-management my-favorite"><i id="my_res_scho">本校资源</i></div>
+				</div>
+				<div class="page-content-right">
+					<div class="page-content-header" style="width: 750px";><p>我的收藏</p></div>
+					<div class="my-download-content">                                         
+						<div class="my-download-content-c">
+							<volist name="vlist" id="vo">                                                
+							<div class="my-download-list" id="table_{$vo.id}">
+								<div class="my-download-list-content">                   
+								<if condition="$vo['litpic'] neq ''">  
+								<img src="{$vo['litpic']}" alt="" />                
+								<elseif condition="$vo.filesize neq 0" />     
+								<img src="__PUBLIC__/images/my-download-img.png" alt="" /> 
+								</if>                                                 
+									<div class="imgDetails">
+									<div class="img-name">
+									<p class="name">资源名称：{$vo.title}</p>
+									<p class="download" style="color:#b5b5b5;background: url(__PUBLIC__/images/collect.png) no-repeat left center;">下载<i>{$vo.downcnt}</i></p>
+                                                                        <p class="collect" style="color:#b5b5b5;background: url(__PUBLIC__/images/download.png) no-repeat left center;">收藏<i>{$vo.collection}</i></p>
+									</div>
+										<div class="img-btn">
+											<i>大小：
+												<if condition="$vo.filesize eq 0"> 未知                      
+												<elseif condition="$vo.filesize neq 0" /> {$vo.filesize}                 
+												</if>
+											</i>
+										<i>上传时间：{$vo.publishtime|date='Y-m-d H:i:s', ###}</i>
+										<i>浏览：{$vo.click}次</i>
+											<ul>
+												<li><a data-resid='{$vo.id}' class='res_id'>查看</a></li>
+												<!--<li><a href="{:trim($vo['downlink'],'本地下载$$$')}" target="_blank" download="">下载</a></li> -->
+												<li><a  data-resid='{$vo.id}' class="del">删除</a></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>	
+							</volist>					
+						</div>                                           
+						<div class="row clearfix">
+							<div class="col-md-12 column">
+								<div class="xyh-page">
+									{$page}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br><br><br><br><br><br><br><br><br>
+
+		<!--jquery库-->
+		<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js"></script>	
+		<!-- 私有js文件-->
+		<script type="text/javascript" src="__PUBLIC__/js/common-focus.js"></script>
+		<!-- 私有js文件-->
+		<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+		<!--私有js文件-->
+		<script type="text/javascript" src="__PUBLIC__/js/educationwisdom.js"></script>
+		<!--自定义select-->
+		<script type="text/javascript" src="__PUBLIC__/js/select.js"></script>		          
+	</body>
+</html>
+ <script type="text/javascript" language="javascript">   
+    $(document).on("click", ".res_id", function () { 
+       var resid = $(this).attr('data-resid');      
+       location.href="{:U('show_res')}&resid="+resid;
+    });    
+   
+    $('.search-btn').click(function(){
+        $('#form_adv_search').submit();        
+    });
+    
+    $('.del').click(function(){
+        var res_id = $(this).attr('data-resid');
+        sendAjax( "{:U('del_coll')}", "res_id="+res_id, function(data) {
+            window.location.reload();
+        });   
+    }); 
+    
+    $('#my_res_down').click(function(){
+        location.href="{:U('download')}";   
+    }); 
+    
+    $('#my_res_coll').click(function(){
+        location.href="{:U('collection')}";   
+    });
+    
+    $('#my_res_list').click(function(){
+        location.href="{:U('myreslist')}";   
+    });
+    
+    $('#my_res_scho').click(function(){
+        location.href="{:U('schoolres')}";   
+    });
+    
+    //加入收藏
+    function AddFavorite(sURL, sTitle) {
+        sURL = encodeURI(sURL); 
+	    try{   
+	        window.external.addFavorite(sURL, sTitle);   
+	    }catch(e) {   
+	        try{   
+	            window.sidebar.addPanel(sTitle, sURL, "");   
+	        }catch (e) {   
+	            alert("加入收藏失败，请使用Ctrl+D进行添加,或手动在浏览器里进行设置.");
+	        }   
+	    }
+	}
+	
+	//设为首页
+    function SetHome(url){
+        if (document.all) {
+            document.body.style.behavior='url(#default#homepage)';
+               document.body.setHomePage(url);
+        }else{
+            alert("您好,您的浏览器不支持自动设置页面为首页功能,请您手动在浏览器里设置该页面为首页!");
+        }
+    }
+   
+   /*切换选项*/
+	var navButton_01 = document.getElementById('navButton1')
+	var navButton_02 = document.getElementById('navButton2')
+	function navChange_01(){				
+		change01.style.display = "block";
+		change02.style.display = "none";
+	}
+	function navChange_02(){				
+		change01.style.display = "none";
+		change02.style.display = "block";
+	}
+	
+	var _init_ = false;
+	$(document).ready(function() {
+            _init_ = true; 
+            $(".course-ul a").eq(0).click();
+            $('#holder').page_s(); 
+	});	
+</script>

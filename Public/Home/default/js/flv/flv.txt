@@ -1,0 +1,4 @@
+{
+"type":"flv",
+"url":"http://127.0.0.1/ResSite/uploads/test.flv"
+}
